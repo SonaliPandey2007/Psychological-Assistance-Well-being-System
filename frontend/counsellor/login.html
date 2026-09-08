@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>PAWS | Counsellor Login</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef7f5 0%,
+                    #f7f5ff 100%
+                );
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #263f47;
+
+        }
+
+
+        .login-wrapper {
+
+            width: 92%;
+
+            max-width: 430px;
+
+        }
+
+
+        /* =========================
+           BRAND
+        ========================= */
+
+        .brand {
+
+            text-align: center;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .brand h1 {
+
+            font-size: 44px;
+
+            letter-spacing: 4px;
+
+            color: #244b57;
+
+            font-weight: 700;
+
+        }
+
+
+        .brand p {
+
+            margin-top: 7px;
+
+            font-size: 13px;
+
+            color: #7b898e;
+
+        }
+
+
+        /* =========================
+           LOGIN CARD
+        ========================= */
+
+        .login-card {
+
+            background:
+                rgba(255, 255, 255, 0.95);
+
+            border:
+                1px solid #e3ebeb;
+
+            border-radius: 22px;
+
+            padding: 38px;
+
+            box-shadow:
+                0 18px 45px
+                rgba(40, 65, 75, 0.12);
+
+        }
+
+
+        /* =========================
+           ROLE ICON
+        ========================= */
+
+        .role-icon {
+
+            width: 70px;
+
+            height: 70px;
+
+            border-radius: 50%;
+
+            background: #edf7f5;
+
+            margin:
+                0 auto 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 31px;
+
+        }
+
+
+        /* =========================
+           TITLE
+        ========================= */
+
+        .login-card h2 {
+
+            text-align: center;
+
+            font-size: 25px;
+
+            color: #294751;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .login-description {
+
+            text-align: center;
+
+            color: #7b898e;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            margin-bottom: 29px;
+
+        }
+
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-group {
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            color: #405860;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .form-group input {
+
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border:
+                1px solid #dce5e5;
+
+            border-radius: 10px;
+
+            outline: none;
+
+            font-size: 14px;
+
+            background: #fbfdfd;
+
+            transition: 0.2s;
+
+        }
+
+
+        .form-group input:focus {
+
+            border-color: #6c9aa3;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(108, 154, 163, 0.12);
+
+        }
+
+
+        /* =========================
+           LOGIN BUTTON
+        ========================= */
+
+        .login-btn {
+
+            width: 100%;
+
+            border: none;
+
+            padding: 14px;
+
+            margin-top: 7px;
+
+            border-radius: 10px;
+
+            background: #315c68;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .login-btn:hover {
+
+            background: #244b57;
+
+        }
+
+
+        .login-btn:disabled {
+
+            opacity: 0.6;
+
+            cursor: not-allowed;
+
+        }
+
+
+        /* =========================
+           MESSAGE
+        ========================= */
+
+        .message {
+
+            display: none;
+
+            margin-top: 15px;
+
+            padding: 11px;
+
+            border-radius: 8px;
+
+            text-align: center;
+
+            font-size: 13px;
+
+            line-height: 1.4;
+
+        }
+
+
+        .message.error {
+
+            display: block;
+
+            background: #fef2f2;
+
+            color: #b91c1c;
+
+        }
+
+
+        .message.success {
+
+            display: block;
+
+            background: #f0fdf4;
+
+            color: #166534;
+
+        }
+
+
+        /* =========================
+           BACK LINK
+        ========================= */
+
+        .back {
+
+            display: block;
+
+            text-align: center;
+
+            margin-top: 22px;
+
+            color: #718087;
+
+            font-size: 13px;
+
+            text-decoration: none;
+
+        }
+
+
+        .back:hover {
+
+            color: #315c68;
+
+        }
+
+
+        /* =========================
+           SECURITY NOTE
+        ========================= */
+
+        .security-note {
+
+            text-align: center;
+
+            margin-top: 19px;
+
+            font-size: 11px;
+
+            color: #9aa6aa;
+
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 480px) {
+
+            .login-card {
+
+                padding: 30px 24px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="login-wrapper">
+
+
+        <!-- =========================
+             PAWS BRAND
+        ========================== -->
+
+        <div class="brand">
+
+            <h1>
+                PAWS
+            </h1>
+
+            <p>
+                Psychological Assistance &amp;
+                Wellbeing System
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             LOGIN CARD
+        ========================== -->
+
+        <div class="login-card">
+
+
+            <div class="role-icon">
+                🧑‍⚕️
+            </div>
+
+
+            <h2>
+                Counsellor Login
+            </h2>
+
+
+            <p class="login-description">
+
+                Sign in to access victim wellbeing,
+                distress alerts and intervention tools.
+
+            </p>
+
+
+            <!-- =====================
+                 LOGIN FORM
+            ====================== -->
+
+            <form id="loginForm">
+
+
+                <div class="form-group">
+
+                    <label for="email">
+
+                        Email / Counsellor ID
+
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="email"
+                        placeholder="Enter your counsellor ID"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+
+                        Password
+
+                    </label>
+
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="login-btn"
+                    id="loginBtn"
+                >
+
+                    Sign In
+
+                </button>
+
+
+            </form>
+
+
+            <!-- =====================
+                 LOGIN MESSAGE
+            ====================== -->
+
+            <div
+                id="message"
+                class="message"
+            ></div>
+
+
+            <!-- =====================
+                 BACK
+            ====================== -->
+
+            <a
+                href="../index.html"
+                class="back"
+            >
+
+                ← Back to role selection
+
+            </a>
+
+
+            <div class="security-note">
+
+                🔒 Secure counsellor access
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+
+        const loginBtn =
+            document.getElementById("loginBtn");
+
+
+        const message =
+            document.getElementById("message");
+
+
+        loginForm.addEventListener(
+            "submit",
+            async function(event) {
+
+
+                event.preventDefault();
+
+
+                const email =
+                    document
+                        .getElementById("email")
+                        .value
+                        .trim();
+
+
+                const password =
+                    document
+                        .getElementById("password")
+                        .value;
+
+
+                message.className =
+                    "message";
+
+                message.textContent = "";
+
+
+                loginBtn.disabled = true;
+
+                loginBtn.textContent =
+                    "Signing in...";
+
+
+                try {
+
+
+                    /*
+                     * ==================================
+                     * BACKEND AUTHENTICATION
+                     * ==================================
+                     *
+                     * Prisha's authentication endpoint
+                     * should be connected here.
+                     *
+                     * Expected example:
+                     *
+                     * POST /login
+                     *
+                     * {
+                     *     "email": "...",
+                     *     "password": "...",
+                     *     "role": "counsellor"
+                     * }
+                     *
+                     * DO NOT change the backend
+                     * endpoint until you confirm
+                     * Prisha's actual route.
+                     */
+
+
+                    const response = await fetch(
+
+                        "http://127.0.0.1:5000/login",
+
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body: JSON.stringify({
+
+                                email: email,
+
+                                password: password,
+
+                                role: "counsellor"
+
+                            })
+
+                        }
+
+                    );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+
+                            data.error ||
+                            "Invalid counsellor credentials."
+
+                        );
+
+                    }
+
+
+                    /* =========================
+                       SUCCESS
+                    ========================== */
+
+                    message.className =
+                        "message success";
+
+
+                    message.textContent =
+                        "✓ Login successful. Opening dashboard...";
+
+
+                    /*
+                     * Store token if the backend
+                     * returns one.
+                     */
+
+                    if (data.token) {
+
+                        localStorage.setItem(
+                            "paws_token",
+                            data.token
+                        );
+
+                    }
+
+
+                    localStorage.setItem(
+                        "paws_role",
+                        "counsellor"
+                    );
+
+
+                    /*
+                     * IMPORTANT:
+                     *
+                     * login.html and dashboard.html
+                     * are in the SAME folder.
+                     */
+
+                    setTimeout(
+                        function() {
+
+                            window.location.href =
+                                "dashboard.html";
+
+                        },
+                        700
+                    );
+
+
+                }
+
+
+                catch (error) {
+
+
+                    console.error(
+                        "Login error:",
+                        error
+                    );
+
+
+                    message.className =
+                        "message error";
+
+
+                    message.textContent =
+                        "❌ " +
+                        error.message;
+
+
+                }
+
+
+                finally {
+
+
+                    loginBtn.disabled = false;
+
+                    loginBtn.textContent =
+                        "Sign In";
+
+                }
+
+            }
+
+        );
+
+
+    </script>
+
+
+</body>
+
+</html>

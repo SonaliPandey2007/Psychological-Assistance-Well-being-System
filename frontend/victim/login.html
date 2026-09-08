@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAWS — Victim Login</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Inter, Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef7f4, #f5f7fb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #24332f;
+        }
+
+        .login-wrapper {
+            width: 900px;
+            max-width: 92%;
+            min-height: 560px;
+            background: white;
+            border-radius: 28px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        }
+
+        .welcome-section {
+            background: linear-gradient(145deg, #dcefe9, #eef8f5);
+            padding: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo {
+            font-size: 34px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #28675b;
+            margin-bottom: 12px;
+        }
+
+        .tagline {
+            font-size: 25px;
+            line-height: 1.3;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .description {
+            color: #61736e;
+            line-height: 1.7;
+            font-size: 15px;
+            max-width: 340px;
+        }
+
+        .calm-icon {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            margin-bottom: 28px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+        }
+
+        .login-section {
+            padding: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-section h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .login-subtitle {
+            color: #7a8783;
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #dce4e1;
+            border-radius: 12px;
+            outline: none;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        input:focus {
+            border-color: #4b9182;
+            box-shadow: 0 0 0 3px rgba(75, 145, 130, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            background: #34796c;
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: 0.2s;
+        }
+
+        .login-btn:hover {
+            background: #28675b;
+            transform: translateY(-1px);
+        }
+
+        .error-message {
+            color: #c44d4d;
+            font-size: 13px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .privacy-note {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 12px;
+            color: #89938f;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 700px) {
+            .login-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-section {
+                display: none;
+            }
+
+            .login-section {
+                padding: 40px 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-wrapper">
+
+    <div class="welcome-section">
+
+        <div class="calm-icon">🌿</div>
+
+        <div class="logo">PAWS</div>
+
+        <div class="tagline">
+            You don't have to face it alone.
+        </div>
+
+        <div class="description">
+            Psychological Assistance & Wellbeing System
+            <br><br>
+            A safe space to check in, understand how you're feeling,
+            and connect with support when you need it.
+        </div>
+
+    </div>
+
+
+    <div class="login-section">
+
+        <h2>Welcome back</h2>
+
+        <div class="login-subtitle">
+            Sign in to access your personal wellbeing space.
+        </div>
+
+        <form id="loginForm">
+
+            <div class="input-group">
+                <label for="victimId">Victim ID</label>
+                <input
+                    type="text"
+                    id="victimId"
+                    placeholder="Enter your ID"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+                >
+            </div>
+
+            <button class="login-btn" type="submit">
+                Continue
+            </button>
+
+            <div class="error-message" id="errorMessage">
+                Invalid login details. Please try again.
+            </div>
+
+        </form>
+
+        <div class="privacy-note">
+            Your wellbeing information is private and handled securely.
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+document.getElementById("loginForm").addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const victimId = document.getElementById("victimId").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    const errorMessage = document.getElementById("errorMessage");
+
+    errorMessage.style.display = "none";
+
+    try {
+
+        /*
+        This endpoint will be connected to Prisha's
+        authentication backend.
+
+        Replace "/login" with the final endpoint
+        once Prisha provides it.
+        */
+
+        const response = await fetch("http://127.0.0.1:5000/login", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                userId: victimId,
+                password: password,
+                role: "victim"
+            })
+
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            errorMessage.style.display = "block";
+            return;
+        }
+
+        // Store victim ID for dashboard/check-in pages
+        localStorage.setItem("victimId", victimId);
+
+        // Redirect to victim dashboard
+        window.location.href = "dashboard.html";
+
+    } catch (error) {
+
+        console.error(error);
+
+        /*
+        Temporary demo mode:
+        Remove this once Prisha's login API is connected.
+        */
+
+        localStorage.setItem("victimId", victimId);
+
+        window.location.href = "dashboard.html";
+    }
+
+});
+
+</script>
+
+</body>
+</html>
