@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PAWS | Daily Check-in</title>
+
+    <style>
+
+        /* ================= GLOBAL ================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #243b55;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 75px;
+            background: white;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 0 7%;
+
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+
+        .brand-icon {
+            width: 45px;
+            height: 45px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: linear-gradient(135deg, #365f8b, #547ca8);
+
+            border-radius: 12px;
+
+            font-size: 22px;
+        }
+
+
+        .brand h2 {
+            font-size: 23px;
+            letter-spacing: 1px;
+        }
+
+
+        .brand p {
+            font-size: 11px;
+            color: #718096;
+        }
+
+
+        .back-button {
+            border: none;
+            background: #eef3f8;
+
+            color: #365f8b;
+
+            padding: 10px 16px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .container {
+            max-width: 850px;
+            margin: auto;
+            padding: 45px 20px 70px;
+        }
+
+
+        .heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+
+        .heading h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+
+        .heading p {
+            color: #718096;
+            line-height: 1.6;
+        }
+
+
+        /* ================= PROGRESS ================= */
+
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+
+            font-size: 13px;
+            color: #718096;
+
+            margin-bottom: 8px;
+        }
+
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+
+            background: #e5eaf0;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+
+        .progress {
+            width: 25%;
+            height: 100%;
+
+            background: linear-gradient(
+                90deg,
+                #365f8b,
+                #6d8fc2
+            );
+
+            transition: 0.4s;
+        }
+
+
+        /* ================= CHECK-IN CARD ================= */
+
+        .checkin-card {
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 10px 30px rgba(31, 55, 80, 0.08);
+        }
+
+
+        .question {
+            display: none;
+        }
+
+
+        .question.active {
+            display: block;
+        }
+
+
+        .question h2 {
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+
+
+        .question-description {
+            color: #718096;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+
+        /* ================= MOOD ================= */
+
+        .mood-options {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+
+        .mood-option {
+
+            padding: 18px 8px;
+
+            border: 2px solid #edf0f4;
+
+            border-radius: 14px;
+
+            text-align: center;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+        }
+
+
+        .mood-option:hover {
+
+            background: #f5f8fc;
+
+            transform: translateY(-3px);
+
+        }
+
+
+        .mood-option.selected {
+
+            border-color: #547ca8;
+
+            background: #eef5ff;
+
+        }
+
+
+        .mood-option span {
+
+            display: block;
+
+            font-size: 30px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .mood-option p {
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+        }
+
+
+        /* ================= SAFETY ================= */
+
+        .safety-options {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 18px;
+
+        }
+
+
+        .safety-option {
+
+            padding: 25px;
+
+            border: 2px solid #edf0f4;
+
+            border-radius: 14px;
+
+            text-align: center;
+
+            cursor: pointer;
+
+            font-size: 18px;
+
+            transition: 0.3s;
+
+        }
+
+
+        .safety-option:hover {
+
+            background: #f5f8fc;
+
+        }
+
+
+        .safety-option.selected {
+
+            border-color: #547ca8;
+
+            background: #eef5ff;
+
+        }
+
+
+        /* ================= FEAR SLIDER ================= */
+
+        .fear-value {
+
+            text-align: center;
+
+            font-size: 45px;
+
+            font-weight: bold;
+
+            color: #365f8b;
+
+            margin: 20px 0;
+
+        }
+
+
+        input[type="range"] {
+
+            width: 100%;
+
+            cursor: pointer;
+
+        }
+
+
+        .slider-labels {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            color: #718096;
+
+            font-size: 13px;
+
+            margin-top: 10px;
+
+        }
+
+
+        /* ================= TEXT ================= */
+
+        textarea {
+
+            width: 100%;
+
+            min-height: 150px;
+
+            padding: 15px;
+
+            border: 1px solid #d6e0ea;
+
+            border-radius: 12px;
+
+            resize: vertical;
+
+            font-size: 15px;
+
+            outline: none;
+
+        }
+
+
+        textarea:focus {
+
+            border-color: #547ca8;
+
+            box-shadow:
+                0 0 0 3px rgba(84, 124, 168, 0.12);
+
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .buttons {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-top: 35px;
+
+        }
+
+
+        button {
+
+            border: none;
+
+            padding: 13px 24px;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        .previous-button {
+
+            background: #edf1f5;
+
+            color: #365f8b;
+
+        }
+
+
+        .next-button {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #365f8b,
+                    #547ca8
+                );
+
+            color: white;
+
+        }
+
+
+        .submit-button {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2f855a,
+                    #48a868
+                );
+
+            color: white;
+
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 700px) {
+
+            .mood-options {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .navbar {
+
+                padding: 0 20px;
+
+            }
+
+
+            .brand p {
+
+                display: none;
+
+            }
+
+
+            .checkin-card {
+
+                padding: 25px;
+
+            }
+
+
+            .safety-options {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            🛡️
+        </div>
+
+
+        <div>
+
+            <h2>PAWS</h2>
+
+            <p>
+                Psychological Assistance & Wellbeing System
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <button
+        class="back-button"
+        onclick="goBack()"
+    >
+
+        ← Dashboard
+
+    </button>
+
+</nav>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="container">
+
+
+    <div class="heading">
+
+        <h1>
+            Daily Well-being Check-in
+        </h1>
+
+
+        <p>
+            Take a few moments to reflect on how you are feeling.
+            Your responses help PAWS understand your well-being
+            and provide appropriate support.
+        </p>
+
+    </div>
+
+
+
+    <!-- ================= PROGRESS ================= -->
+
+    <div class="progress-container">
+
+        <div class="progress-text">
+
+            <span id="stepText">
+                Step 1 of 4
+            </span>
+
+            <span>
+                Daily Check-in
+            </span>
+
+        </div>
+
+
+        <div class="progress-bar">
+
+            <div
+                class="progress"
+                id="progressBar"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= CHECK-IN CARD ================= -->
+
+    <div class="checkin-card">
+
+
+        <!-- QUESTION 1 -->
+
+        <div
+            class="question active"
+            id="question1"
+        >
+
+            <h2>
+                How are you feeling today?
+            </h2>
+
+
+            <p class="question-description">
+
+                Choose the option that best describes
+                your current emotional state.
+
+            </p>
+
+
+            <div class="mood-options">
+
+
+                <div
+                    class="mood-option"
+                    onclick="selectMood('Happy', this)"
+                >
+
+                    <span>😊</span>
+
+                    <p>Happy</p>
+
+                </div>
+
+
+                <div
+                    class="mood-option"
+                    onclick="selectMood('Okay', this)"
+                >
+
+                    <span>🙂</span>
+
+                    <p>Okay</p>
+
+                </div>
+
+
+                <div
+                    class="mood-option"
+                    onclick="selectMood('Stressed', this)"
+                >
+
+                    <span>😟</span>
+
+                    <p>Stressed</p>
+
+                </div>
+
+
+                <div
+                    class="mood-option"
+                    onclick="selectMood('Sad', this)"
+                >
+
+                    <span>😢</span>
+
+                    <p>Sad</p>
+
+                </div>
+
+
+                <div
+                    class="mood-option"
+                    onclick="selectMood('Scared', this)"
+                >
+
+                    <span>😨</span>
+
+                    <p>Scared</p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- QUESTION 2 -->
+
+        <div
+            class="question"
+            id="question2"
+        >
+
+            <h2>
+                Do you feel safe right now?
+            </h2>
+
+
+            <p class="question-description">
+
+                Please answer honestly.
+                This helps us understand whether
+                additional support may be needed.
+
+            </p>
+
+
+            <div class="safety-options">
+
+
+                <div
+                    class="safety-option"
+                    onclick="selectSafety('Yes', this)"
+                >
+
+                    🟢
+
+                    <br><br>
+
+                    Yes, I feel safe
+
+                </div>
+
+
+                <div
+                    class="safety-option"
+                    onclick="selectSafety('No', this)"
+                >
+
+                    🔴
+
+                    <br><br>
+
+                    No, I don't feel safe
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- QUESTION 3 -->
+
+        <div
+            class="question"
+            id="question3"
+        >
+
+            <h2>
+                How intense is your fear or anxiety today?
+            </h2>
+
+
+            <p class="question-description">
+
+                Move the slider to indicate your
+                current level of fear or anxiety.
+
+            </p>
+
+
+            <div
+                class="fear-value"
+                id="fearValue"
+            >
+                5
+            </div>
+
+
+            <input
+                type="range"
+                id="fearSlider"
+                min="1"
+                max="10"
+                value="5"
+                oninput="updateFear()"
+            >
+
+
+            <div class="slider-labels">
+
+                <span>
+                    1 — Very Low
+                </span>
+
+
+                <span>
+                    10 — Very High
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- QUESTION 4 -->
+
+        <div
+            class="question"
+            id="question4"
+        >
+
+            <h2>
+                Would you like to tell us more?
+            </h2>
+
+
+            <p class="question-description">
+
+                Share anything about how you have been
+                feeling recently. You can write as much
+                or as little as you are comfortable with.
+
+            </p>
+
+
+            <textarea
+                id="checkinText"
+                placeholder="For example: I have been feeling worried because..."
+            ></textarea>
+
+        </div>
+
+
+
+        <!-- ================= BUTTONS ================= -->
+
+        <div class="buttons">
+
+
+            <button
+                class="previous-button"
+                id="previousButton"
+                onclick="previousQuestion()"
+                style="visibility: hidden;"
+            >
+
+                ← Previous
+
+            </button>
+
+
+            <button
+                class="next-button"
+                id="nextButton"
+                onclick="nextQuestion()"
+            >
+
+                Next →
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+
+    let currentStep = 1;
+
+    let selectedMood = "";
+
+    let selectedSafety = "";
+
+
+    /* ================= SELECT MOOD ================= */
+
+    function selectMood(mood, element) {
+
+        selectedMood = mood;
+
+
+        const options =
+            document.querySelectorAll(".mood-option");
+
+
+        options.forEach(option => {
+
+            option.classList.remove("selected");
+
+        });
+
+
+        element.classList.add("selected");
+
+    }
+
+
+
+    /* ================= SELECT SAFETY ================= */
+
+    function selectSafety(safety, element) {
+
+        selectedSafety = safety;
+
+
+        const options =
+            document.querySelectorAll(".safety-option");
+
+
+        options.forEach(option => {
+
+            option.classList.remove("selected");
+
+        });
+
+
+        element.classList.add("selected");
+
+    }
+
+
+
+    /* ================= UPDATE FEAR ================= */
+
+    function updateFear() {
+
+        const fear =
+            document.getElementById("fearSlider").value;
+
+
+        document.getElementById("fearValue").innerText = fear;
+
+    }
+
+
+
+    /* ================= NEXT QUESTION ================= */
+
+    function nextQuestion() {
+
+
+        /* VALIDATION */
+
+        if (
+            currentStep === 1 &&
+            selectedMood === ""
+        ) {
+
+            alert(
+                "Please select how you are feeling."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            currentStep === 2 &&
+            selectedSafety === ""
+        ) {
+
+            alert(
+                "Please select your safety status."
+            );
+
+            return;
+
+        }
+
+
+        /* LAST STEP → SUBMIT */
+
+        if (currentStep === 4) {
+
+            submitCheckin();
+
+            return;
+
+        }
+
+
+        /* HIDE CURRENT QUESTION */
+
+        document
+            .getElementById(
+                "question" + currentStep
+            )
+            .classList.remove("active");
+
+
+        /* MOVE TO NEXT QUESTION */
+
+        currentStep++;
+
+
+        document
+            .getElementById(
+                "question" + currentStep
+            )
+            .classList.add("active");
+
+
+        updateProgress();
+
+    }
+
+
+
+    /* ================= PREVIOUS QUESTION ================= */
+
+    function previousQuestion() {
+
+        if (currentStep === 1) {
+
+            return;
+
+        }
+
+
+        /* HIDE CURRENT QUESTION */
+
+        document
+            .getElementById(
+                "question" + currentStep
+            )
+            .classList.remove("active");
+
+
+        /* GO BACK */
+
+        currentStep--;
+
+
+        document
+            .getElementById(
+                "question" + currentStep
+            )
+            .classList.add("active");
+
+
+        updateProgress();
+
+    }
+
+
+
+    /* ================= UPDATE PROGRESS ================= */
+
+    function updateProgress() {
+
+
+        document
+            .getElementById("stepText")
+            .innerText =
+            "Step " +
+            currentStep +
+            " of 4";
+
+
+        const progress =
+            currentStep * 25;
+
+
+        document
+            .getElementById("progressBar")
+            .style.width =
+            progress + "%";
+
+
+        /* PREVIOUS BUTTON */
+
+        const previousButton =
+            document.getElementById(
+                "previousButton"
+            );
+
+
+        if (currentStep === 1) {
+
+            previousButton.style.visibility =
+                "hidden";
+
+        }
+
+        else {
+
+            previousButton.style.visibility =
+                "visible";
+
+        }
+
+
+        /* NEXT / SUBMIT BUTTON */
+
+        const nextButton =
+            document.getElementById(
+                "nextButton"
+            );
+
+
+        if (currentStep === 4) {
+
+            nextButton.innerText =
+                "Submit Check-in ✓";
+
+            nextButton.className =
+                "submit-button";
+
+        }
+
+        else {
+
+            nextButton.innerText =
+                "Next →";
+
+            nextButton.className =
+                "next-button";
+
+        }
+
+    }
+
+
+
+    /* ================= SUBMIT CHECK-IN ================= */
+
+    async function submitCheckin() {
+
+
+        /* GET VICTIM ID */
+
+        const victimId =
+            localStorage.getItem("victimId");
+
+
+        /* CHECK IF VICTIM ID EXISTS */
+
+        if (!victimId) {
+
+            alert(
+                "Victim ID not found. Please log in again."
+            );
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        /* GET FEAR LEVEL */
+
+        const fearLevel =
+            document.getElementById(
+                "fearSlider"
+            ).value;
+
+
+        /* GET TEXT RESPONSE */
+
+        const checkinText =
+            document.getElementById(
+                "checkinText"
+            )
+            .value
+            .trim();
+
+
+        /* CREATE DATA OBJECT */
+
+        const checkinData = {
+
+            victimId: victimId,
+
+            mood: selectedMood,
+
+            safety: selectedSafety,
+
+            fearLevel: parseInt(fearLevel),
+
+            text: checkinText
+
+        };
+
+
+        console.log(
+            "Sending Check-in Data:",
+            checkinData
+        );
+
+
+        try {
+
+
+            /* SEND DATA TO FLASK BACKEND */
+
+            const response = await fetch(
+
+                "http://127.0.0.1:5000/checkin",
+
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify(checkinData)
+
+                }
+
+            );
+
+
+            /* GET RESPONSE */
+
+            const result =
+                await response.json();
+
+
+            console.log(
+                "Backend Response:",
+                result
+            );
+
+
+            /* HANDLE BACKEND ERROR */
+
+            if (!response.ok) {
+
+                alert(
+
+                    result.error ||
+
+                    "Something went wrong while submitting your check-in."
+
+                );
+
+                return;
+
+            }
+
+
+            /* STORE RESULT FOR DASHBOARD */
+
+            localStorage.setItem(
+
+                "latestCheckinResult",
+
+                JSON.stringify(result)
+
+            );
+
+
+            /* SUCCESS MESSAGE */
+
+            alert(
+
+                "Check-in completed successfully!\n\n" +
+
+                "Well-being Score: " +
+
+                result.ddi_score +
+
+                "\nRisk Level: " +
+
+                result.risk_level
+
+            );
+
+
+            /* RETURN TO DASHBOARD */
+
+            window.location.href =
+                "dashboard.html";
+
+        }
+
+
+        /* CONNECTION ERROR */
+
+        catch (error) {
+
+
+            console.error(
+                "Error:",
+                error
+            );
+
+
+            alert(
+
+                "Unable to connect to the PAWS server.\n\n" +
+
+                "Please make sure your Flask backend is running."
+
+            );
+
+        }
+
+    }
+
+
+
+    /* ================= GO BACK ================= */
+
+    function goBack() {
+
+        window.location.href =
+            "dashboard.html";
+
+    }
+
+
+</script>
+
+
+</body>
+
+</html>
