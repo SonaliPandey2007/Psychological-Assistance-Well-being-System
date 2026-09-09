@@ -34,15 +34,15 @@ def calculate_ddi(
     ) / 3
 
     # Weighted Dynamic Distress Index
-    # Total weight = 1.00
+# Total weight = 1.00
     ddi = (
-        fear_score * 0.18 +
-        stress_score * 0.18 +
-        anxiety_score * 0.12 +
-        negative_emotion_score * 0.12 +
-        self_report_score * 0.30 +
-        behaviour_score * 0.10
-    )
+    fear_score * 0.22 +
+    stress_score * 0.18 +
+    anxiety_score * 0.16 +
+    negative_emotion_score * 0.12 +
+    self_report_score * 0.27 +
+    behaviour_score * 0.05
+)
 
     # Keep score between 0 and 100
     ddi = max(0, min(100, ddi))

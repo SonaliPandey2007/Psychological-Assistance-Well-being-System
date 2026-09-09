@@ -159,21 +159,36 @@ def victim_profile(victim_id):
         # -------------------------------------------------
 
         cursor.execute("""
-            SELECT
-                score_id,
-                checkin_id,
-                distress_index,
-                risk_level,
-                fear_score,
-                stress_score,
-                negative_emotion_score,
-                behaviour_score,
-                explanation,
-                created_at
-            FROM distress_scores
-            WHERE victim_id = %s
-            ORDER BY created_at ASC
-        """, (victim_id,))
+    SELECT
+        d.score_id,
+        d.checkin_id,
+
+        c.mood_score,
+        c.safety_score,
+        c.stress_level,
+        c.text_response,
+        c.engagement_score,
+
+        d.distress_index,
+        d.risk_level,
+        d.fear_score,
+        d.stress_score,
+        d.anxiety_score,
+        d.negative_emotion_score,
+        d.behaviour_score,
+        d.explanation,
+
+        d.created_at
+
+    FROM distress_scores d
+
+    LEFT JOIN check_ins c
+        ON d.checkin_id = c.checkin_id
+
+    WHERE d.victim_id = %s
+
+    ORDER BY d.created_at ASC
+""", (victim_id,))
 
         history = cursor.fetchall()
 
@@ -433,4 +448,310 @@ def get_interventions(victim_id):
             cursor.close()
 
         if connection and connection.is_connected():
-            connection.close()           
+            connection.close()    
+
+# =========================================================
+# UPDATE ALERT STATUS
+# =========================================================
+
+@counsellor_bp.route(
+    "/api/counsellor/alerts/<int:alert_id>/status",
+    methods=["PUT"]
+)
+@token_required
+@role_required("COUNSELLOR")
+def update_alert_status(alert_id):
+
+    data = request.get_json() or {}
+
+    status = data.get("status")
+    follow_up_date = data.get("follow_up_date")
+
+    allowed_statuses = [
+        "Contacted",
+        "Counselling",
+        "Follow-up",
+        "Resolved"
+    ]
+
+    if status not in allowed_statuses:
+        return jsonify({
+            "error": "Invalid status"
+        }), 400
+
+    connection = None
+    cursor = None
+
+    try:
+
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+
+        # Find alert
+        cursor.execute("""
+            SELECT
+                alert_id,
+                victim_id,
+                severity,
+                message
+            FROM alerts
+            WHERE alert_id = %s
+        """, (alert_id,))
+
+        alert = cursor.fetchone()
+
+        if not alert:
+            return jsonify({
+                "error": "Alert not found"
+            }), 404
+
+        # -------------------------------------------------
+        # RESOLVED
+        # -------------------------------------------------
+
+        if status == "Resolved":
+
+            cursor.execute("""
+                UPDATE alerts
+                SET
+                    is_reviewed = TRUE,
+                    reviewed_by = %s
+                WHERE alert_id = %s
+            """, (
+                request.user["user_id"],
+                alert_id
+            ))
+
+            connection.commit()
+
+            return jsonify({
+                "message": "Alert resolved successfully",
+                "alert_id": alert_id,
+                "status": "Resolved"
+            }), 200
+
+        # -------------------------------------------------
+        # FOLLOW-UP
+        # -------------------------------------------------
+
+        if status == "Follow-up":
+
+            if not follow_up_date:
+                return jsonify({
+                    "error": "Follow-up date is required"
+                }), 400
+
+            cursor.execute("""
+                UPDATE alerts
+                SET
+                    is_reviewed = FALSE,
+                    reviewed_by = %s,
+                    message = CONCAT(
+                        COALESCE(message, ''),
+                        ' | Follow-up scheduled: ',
+                        %s
+                    )
+                WHERE alert_id = %s
+            """, (
+                request.user["user_id"],
+                follow_up_date,
+                alert_id
+            ))
+
+            connection.commit()
+
+            return jsonify({
+                "message": "Follow-up scheduled successfully",
+                "alert_id": alert_id,
+                "status": "Follow-up",
+                "follow_up_date": follow_up_date
+            }), 200
+
+        # -------------------------------------------------
+        # CONTACTED / COUNSELLING
+        # -------------------------------------------------
+
+        cursor.execute("""
+            UPDATE alerts
+            SET
+                reviewed_by = %s
+            WHERE alert_id = %s
+        """, (
+            request.user["user_id"],
+            alert_id
+        ))
+
+        connection.commit()
+
+        return jsonify({
+            "message": "Alert status updated successfully",
+            "alert_id": alert_id,
+            "status": status
+        }), 200
+
+    except Exception as error:
+
+        if connection and connection.is_connected():
+            connection.rollback()
+
+        print("UPDATE ALERT STATUS ERROR:", error)
+
+        return jsonify({
+            "error": "Could not update alert status"
+        }), 500
+
+    finally:
+
+        if cursor:
+            cursor.close()
+
+        if connection and connection.is_connected():
+            connection.close()     
+
+# =========================================================
+# GET SCHEDULED FOLLOW-UPS
+# =========================================================
+
+@counsellor_bp.route(
+    "/api/counsellor/followups",
+    methods=["GET"]
+)
+@token_required
+@role_required("COUNSELLOR")
+def get_followups():
+
+    connection = None
+    cursor = None
+
+    try:
+
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+
+        cursor.execute("""
+            SELECT
+                a.alert_id,
+                a.victim_id,
+                v.victim_code,
+                a.severity,
+                a.message,
+                a.created_at
+            FROM alerts a
+            JOIN victims v
+                ON a.victim_id = v.victim_id
+            WHERE
+                a.is_reviewed = FALSE
+                AND a.message LIKE '%Follow-up scheduled:%'
+            ORDER BY a.created_at DESC
+        """)
+
+        rows = cursor.fetchall()
+
+        followups = []
+
+        for row in rows:
+
+            message = row.get("message") or ""
+
+            follow_up_date = None
+
+            marker = "Follow-up scheduled:"
+
+            if marker in message:
+
+                follow_up_date = (
+                    message.split(marker, 1)[1]
+                    .strip()
+                )
+
+            followups.append({
+                "alert_id": row["alert_id"],
+                "victim_id": row["victim_id"],
+                "victim_code": row["victim_code"],
+                "risk_level": row["severity"],
+                "follow_up_date": follow_up_date,
+                "created_at": row["created_at"]
+            })
+
+        return jsonify({
+            "followups": followups
+        }), 200
+
+    except Exception as error:
+
+        print("FOLLOW-UP ERROR:", error)
+
+        return jsonify({
+            "error": "Could not load follow-ups"
+        }), 500
+
+    finally:
+
+        if cursor:
+            cursor.close()
+
+        if connection and connection.is_connected():
+            connection.close()  
+
+# =========================================================
+# COMPLETE FOLLOW-UP
+# =========================================================
+
+@counsellor_bp.route(
+    "/alerts/<int:alert_id>/follow-up/complete",
+    methods=["PUT"]
+)
+@token_required
+@role_required("COUNSELLOR")
+def complete_followup(alert_id):
+
+    connection = None
+    cursor = None
+
+    try:
+
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            UPDATE alerts
+            SET
+                is_reviewed = TRUE,
+                reviewed_by = %s
+            WHERE alert_id = %s
+        """, (
+            request.user["user_id"],
+            alert_id
+        ))
+
+        if cursor.rowcount == 0:
+
+            return jsonify({
+                "error": "Follow-up not found"
+            }), 404
+
+        connection.commit()
+
+        return jsonify({
+            "message": "Follow-up completed successfully",
+            "alert_id": alert_id
+        }), 200
+
+    except Exception as error:
+
+        if connection and connection.is_connected():
+            connection.rollback()
+
+        print("COMPLETE FOLLOW-UP ERROR:", error)
+
+        return jsonify({
+            "error": "Could not complete follow-up"
+        }), 500
+
+    finally:
+
+        if cursor:
+            cursor.close()
+
+        if connection and connection.is_connected():
+            connection.close()

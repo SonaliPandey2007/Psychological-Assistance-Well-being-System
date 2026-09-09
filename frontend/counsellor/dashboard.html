@@ -1,0 +1,2160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>PAWS | Counsellor Dashboard</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        /* ==========================================
+           HEADER
+        ========================================== */
+
+        .header {
+            height: 72px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 35px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: #6c63ff;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .logo-text h2 {
+            font-size: 20px;
+        }
+
+        .logo-text p {
+            font-size: 11px;
+            color: #6b7280;
+        }
+
+        .counsellor-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #e8e7ff;
+            color: #5b54d6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* ==========================================
+           MAIN
+        ========================================== */
+
+        .container {
+            padding: 30px 35px;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h1 {
+            font-size: 28px;
+            margin-bottom: 7px;
+        }
+
+        .page-title p {
+            color: #6b7280;
+        }
+
+        /* ==========================================
+           STAT CARDS
+        ========================================== */
+
+        .stats {
+            display: grid;
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 22px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .stat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-title {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .stat-icon {
+            font-size: 20px;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .high {
+            color: #dc2626;
+        }
+
+        .medium {
+            color: #d97706;
+        }
+
+        .pending {
+            color: #2563eb;
+        }
+
+        .resolved {
+            color: #16a34a;
+        }
+
+        /* ==========================================
+           CONTENT GRID
+        ========================================== */
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 40% 60%;
+            gap: 25px;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #e5e7eb;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .panel-header h2 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .panel-header p {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        /* ==========================================
+           ALERT LIST
+        ========================================== */
+
+        .alert-list {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .alert-card {
+            padding: 18px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .alert-card:hover {
+            background: #f8f9ff;
+        }
+
+        .alert-card.selected {
+            background: #f0efff;
+            border-left: 4px solid #6c63ff;
+        }
+
+        .alert-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .victim-name {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .risk-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .risk-high {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .risk-medium {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .risk-low {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .alert-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .alert-status {
+            margin-top: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* ==========================================
+   FOLLOW-UP DATE
+========================================== */
+
+.followup-date {
+
+    margin-top: 8px;
+
+    padding: 8px 10px;
+
+    background: #fef3c7;
+
+    border-radius: 8px;
+
+    color: #92400e;
+
+    font-size: 12px;
+
+}
+
+        /* ==========================================
+           VICTIM DETAILS
+        ========================================== */
+
+        .details-content {
+            padding: 25px;
+        }
+
+        .empty-state {
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #9ca3af;
+            text-align: center;
+        }
+
+        .empty-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .victim-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .victim-heading h2 {
+            font-size: 25px;
+        }
+
+        .victim-heading p {
+            color: #6b7280;
+            margin-top: 5px;
+        }
+
+        /* ==========================================
+           RISK SUMMARY
+        ========================================== */
+
+        .risk-summary {
+            display: grid;
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .metric {
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: #6b7280;
+            margin-bottom: 6px;
+        }
+
+        .metric-value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* ==========================================
+   AI ASSESSMENT ENHANCEMENT
+========================================== */
+
+.insight-box {
+    position: relative;
+}
+
+.insight-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.5;
+}
+
+.insight-item::before {
+    content: "•";
+    color: #6c63ff;
+    font-size: 18px;
+    line-height: 1;
+}
+
+        /* ==========================================
+           CHECK-IN HISTORY
+        ========================================== */
+
+        .history-title {
+            font-size: 17px;
+            margin-bottom: 12px;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        .history-table th {
+            text-align: left;
+            background: #f8fafc;
+            padding: 10px;
+            color: #6b7280;
+        }
+
+        .history-table td {
+            padding: 11px 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        /* ==========================================
+           ACTIONS
+        ========================================== */
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .action-btn {
+            border: none;
+            padding: 11px 17px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .btn-contact {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .btn-counselling {
+            background: #ede9fe;
+            color: #6d28d9;
+        }
+
+        .btn-followup {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .btn-resolve {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .action-btn:hover {
+            opacity: 0.8;
+        }
+
+        /* ==========================================
+           LOADING
+        ========================================== */
+
+        .loading {
+            padding: 40px;
+            text-align: center;
+            color: #6b7280;
+        }
+
+
+        /* ==========================================
+   FOLLOW-UP SECTION
+========================================== */
+
+.followup-section {
+
+    margin-top: 30px;
+
+}
+
+
+.followup-list {
+
+    padding: 20px;
+
+}
+
+
+.followup-card {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 18px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    margin-bottom: 12px;
+
+}
+
+
+.followup-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+}
+
+
+.followup-victim {
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+}
+
+
+.followup-date {
+
+    font-size: 13px;
+
+    color: #6b7280;
+
+}
+
+
+.followup-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.followup-status {
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    background: #fef3c7;
+
+    color: #92400e;
+
+}
+
+
+.complete-followup-btn {
+
+    border: none;
+
+    padding: 10px 15px;
+
+    border-radius: 8px;
+
+    background: #dcfce7;
+
+    color: #166534;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+
+.complete-followup-btn:hover {
+
+    opacity: 0.8;
+
+}
+
+        /* ==========================================
+           RESPONSIVE
+        ========================================== */
+
+        @media (max-width: 1000px) {
+
+            .stats {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                padding: 20px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .risk-summary {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .header {
+                padding: 0 20px;
+            }
+
+        }
+
+        /* ==========================================
+   DDI TREND
+========================================== */
+
+.trend-section {
+    margin-top: 25px;
+}
+
+.trend-title {
+    font-size: 17px;
+    margin-bottom: 12px;
+}
+
+.trend-box {
+    height: 280px;
+    width: 100%;
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+#ddiTrendChart {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================================
+     HEADER
+========================================== -->
+
+<header class="header">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            P
+        </div>
+
+        <div class="logo-text">
+
+            <h2>PAWS</h2>
+
+            <p>
+                Psychological Assistance & Wellbeing System
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="counsellor-info">
+
+        <div>
+
+            <strong>Counsellor</strong>
+
+            <div style="
+                font-size:11px;
+                color:#6b7280;
+                text-align:right;
+            ">
+                Support Center
+            </div>
+
+        </div>
+
+        <div class="avatar">
+            C
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- ==========================================
+     MAIN CONTENT
+========================================== -->
+
+<main class="container">
+
+
+    <div class="page-title">
+
+        <h1>
+            Counsellor Dashboard
+        </h1>
+
+        <p>
+            Monitor wellbeing alerts and provide timely support.
+        </p>
+
+    </div>
+
+
+    <!-- ==========================================
+         STATISTICS
+    ========================================== -->
+
+    <section class="stats">
+
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <span class="stat-title">
+                    High Risk
+                </span>
+
+                <span class="stat-icon">
+                    🔴
+                </span>
+
+            </div>
+
+            <div
+                class="stat-number high"
+                id="highCount">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <span class="stat-title">
+                    Medium Risk
+                </span>
+
+                <span class="stat-icon">
+                    🟡
+                </span>
+
+            </div>
+
+            <div
+                class="stat-number medium"
+                id="mediumCount">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <span class="stat-title">
+                    Pending Alerts
+                </span>
+
+                <span class="stat-icon">
+                    🔔
+                </span>
+
+            </div>
+
+            <div
+                class="stat-number pending"
+                id="pendingCount">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <span class="stat-title">
+                    Resolved
+                </span>
+
+                <span class="stat-icon">
+                    ✓
+                </span>
+
+            </div>
+
+            <div
+                class="stat-number resolved"
+                id="resolvedCount">
+                0
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ==========================================
+         MAIN TWO-COLUMN AREA
+    ========================================== -->
+
+    <section class="content-grid">
+
+
+        <!-- ======================================
+             ALERTS
+        ======================================= -->
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <h2>
+                    Priority Alerts
+                </h2>
+
+                <p>
+                    Recent wellbeing alerts requiring attention
+                </p>
+
+            </div>
+
+
+            <div
+                class="alert-list"
+                id="alertList">
+
+                <div class="loading">
+                    Loading alerts...
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ======================================
+             VICTIM DETAILS
+        ======================================= -->
+
+        <div class="panel">
+
+            <div
+                class="details-content"
+                id="detailsContent">
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        👤
+                    </div>
+
+                    <h3>
+                        Select an alert
+                    </h3>
+
+                    <p>
+                        Select a victim from the alert list
+                        to view their wellbeing information.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+    <!-- ==========================================
+     FOLLOW-UP SECTION
+========================================== -->
+
+<section class="followup-section">
+
+    <div class="panel">
+
+        <div class="panel-header">
+
+            <h2>
+                📅 Scheduled Follow-ups
+            </h2>
+
+            <p>
+                Victims who require follow-up and continued support.
+            </p>
+
+        </div>
+
+
+        <div
+            class="followup-list"
+            id="followupList"
+        >
+
+            <div class="loading">
+
+                Loading follow-ups...
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<script>
+
+
+// ==========================================
+// GLOBAL DATA
+// ==========================================
+
+let alerts = [];
+
+let selectedAlertId = null;
+
+let ddiTrendChart = null;
+
+let followups = [];
+
+//load alerts
+async function loadAlerts() {
+
+    try {
+
+        const token = localStorage.getItem("pawsToken");
+
+        if (!token) {
+            window.location.href = "/frontend/counsellor/login.html";
+            return;
+        }
+
+        const response = await fetch(
+            "/api/counsellor/dashboard",
+            {
+                method: "GET",
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        console.log("Counsellor Dashboard:", data);
+
+        if (response.status === 401) {
+
+            localStorage.removeItem("pawsToken");
+            localStorage.removeItem("pawsUser");
+
+            window.location.href =
+                "/frontend/counsellor/login.html";
+
+            return;
+        }
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Unable to load counsellor dashboard"
+            );
+
+        }
+
+        alerts = data.alerts || [];
+
+        updateStatistics();
+
+        displayAlerts();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Alert loading error:",
+            error
+        );
+
+        document.getElementById(
+            "alertList"
+        ).innerHTML = `
+            <div class="loading">
+                ❌ Unable to load alerts.
+                <br><br>
+                ${error.message}
+            </div>
+        `;
+    }
+}
+
+
+
+// ==========================================
+// UPDATE STATISTICS
+// ==========================================
+
+function updateStatistics() {
+
+    let high = 0;
+    let medium = 0;
+    let pending = 0;
+    let resolved = 0;
+
+    alerts.forEach(alert => {
+
+        const risk =
+            String(alert.severity || "")
+            .toUpperCase();
+
+        if (risk === "HIGH") {
+            high++;
+        }
+
+        if (
+            risk === "MODERATE" ||
+            risk === "MEDIUM"
+        ) {
+            medium++;
+        }
+
+        if (!alert.is_reviewed) {
+            pending++;
+        }
+
+        if (alert.is_reviewed) {
+            resolved++;
+        }
+
+    });
+
+    document.getElementById(
+        "highCount"
+    ).textContent = high;
+
+    document.getElementById(
+        "mediumCount"
+    ).textContent = medium;
+
+    document.getElementById(
+        "pendingCount"
+    ).textContent = pending;
+
+    document.getElementById(
+        "resolvedCount"
+    ).textContent = resolved;
+}
+
+
+
+// ==========================================
+// DISPLAY ALERTS
+// ==========================================
+
+function displayAlerts() {
+
+    const container =
+        document.getElementById("alertList");
+
+    if (!alerts.length) {
+
+        container.innerHTML = `
+            <div class="loading">
+                🎉
+                <br><br>
+                No active alerts.
+            </div>
+        `;
+
+        return;
+    }
+
+    container.innerHTML = "";
+
+    alerts.forEach(alert => {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "alert-card";
+
+        const risk =
+            String(alert.severity || "LOW")
+            .toUpperCase();
+
+        const riskLabel =
+            risk === "MODERATE"
+                ? "Medium"
+                : risk.charAt(0) +
+                  risk.slice(1).toLowerCase();
+
+        const riskClass =
+            risk === "HIGH"
+                ? "risk-high"
+                : risk === "MODERATE"
+                ? "risk-medium"
+                : "risk-low";
+
+        const status =
+            alert.is_reviewed
+                ? "Reviewed"
+                : "Pending";
+
+        card.innerHTML = `
+
+            <div class="alert-header">
+
+                <span class="victim-name">
+                    Victim ${alert.victim_code || alert.victim_id}
+                </span>
+
+                <span class="
+                    risk-badge
+                    ${riskClass}
+                ">
+                    ${riskLabel}
+                </span>
+
+            </div>
+
+            <div class="alert-details">
+
+                <span>
+                    Victim ID:
+                    <strong>
+                        ${alert.victim_id}
+                    </strong>
+                </span>
+
+                <span>
+                    Alert:
+                    <strong>
+                        ${alert.alert_type || "Wellbeing Alert"}
+                    </strong>
+                </span>
+
+                <span>
+                    Severity:
+                    ${riskLabel}
+                </span>
+
+                <span>
+                    Created:
+                    ${formatDate(alert.created_at)}
+                </span>
+
+            </div>
+
+            <div class="alert-status">
+
+                Status:
+                ${status}
+
+            </div>
+
+            <div style="
+                margin-top:8px;
+                font-size:12px;
+                color:#6b7280;
+            ">
+                ${alert.message || "Wellbeing alert requires attention."}
+            </div>
+
+        `;
+
+        card.addEventListener(
+            "click",
+            () => {
+                selectAlert(
+                    alert.alert_id,
+                    card
+                );
+            }
+        );
+
+        container.appendChild(card);
+
+    });
+}
+
+function formatDate(dateValue) {
+
+    if (!dateValue) {
+        return "—";
+    }
+
+    const date = new Date(dateValue);
+
+    if (isNaN(date.getTime())) {
+        return dateValue;
+    }
+
+    return date.toLocaleString();
+}
+
+
+// ==========================================
+// SELECT ALERT
+// ==========================================
+
+async function selectAlert(
+    alertId,
+    card
+) {
+
+    selectedAlertId =
+        alertId;
+
+
+    document.querySelectorAll(
+        ".alert-card"
+    ).forEach(item => {
+
+        item.classList.remove(
+            "selected"
+        );
+
+    });
+
+
+    card.classList.add(
+        "selected"
+    );
+
+
+    const alert =
+        alerts.find(
+            item =>
+                item.alert_id === alertId
+        );
+
+
+    if (!alert) {
+
+        return;
+
+    }
+
+
+    await loadVictimDetails(
+        alert.victim_id
+    );
+
+}
+
+
+
+// ==========================================
+// LOAD VICTIM DETAILS
+// ==========================================
+
+async function loadVictimDetails(victimId) {
+
+    const container =
+        document.getElementById(
+            "detailsContent"
+        );
+
+    container.innerHTML = `
+        <div class="loading">
+            Loading victim information...
+        </div>
+    `;
+
+    try {
+
+        const token =
+            localStorage.getItem("pawsToken");
+
+        const response = await fetch(
+            `/api/counsellor/victims/${victimId}`,
+            {
+                method: "GET",
+                headers: {
+                    "Authorization":
+                        "Bearer " + token
+                }
+            }
+        );
+
+        const data =
+            await response.json();
+
+        console.log(
+            "Victim Profile:",
+            data
+        );
+
+        if (response.status === 401) {
+
+            localStorage.removeItem(
+                "pawsToken"
+            );
+
+            window.location.href =
+                "/frontend/counsellor/login.html";
+
+            return;
+        }
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Unable to load victim"
+            );
+
+        }
+
+        displayVictimDetails(data);
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Victim details error:",
+            error
+        );
+
+        container.innerHTML = `
+            <div class="loading">
+                ❌ Unable to load victim details.
+                <br><br>
+                ${error.message}
+            </div>
+        `;
+    }
+}
+
+
+// ==========================================
+// DDI TREND CHART
+// ==========================================
+function createDDITrendChart(checkins) {
+
+    const canvas =
+        document.getElementById("ddiTrendChart");
+
+    if (!canvas) {
+        console.warn("DDI chart canvas not found.");
+        return;
+    }
+
+    const labels = checkins.map((item, index) => {
+        return `Check-in ${index + 1}`;
+    });
+
+    const ddiScores = checkins.map(item => {
+        const value = Number(item.distress_index);
+        return Number.isFinite(value) ? value : 0;
+    });
+
+    // Destroy previous chart if it exists
+    if (window.ddiChart) {
+        window.ddiChart.destroy();
+    }
+
+    window.ddiChart = new Chart(canvas, {
+        type: "line",
+
+        data: {
+            labels: labels,
+
+            datasets: [{
+                label: "Distress Index",
+                data: ddiScores,
+                tension: 0.35,
+                fill: false
+            }]
+        },
+
+        options: {
+            responsive: true,
+
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            },
+
+            plugins: {
+                legend: {
+                    display: true
+                }
+            }
+        }
+    });
+}
+
+
+
+// ==========================================
+// DISPLAY VICTIM DETAILS
+// ==========================================
+function displayVictimDetails(data) {
+
+    console.log("Victim details received:", data);
+
+    if (!data || !data.victim) {
+        console.error("No victim data received.");
+        return;
+    }
+
+    const victim = data.victim;
+    const history = data.distress_history || [];
+    const latest = data.latest_distress || {};
+
+    const victimCode =
+        victim.victim_code ||
+        victim.victim_id ||
+        "Unknown";
+
+    const victimId =
+        victim.victim_id ||
+        "Unknown";
+
+    const victimName =
+        victim.name ||
+        `Victim ${victimCode}`;
+
+    const risk =
+        String(latest.risk_level || "LOW").toUpperCase();
+
+    let riskLabel = "Low";
+
+    if (risk === "HIGH") {
+        riskLabel = "High";
+    } else if (risk === "MODERATE") {
+        riskLabel = "Medium";
+    }
+
+    const ddi = Number(latest.distress_index);
+
+    const ddiValue =
+        Number.isFinite(ddi)
+            ? ddi.toFixed(1)
+            : "—";
+
+    const moodValue =
+        getMoodLabel(latest.mood_score);
+
+    const safetyValue =
+        getSafetyLabel(latest.safety_score);
+
+    const fear = Number(latest.fear_score);
+
+    const fearValue =
+        Number.isFinite(fear)
+            ? fear.toFixed(1)
+            : "—";
+
+    const container =
+        document.getElementById("detailsContent");
+
+    container.innerHTML = `
+
+        <!-- VICTIM HEADER -->
+
+        <div class="victim-heading">
+
+            <div>
+                <h2>${victimName}</h2>
+
+                <p>
+                    Victim Code:
+                    <strong>${victimCode}</strong>
+                    &nbsp; | &nbsp;
+                    Victim ID:
+                    <strong>${victimId}</strong>
+                </p>
+            </div>
+
+            <span class="
+                risk-badge
+                ${
+                    risk === "HIGH"
+                        ? "risk-high"
+                        : risk === "MODERATE"
+                        ? "risk-medium"
+                        : "risk-low"
+                }
+            ">
+                ${riskLabel} Risk
+            </span>
+
+        </div>
+
+
+        <!-- RISK SUMMARY -->
+
+        <div class="risk-summary">
+
+            <div class="metric">
+
+                <div class="metric-label">
+                    DISTRESS INDEX
+                </div>
+
+                <div class="metric-value">
+                    ${ddiValue}
+                </div>
+
+            </div>
+
+
+            <div class="metric">
+
+                <div class="metric-label">
+                    MOOD
+                </div>
+
+                <div class="metric-value">
+                    ${moodValue}
+                </div>
+
+            </div>
+
+
+            <div class="metric">
+
+                <div class="metric-label">
+                    SAFETY
+                </div>
+
+                <div class="metric-value">
+                    ${safetyValue}
+                </div>
+
+            </div>
+
+
+            <div class="metric">
+
+                <div class="metric-label">
+                    FEAR SCORE
+                </div>
+
+                <div class="metric-value">
+                    ${fearValue}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- AI ASSESSMENT -->
+
+        <div class="trend-section">
+
+            <h3 class="trend-title">
+                🤖 AI Assessment
+            </h3>
+
+            <div
+                class="insight-box"
+                style="
+                    background:#f8fafc;
+                    border-radius:12px;
+                    padding:18px;
+                    margin-bottom:20px;
+                "
+            >
+
+                <div class="insight-item">
+
+                    ${
+                        latest.explanation ||
+                        "AI explanation will appear after the victim completes a wellbeing check-in."
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DDI TREND -->
+
+        <div class="trend-section">
+
+            <h3 class="trend-title">
+                📈 Distress Index Trend
+            </h3>
+
+            <div class="trend-box">
+
+                <canvas id="ddiTrendChart"></canvas>
+
+            </div>
+
+        </div>
+
+
+        <!-- CHECK-IN HISTORY -->
+
+        <div class="trend-section">
+
+            <h3 class="history-title">
+                📝 Check-in History
+            </h3>
+
+            <div id="distressHistory"></div>
+
+        </div>
+
+
+        <!-- INTERVENTION ACTIONS -->
+
+        <div class="actions">
+
+            <button
+                class="action-btn btn-contact"
+                onclick="updateStatus('Contacted')"
+            >
+                📞 Contacted
+            </button>
+
+            <button
+                class="action-btn btn-counselling"
+                onclick="updateStatus('Counselling')"
+            >
+                💬 Counselling
+            </button>
+
+            <button
+                class="action-btn btn-followup"
+                onclick="updateStatus('Follow-up')"
+            >
+                📅 Follow-up
+            </button>
+
+            <button
+                class="action-btn btn-resolve"
+                onclick="updateStatus('Resolved')"
+            >
+                ✓ Resolve
+            </button>
+
+        </div>
+
+    `;
+
+    // Display history
+    displayDistressHistory(history);
+
+    // Create DDI chart
+    createDDITrendChart(history);
+
+}
+
+
+// display distress history
+
+function displayDistressHistory(history) {
+
+    const container =
+        document.getElementById("distressHistory");
+
+    if (!container) {
+        console.warn("Distress history container not found.");
+        return;
+    }
+
+    if (!history || history.length === 0) {
+        container.innerHTML = `
+            <p style="text-align:center; opacity:0.7;">
+                No distress history available.
+            </p>
+        `;
+        return;
+    }
+
+    container.innerHTML = history.map(item => {
+
+        const ddi = Number(item.distress_index);
+
+        const fear = Number(item.fear_score);
+
+        const risk = String(
+            item.risk_level || "LOW"
+        ).toUpperCase();
+
+        let riskLabel = "Low";
+
+        if (risk === "HIGH") {
+            riskLabel = "High";
+        } else if (risk === "MODERATE") {
+            riskLabel = "Medium";
+        }
+
+        return `
+            <div class="history-item">
+
+                <div>
+                    <strong>
+                        Check-in #${item.score_id || "—"}
+                    </strong>
+
+                    <div>
+                        Mood:
+                        ${getMoodLabel(item.mood_score)}
+                    </div>
+
+                    <div>
+                        Safety:
+                        ${getSafetyLabel(item.safety_score)}
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        DDI:
+                        ${
+                            Number.isFinite(ddi)
+                                ? ddi.toFixed(1)
+                                : "—"
+                        }
+                    </div>
+
+                    <div>
+                        Fear:
+                        ${
+                            Number.isFinite(fear)
+                                ? fear.toFixed(1)
+                                : "—"
+                        }
+                    </div>
+
+                    <div>
+                        Risk:
+                        ${riskLabel}
+                    </div>
+                </div>
+
+            </div>
+        `;
+    }).join("");
+}
+
+// ==========================================
+// LOAD FOLLOW-UPS
+// ==========================================
+
+async function loadFollowups() {
+
+    const token = localStorage.getItem("pawsToken");
+
+    if (!token) {
+        console.warn("No counsellor token found.");
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            "/api/counsellor/followups",
+            {
+                method: "GET",
+
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
+
+        if (response.status === 401) {
+
+            localStorage.removeItem("pawsToken");
+            localStorage.removeItem("pawsUser");
+            localStorage.removeItem("pawsRole");
+
+            window.location.href = "login.html";
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.error || "Unable to load follow-ups."
+            );
+        }
+
+        console.log("Follow-ups:", data);
+
+followups = data.followups || [];
+
+displayFollowups();
+
+    } catch (error) {
+
+        console.error(
+            "Follow-up loading error:",
+            error
+        );
+    }
+}
+
+// ==========================================
+// DISPLAY FOLLOW-UPS
+// ==========================================
+
+function displayFollowups() {
+
+    const container =
+        document.getElementById(
+            "followupList"
+        );
+
+
+    if (!followups.length) {
+
+        container.innerHTML = `
+
+            <div class="loading">
+
+                🎉 No scheduled follow-ups.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    followups.forEach(
+
+        followup => {
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "followup-card";
+
+
+            card.innerHTML = `
+
+                <div class="followup-info">
+
+
+                    <div class="followup-victim">
+
+                        👤 ${followup.victim_id}
+
+                    </div>
+
+
+                    <div class="followup-date">
+
+                        📅 Follow-up scheduled:
+
+                        <strong>
+
+                            ${followup.follow_up_date}
+
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        Risk:
+
+                        <strong>
+
+                            ${followup.risk_level}
+
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="followup-actions">
+
+
+                    <span class="followup-status">
+
+                        Follow-up Pending
+
+                    </span>
+
+
+                    <button
+
+                        class="complete-followup-btn"
+
+                        onclick="completeFollowup(
+                            ${followup.alert_id}
+                        )"
+
+                    >
+
+                        ✓ Mark Completed
+
+                    </button>
+
+
+                </div>
+
+            `;
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+
+    );
+
+}
+
+// ==========================================
+// COMPLETE FOLLOW-UP
+// ==========================================
+
+async function completeFollowup(alertId) {
+
+    const token = localStorage.getItem("pawsToken");
+
+    if (!token) {
+        alert("Your session has expired. Please login again.");
+        window.location.href = "login.html";
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `/api/counsellor/alerts/${alertId}/follow-up/complete`,
+            {
+                method: "PUT",
+
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.error ||
+                "Unable to complete follow-up."
+            );
+        }
+
+        alert("Follow-up marked as completed.");
+
+        await loadFollowups();
+        await loadAlerts();
+
+    } catch (error) {
+
+        console.error(
+            "Complete follow-up error:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Unable to complete follow-up."
+        );
+    }
+}
+
+
+
+async function updateStatus(status) {
+
+    if (!selectedAlertId) {
+        alert("Please select an alert first.");
+        return;
+    }
+
+    const token = localStorage.getItem("pawsToken");
+
+    if (!token) {
+        alert("Your session has expired. Please login again.");
+        window.location.href = "login.html";
+        return;
+    }
+
+    let followUpDate = null;
+
+    // Follow-up requires a date
+    if (status === "Follow-up") {
+
+        followUpDate = prompt(
+            "Enter follow-up date and time:\n\nExample: 2026-09-15T14:30"
+        );
+
+        if (!followUpDate) {
+            return;
+        }
+    }
+
+    try {
+
+        const response = await fetch(
+            `/api/counsellor/alerts/${selectedAlertId}/status`,
+            {
+                method: "PUT",
+
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+
+                body: JSON.stringify({
+                    status: status,
+                    follow_up_date: followUpDate
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.error || "Unable to update status."
+            );
+        }
+
+        alert(`Status updated to ${status}.`);
+
+        // Save intervention record
+const selectedAlert = alerts.find(
+    alert => alert.alert_id === selectedAlertId
+);
+
+if (selectedAlert) {
+    const interventionResponse = await fetch(
+        "/api/counsellor/interventions",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                victim_id: selectedAlert.victim_id,
+                alert_id: selectedAlertId,
+                intervention_type: status,
+                notes: `Counsellor updated victim status to ${status}.`,
+                outcome: status,
+                follow_up_date:
+                    status === "Follow-up" && followUpDate
+                        ? followUpDate.split("T")[0]
+                        : null
+            })
+        }
+    );
+
+    const interventionData = await interventionResponse.json();
+
+    console.log("Intervention saved:", interventionData);
+
+    if (!interventionResponse.ok) {
+        console.error(
+            "Failed to save intervention:",
+            interventionData
+        );
+    }
+}
+
+await loadAlerts();
+await loadFollowups();
+
+    } catch (error) {
+
+        console.error("Status update error:", error);
+
+        alert(
+            error.message ||
+            "Unable to update alert status."
+        );
+    }
+}
+
+
+
+// ==========================================
+// START DASHBOARD
+// ==========================================
+
+loadAlerts();
+loadFollowups();
+
+
+</script>
+
+
+</body>
+
+</html>

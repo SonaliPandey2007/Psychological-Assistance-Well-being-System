@@ -2,3 +2,21 @@ venv/
 .env
 __pycache__/
 *.pyc
+# Environment / secrets
+.env
+*.env
+
+# Python virtual environment
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+docker exec -it paws-mysql mysql -uroot -p paws_db -e "SELECT user_id,name,email,role FROM users; SELECT victim_id,user_id,victim_code FROM victims;"
+
+

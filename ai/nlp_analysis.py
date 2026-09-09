@@ -40,7 +40,7 @@ def keyword_score(text, keywords):
             matches.append(word)
 
     # Cap the score at 100
-    score = min(len(matches) * 25, 100)
+    score = min(len(matches) * 40, 100)
 
     return score, matches
 
