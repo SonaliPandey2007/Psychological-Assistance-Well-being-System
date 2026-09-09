@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PAWS — Psychological Assistance & Well-being System</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #eef2ff, #f8fafc);
+    color: #172554;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+.box {
+    width: 100%;
+    max-width: 900px;
+    background: white;
+    border-radius: 24px;
+    padding: 45px;
+    box-shadow: 0 10px 40px #00000015;
+    text-align: center;
+}
+
+.logo {
+    font-size: 42px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.tagline {
+    color: #64748b;
+    font-size: 17px;
+    margin-bottom: 35px;
+}
+
+h2 {
+    margin-bottom: 25px;
+}
+
+.roles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.role {
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 28px 20px;
+    transition: .2s;
+}
+
+.role:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px #00000012;
+}
+
+.icon {
+    font-size: 38px;
+    margin-bottom: 12px;
+}
+
+.role h3 {
+    margin: 8px 0;
+}
+
+.role p {
+    color: #64748b;
+    font-size: 14px;
+    min-height: 40px;
+}
+
+button {
+    border: 0;
+    border-radius: 9px;
+    padding: 11px 18px;
+    background: #172554;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    opacity: .9;
+}
+
+.pitch {
+    margin-top: 35px;
+    padding: 18px;
+    background: #f1f5f9;
+    border-radius: 12px;
+    font-size: 15px;
+}
+
+.pitch strong {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.footer {
+    margin-top: 25px;
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+@media(max-width:700px) {
+    .roles {
+        grid-template-columns: 1fr;
+    }
+
+    .box {
+        padding: 30px 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="box">
+
+    <div class="logo">PAWS</div>
+
+    <div class="tagline">
+        Psychological Assistance & Well-being System
+        <br>
+        <strong>Detect distress early. Connect support sooner.</strong>
+    </div>
+
+    <h2>Select Portal</h2>
+
+    <div class="roles">
+
+        <div class="role">
+            <div class="icon">🧑‍💻</div>
+            <h3>Victim</h3>
+            <p>
+                Well-being check-ins, support and calming resources.
+            </p>
+
+            <button onclick="location.href='/victim-login'">
+                Victim Portal
+            </button>
+        </div>
+
+
+        <div class="role">
+            <div class="icon">🧠</div>
+            <h3>Counsellor</h3>
+            <p>
+                Monitor distress indicators and review priority alerts.
+            </p>
+
+            <button onclick="location.href='/counsellor-login'">
+                Counsellor Portal
+            </button>
+        </div>
+
+
+        <div class="role">
+            <div class="icon">👮</div>
+            <h3>Officer</h3>
+            <p>
+                Manage cases, victims and case progression.
+            </p>
+
+            <button onclick="location.href='/officer'">
+                Officer Portal
+            </button>
+        </div>
+
+    </div>
+
+
+    <div class="pitch">
+        <strong>PAWS doesn't just track the case.</strong>
+        It tracks the person behind the case.
+    </div>
+
+    <div class="footer">
+        AI-assisted screening • Human counsellor in the loop
+    </div>
+
+</div>
+
+</div>
+
+</body>
+</html>

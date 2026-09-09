@@ -481,36 +481,18 @@
 
         function continueAs(role) {
 
+    if (role === "victim") {
+        window.location.href = "/victim-login";
+    }
 
-            if (role === "victim") {
+    else if (role === "counselor") {
+        window.location.href = "/counsellor-login";
+    }
 
-                window.location.href =
-                    "/frontend/victim/login.html";
-
-            }
-
-
-            else if (role === "counselor") {
-
-                window.location.href =
-                    "/frontend/counsellor/login.html";
-
-            }
-
-
-            else if (role === "officer") {
-
-                /*
-                 * Naina's officer login will be
-                 * connected here.
-                 */
-
-                window.location.href =
-                    "/frontend/officer/login.html";
-
-            }
-
-        }
+    else if (role === "officer") {
+        alert("Officer portal is currently available separately.");
+    }
+}
 
     </script>
 

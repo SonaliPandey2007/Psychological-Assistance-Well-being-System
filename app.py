@@ -1,5 +1,5 @@
 from routes.victim import victim_bp
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
 from database.db import get_db_connection
 from routes.case import case_bp
@@ -20,7 +20,16 @@ app.register_blueprint(counsellor_bp)
 
 @app.route("/")
 def home():
-    return "PAWS Backend is Running 🐾"
+    return send_from_directory("frontend", "index.html")
+
+@app.route("/victim-login")
+def victim_login():
+    return send_from_directory("frontend/victim", "login.html")
+
+
+@app.route("/counsellor-login")
+def counsellor_login():
+    return send_from_directory("frontend/counsellor", "login.html")
 
 
 @app.route("/test-db")
@@ -48,6 +57,20 @@ def health():
         "system": "PAWS",
         "status": "online"
     })
+
+@app.route("/victim/dashboard")
+def victim_dashboard():
+    return send_from_directory("frontend/victim", "dashboard.html")
+
+
+@app.route("/victim/checkin")
+def victim_checkin():
+    return send_from_directory("frontend/victim", "checkin.html")
+
+
+@app.route("/counsellor/dashboard")
+def counsellor_dashboard_page():
+    return send_from_directory("frontend/counsellor", "dashboard.html")
 
 
 if __name__ == "__main__":
