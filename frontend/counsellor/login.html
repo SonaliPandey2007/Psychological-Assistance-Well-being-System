@@ -616,7 +616,7 @@
 
                     const response = await fetch(
 
-                        "http://127.0.0.1:5000/login",
+                        "http://127.0.0.1:5000/api/auth/login",
 
                         {
 
@@ -631,13 +631,11 @@
 
                             body: JSON.stringify({
 
-                                email: email,
+    email: email,
 
-                                password: password,
+    password: password
 
-                                role: "counsellor"
-
-                            })
+})
 
                         }
 

@@ -85,6 +85,7 @@ def dashboard():
         """)
 
         priority_victims = cursor.fetchall()
+        print("COUNSELLOR DASHBOARD DATA:", alerts, priority_victims)
 
         return jsonify({
             "dashboard": "COUNSELLOR",

@@ -26,20 +26,7 @@ def officer_dashboard():
     }), 200
 
 
-# =========================================================
-# COUNSELLOR AREA
-# =========================================================
 
-@protected_bp.route("/counsellor/dashboard", methods=["GET"])
-@token_required
-@role_required("COUNSELLOR")
-def counsellor_dashboard():
-
-    return jsonify({
-        "message": "Counsellor access granted",
-        "user": request.user,
-        "dashboard": "COUNSELLOR"
-    }), 200
 
 
 # =========================================================

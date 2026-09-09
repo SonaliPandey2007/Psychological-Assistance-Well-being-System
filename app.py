@@ -1,5 +1,6 @@
 from routes.victim import victim_bp
 from flask import Flask, jsonify
+from flask_cors import CORS
 from database.db import get_db_connection
 from routes.case import case_bp
 from routes.auth import auth_bp
@@ -8,6 +9,7 @@ from routes.officer import officer_bp
 from routes.counsellor import counsellor_bp
 
 app = Flask(__name__)
+CORS(app)
 app.register_blueprint(victim_bp)
 app.register_blueprint(case_bp)
 app.register_blueprint(auth_bp)
