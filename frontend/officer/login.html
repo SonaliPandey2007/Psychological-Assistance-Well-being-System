@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PAWS | Officer Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef7f5 0%,
+                    #f7f5ff 100%
+                );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #263f47;
+        }
+
+        .login-container {
+            width: 92%;
+            max-width: 430px;
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .brand h1 {
+            font-size: 48px;
+            letter-spacing: 5px;
+            color: #244b57;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .brand p {
+            font-size: 14px;
+            color: #718087;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+
+            border: 1px solid #e3ebeb;
+            border-radius: 20px;
+
+            padding: 35px 32px;
+
+            box-shadow:
+                0 15px 40px
+                rgba(45, 70, 80, 0.10);
+        }
+
+        .icon {
+            width: 70px;
+            height: 70px;
+
+            border-radius: 50%;
+
+            background: #edf7f5;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 32px;
+
+            margin: 0 auto 18px;
+        }
+
+        .login-card h2 {
+            text-align: center;
+
+            font-size: 25px;
+
+            color: #294751;
+
+            margin-bottom: 8px;
+        }
+
+        .description {
+            text-align: center;
+
+            font-size: 13px;
+
+            color: #7a898e;
+
+            line-height: 1.5;
+
+            margin-bottom: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            color: #415a62;
+
+            margin-bottom: 7px;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid #d8e2e4;
+
+            border-radius: 10px;
+
+            background: #fbfdfd;
+
+            font-size: 14px;
+
+            color: #263f47;
+
+            outline: none;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        input:focus {
+            border-color: #315c68;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(49, 92, 104, 0.10);
+        }
+
+        .login-btn {
+            width: 100%;
+
+            margin-top: 8px;
+
+            padding: 13px 15px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #315c68;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .login-btn:hover {
+            background: #244b57;
+
+            transform: translateY(-1px);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message {
+            display: none;
+
+            background: #fbe8e8;
+
+            border: 1px solid #efc5c5;
+
+            color: #963434;
+
+            border-radius: 9px;
+
+            padding: 11px 13px;
+
+            font-size: 12px;
+
+            line-height: 1.4;
+
+            margin-bottom: 17px;
+        }
+
+        .back-link {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #6e7f85;
+
+            font-size: 12px;
+
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: #315c68;
+        }
+
+        .security-note {
+            text-align: center;
+
+            margin-top: 22px;
+
+            font-size: 11px;
+
+            color: #98a4a8;
+
+            line-height: 1.5;
+        }
+
+        @media (max-width: 500px) {
+            .login-card {
+                padding: 30px 22px;
+            }
+
+            .brand h1 {
+                font-size: 42px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <!-- PAWS BRAND -->
+    <div class="brand">
+        <h1>PAWS</h1>
+
+        <p>
+            Psychological Assistance &amp;
+            Wellbeing System
+        </p>
+    </div>
+
+
+    <!-- LOGIN CARD -->
+    <div class="login-card">
+
+        <div class="icon">
+            👮
+        </div>
+
+        <h2>Officer Login</h2>
+
+        <p class="description">
+            Sign in to access case information,
+            priority alerts and officer support tools.
+        </p>
+
+
+        <!-- ERROR -->
+        <div
+            id="errorMessage"
+            class="error-message"
+        ></div>
+
+
+        <!-- LOGIN FORM -->
+        <form id="loginForm">
+
+            <div class="form-group">
+
+                <label for="email">
+                    Officer Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                    autocomplete="email"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+                    autocomplete="current-password"
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="login-btn"
+                id="loginButton"
+            >
+                Continue as Officer
+            </button>
+
+        </form>
+
+
+        <a
+            href="/"
+            class="back-link"
+        >
+            ← Back to role selection
+        </a>
+
+    </div>
+
+
+    <div class="security-note">
+        PAWS officer access is restricted to authorized personnel.
+    </div>
+
+</div>
+
+
+<script>
+
+const API_BASE = "http://127.0.0.1:5000";
+
+const loginForm = document.getElementById("loginForm");
+const loginButton = document.getElementById("loginButton");
+const errorMessage = document.getElementById("errorMessage");
+
+
+function showError(message) {
+
+    errorMessage.textContent = message;
+
+    errorMessage.style.display = "block";
+}
+
+
+function hideError() {
+
+    errorMessage.textContent = "";
+
+    errorMessage.style.display = "none";
+}
+
+
+loginForm.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    hideError();
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+
+    loginButton.disabled = true;
+
+    loginButton.textContent = "Signing in...";
+
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE}/api/auth/login`,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            }
+        );
+
+
+        const data = await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Invalid email or password."
+            );
+        }
+
+
+        if (!data.token) {
+
+            throw new Error(
+                "Login succeeded but no authentication token was received."
+            );
+        }
+
+
+        /*
+         * IMPORTANT:
+         * Store the token using the same key
+         * expected by the other PAWS dashboards.
+         */
+
+        localStorage.setItem(
+            "pawsToken",
+            data.token
+        );
+
+        localStorage.setItem(
+            "paws_token",
+            data.token
+        );
+
+
+        /*
+         * Verify that this account is actually
+         * an Officer.
+         */
+
+        const role =
+            data.user &&
+            data.user.role
+                ? data.user.role.toUpperCase()
+                : "";
+
+
+        if (role !== "OFFICER") {
+
+            localStorage.removeItem("pawsToken");
+            localStorage.removeItem("paws_token");
+
+            throw new Error(
+                "This account is not authorized for the Officer portal."
+            );
+        }
+
+
+        /*
+         * Store role for frontend use.
+         */
+
+        localStorage.setItem(
+            "paws_role",
+            "officer"
+        );
+
+
+        /*
+         * Open Officer Dashboard.
+         */
+
+        window.location.href =
+            "/officer/dashboard";
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "OFFICER LOGIN ERROR:",
+            error
+        );
+
+        showError(
+            error.message ||
+            "Unable to login. Please try again."
+        );
+
+    }
+
+    finally {
+
+        loginButton.disabled = false;
+
+        loginButton.textContent =
+            "Continue as Officer";
+    }
+
+});
+
+</script>
+
+</body>
+</html>

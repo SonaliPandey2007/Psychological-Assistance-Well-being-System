@@ -74,7 +74,7 @@ def victim_checkin():
 
 @app.route("/counsellor/dashboard")
 def counsellor_dashboard_page():
-    return send_from_directory("frontend/counsellor", "dashboard.html")
+    return send_from_directory("frontend/counsellor", "officer_dashboard.html")
 
 <<<<<<< HEAD
 @app.route("/victim/audio/<path:filename>")
