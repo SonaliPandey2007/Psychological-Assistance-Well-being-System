@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAWS Officer Dashboard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fa;
+            color: #1d2a35;
+        }
+
+        .topbar {
+            height: 74px;
+            background: #173f5f;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 34px;
+        }
+
+        .brand {
+            font-size: 25px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            opacity: 0.82;
+            margin-top: 4px;
+        }
+
+        .officer {
+            background: rgba(255,255,255,0.12);
+            padding: 10px 15px;
+            border-radius: 9px;
+            font-size: 14px;
+        }
+
+        .container {
+            width: min(1200px, 92%);
+            margin: 32px auto 50px;
+        }
+
+        .welcome h1 {
+            margin: 0 0 8px;
+            font-size: 30px;
+        }
+
+        .welcome p {
+            margin: 0 0 26px;
+            color: #6c7a88;
+            font-size: 15px;
+        }
+
+        .demo-note {
+            background: #fff8e8;
+            border: 1px solid #efd9a0;
+            color: #795f1b;
+            border-radius: 9px;
+            padding: 11px 14px;
+            font-size: 13px;
+            margin-bottom: 22px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e1e7ec;
+            border-radius: 12px;
+            padding: 21px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .card-label {
+            font-size: 13px;
+            color: #71808f;
+            margin-bottom: 12px;
+        }
+
+        .card-value {
+            font-size: 31px;
+            font-weight: 700;
+            color: #173f5f;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1.55fr 1fr;
+            gap: 22px;
+        }
+
+        .panel {
+            background: white;
+            border: 1px solid #e1e7ec;
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            margin-bottom: 22px;
+        }
+
+        .panel h2 {
+            margin: 0 0 18px;
+            font-size: 18px;
+        }
+
+        .alert {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 0;
+            border-bottom: 1px solid #edf1f4;
+        }
+
+        .alert:last-child {
+            border-bottom: none;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            min-width: 10px;
+            border-radius: 50%;
+            margin-top: 5px;
+        }
+
+        .red {
+            background: #d65a56;
+        }
+
+        .amber {
+            background: #dda33d;
+        }
+
+        .blue {
+            background: #4d7fa6;
+        }
+
+        .alert-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .alert-text {
+            font-size: 13px;
+            color: #72808d;
+            line-height: 1.45;
+        }
+
+        .case-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 14px 0;
+            border-bottom: 1px solid #edf1f4;
+        }
+
+        .case-row:last-child {
+            border-bottom: none;
+        }
+
+        .case-id {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .case-type {
+            font-size: 12px;
+            color: #778592;
+            margin-top: 4px;
+        }
+
+        .risk-pill {
+            align-self: center;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .high {
+            color: #963434;
+            background: #fbe6e6;
+        }
+
+        .moderate {
+            color: #896219;
+            background: #fff2d3;
+        }
+
+        .low {
+            color: #2f6f47;
+            background: #e5f3ea;
+        }
+
+        .footer-note {
+            margin-top: 5px;
+            font-size: 12px;
+            color: #7a8793;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 900px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar {
+                padding: 0 18px;
+            }
+
+            .officer {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div>
+        <div class="brand">PAWS</div>
+        <div class="subtitle">Officer Support & Case Dashboard</div>
+    </div>
+
+    <div class="officer">
+        Officer Portal
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="welcome">
+        <h1>Officer Dashboard</h1>
+        <p>Overview of current cases, priority signals and support follow-ups.</p>
+    </section>
+
+    <div class="demo-note">
+        Officer case overview — priority signals, recent alerts, and support follow-ups for active caseloads.
+    </div>
+
+    <section class="cards">
+
+        <div class="card">
+            <div class="card-label">Total Victims</div>
+            <div class="card-value">24</div>
+        </div>
+
+        <div class="card">
+            <div class="card-label">Total Cases</div>
+            <div class="card-value">18</div>
+        </div>
+
+        <div class="card">
+            <div class="card-label">Active Cases</div>
+            <div class="card-value">11</div>
+        </div>
+
+        <div class="card">
+            <div class="card-label">High-Priority Cases</div>
+            <div class="card-value">4</div>
+        </div>
+
+    </section>
+
+    <section class="layout">
+
+        <div class="panel">
+
+            <h2>Recent Alerts</h2>
+
+            <div class="alert">
+                <span class="dot red"></span>
+
+                <div>
+                    <div class="alert-title">
+                        CASE-2026-014 requires review
+                    </div>
+
+                    <div class="alert-text">
+                        Elevated distress indicators reported during recent check-ins.
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert">
+                <span class="dot amber"></span>
+
+                <div>
+                    <div class="alert-title">
+                        Welfare follow-up pending
+                    </div>
+
+                    <div class="alert-text">
+                        Support coordination has not yet been completed for an active case.
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert">
+                <span class="dot blue"></span>
+
+                <div>
+                    <div class="alert-title">
+                        Counsellor update received
+                    </div>
+
+                    <div class="alert-text">
+                        A new case-support update is available for officer review.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="panel">
+
+            <h2>Priority Cases</h2>
+
+            <div class="case-row">
+                <div>
+                    <div class="case-id">CASE-2026-014</div>
+                    <div class="case-type">Atrocity response</div>
+                </div>
+
+                <div class="risk-pill high">
+                    HIGH CONCERN
+                </div>
+            </div>
+
+            <div class="case-row">
+                <div>
+                    <div class="case-id">CASE-2026-011</div>
+                    <div class="case-type">Domestic violence</div>
+                </div>
+
+                <div class="risk-pill moderate">
+                    MODERATE
+                </div>
+            </div>
+
+            <div class="case-row">
+                <div>
+                    <div class="case-id">CASE-2026-009</div>
+                    <div class="case-type">Assault</div>
+                </div>
+
+                <div class="risk-pill low">
+                    LOW
+                </div>
+            </div>
+
+            <div class="footer-note">
+                Risk indicators support officer prioritisation and human review; they are not a diagnosis.
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

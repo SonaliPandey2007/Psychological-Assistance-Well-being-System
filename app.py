@@ -72,6 +72,9 @@ def victim_checkin():
 def counsellor_dashboard_page():
     return send_from_directory("frontend/counsellor", "dashboard.html")
 
+@app.route("/officer-dashboard")
+def officer_dashboard():
+    return send_from_directory("templates", "officer_dashboard.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
