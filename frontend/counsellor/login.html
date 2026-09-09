@@ -669,20 +669,20 @@
                     message.textContent =
                         "✓ Login successful. Opening dashboard...";
 
+                    
+
 
                     /*
                      * Store token if the backend
                      * returns one.
                      */
 
-                    if (data.token) {
+                    if (!data.token) {
+    throw new Error("Login succeeded but no authentication token was received.");
+}
 
-                        localStorage.setItem(
-                            "paws_token",
-                            data.token
-                        );
-
-                    }
+localStorage.setItem("pawsToken", data.token);
+localStorage.setItem("paws_token", data.token);
 
 
                     localStorage.setItem(

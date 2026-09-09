@@ -435,3 +435,114 @@ def get_interventions(victim_id):
 
         if connection and connection.is_connected():
             connection.close()           
+
+@counsellor_bp.route("/followups", methods=["GET"])
+@token_required
+@role_required("COUNSELLOR")
+def get_followups():
+    connection = None
+    cursor = None
+
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+
+        cursor.execute("""
+            SELECT
+                i.intervention_id,
+                i.victim_id,
+                v.victim_code,
+                i.alert_id,
+                i.intervention_type,
+                i.notes,
+                i.outcome,
+                i.follow_up_date,
+                i.follow_up_status,
+                i.created_at,
+                d.distress_index,
+                d.risk_level
+            FROM interventions i
+            JOIN victims v
+                ON i.victim_id = v.victim_id
+            LEFT JOIN distress_scores d
+                ON d.score_id = (
+                    SELECT MAX(d2.score_id)
+                    FROM distress_scores d2
+                    WHERE d2.victim_id = i.victim_id
+                )
+            WHERE i.follow_up_date IS NOT NULL
+              AND i.follow_up_status = 'SCHEDULED'
+            ORDER BY i.follow_up_date ASC
+        """)
+
+        followups = cursor.fetchall()
+
+        return jsonify({
+            "followups": followups,
+            "count": len(followups)
+        }), 200
+
+    except Exception as error:
+        print("FOLLOWUPS ERROR:", error)
+        return jsonify({
+            "error": "Could not load follow-ups"
+        }), 500
+
+    finally:
+        if cursor:
+            cursor.close()
+
+        if connection and connection.is_connected():
+            connection.close()
+
+
+@counsellor_bp.route(
+    "/followups/<int:intervention_id>/complete",
+    methods=["PUT"]
+)
+@token_required
+@role_required("COUNSELLOR")
+def complete_followup(intervention_id):
+    connection = None
+    cursor = None
+
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            UPDATE interventions
+            SET follow_up_status = 'COMPLETED'
+            WHERE intervention_id = %s
+              AND follow_up_status = 'SCHEDULED'
+        """, (intervention_id,))
+
+        if cursor.rowcount == 0:
+            return jsonify({
+                "error": "Follow-up not found or already completed"
+            }), 404
+
+        connection.commit()
+
+        return jsonify({
+            "message": "Follow-up marked as completed",
+            "intervention_id": intervention_id,
+            "follow_up_status": "COMPLETED"
+        }), 200
+
+    except Exception as error:
+        if connection and connection.is_connected():
+            connection.rollback()
+
+        print("COMPLETE FOLLOWUP ERROR:", error)
+
+        return jsonify({
+            "error": "Could not complete follow-up"
+        }), 500
+
+    finally:
+        if cursor:
+            cursor.close()
+
+        if connection and connection.is_connected():
+            connection.close()

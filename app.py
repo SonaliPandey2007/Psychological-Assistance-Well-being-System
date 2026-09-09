@@ -31,6 +31,10 @@ def victim_login():
 def counsellor_login():
     return send_from_directory("frontend/counsellor", "login.html")
 
+@app.route("/officer-login")
+def officer_login():
+    return send_from_directory("frontend/officer", "login.html")
+
 
 @app.route("/test-db")
 def test_db():
@@ -72,6 +76,7 @@ def victim_checkin():
 def counsellor_dashboard_page():
     return send_from_directory("frontend/counsellor", "dashboard.html")
 
+<<<<<<< HEAD
 @app.route("/victim/audio/<path:filename>")
 def victim_audio(filename):
     return send_from_directory(
@@ -80,8 +85,13 @@ def victim_audio(filename):
     )
 
 @app.route("/officer-dashboard")
+=======
+
+@app.route("/officer/dashboard")
+>>>>>>> 3b7c167 (Completed the counsellor page follow-up and ui)
 def officer_dashboard():
-    return send_from_directory("templates", "officer_dashboard.html")
+    return send_from_directory("frontend/officer", "dashboard.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
