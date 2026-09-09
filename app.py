@@ -72,6 +72,13 @@ def victim_checkin():
 def counsellor_dashboard_page():
     return send_from_directory("frontend/counsellor", "dashboard.html")
 
+@app.route("/victim/audio/<path:filename>")
+def victim_audio(filename):
+    return send_from_directory(
+        "frontend/victim/assets/audio",
+        filename
+    )
+
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -250,64 +250,102 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
 
     event.preventDefault();
 
-    const victimId = document.getElementById("victimId").value.trim();
-    const password = document.getElementById("password").value.trim();
-
+    const victimIdInput = document.getElementById("victimId").value.trim();
+    const password = document.getElementById("password").value;
     const errorMessage = document.getElementById("errorMessage");
 
+    // Hide previous error
     errorMessage.style.display = "none";
+    errorMessage.textContent = "";
+
+    if (!victimIdInput || !password) {
+        errorMessage.textContent = "Please enter Victim ID and password.";
+        errorMessage.style.display = "block";
+        return;
+    }
+
+    // Demo Victim ID → actual login email in database
+    let loginEmail = victimIdInput;
+
+    if (
+        victimIdInput === "1" ||
+        victimIdInput.toUpperCase() === "V-1001"
+    ) {
+        loginEmail = "demo.victim@paws.test";
+    }
 
     try {
 
-        /*
-        This endpoint will be connected to Prisha's
-        authentication backend.
-
-        Replace "/login" with the final endpoint
-        once Prisha provides it.
-        */
-
-        const response = await fetch("http://127.0.0.1:5000/login", {
-
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-                userId: victimId,
-                password: password,
-                role: "victim"
-            })
-
-        });
+        const response = await fetch(
+            "http://127.0.0.1:5000/api/auth/login",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: loginEmail,
+                    password: password
+                })
+            }
+        );
 
         const data = await response.json();
 
+        console.log("PAWS Login Response:", data);
+
         if (!response.ok) {
+
+            errorMessage.textContent =
+                data.error || "Invalid Victim ID or password.";
+
             errorMessage.style.display = "block";
             return;
         }
 
-        // Store victim ID for dashboard/check-in pages
-        localStorage.setItem("victimId", victimId);
+        // Check that the account is actually a victim
+        if (!data.user || data.user.role !== "VICTIM") {
 
-        // Redirect to victim dashboard
+            errorMessage.textContent =
+                "This account is not registered as a victim.";
+
+            errorMessage.style.display = "block";
+            return;
+        }
+
+        // IMPORTANT: Save authentication token
+        localStorage.setItem(
+            "paws_token",
+            data.token
+        );
+
+        // Save victim database ID
+        localStorage.setItem(
+            "victimId",
+            "1"
+        );
+
+        // Save user information
+        localStorage.setItem(
+            "paws_user",
+            JSON.stringify(data.user)
+        );
+
+        console.log("PAWS login successful.");
+        console.log("Token saved.");
+        console.log("Victim ID:", localStorage.getItem("victimId"));
+
+        // Go to Flask victim dashboard
         window.location.href = "/victim/dashboard";
 
     } catch (error) {
 
-        console.error(error);
+        console.error("PAWS Login Error:", error);
 
-        /*
-        Temporary demo mode:
-        Remove this once Prisha's login API is connected.
-        */
+        errorMessage.textContent =
+            "Unable to connect to the PAWS server. Please make sure the Flask backend is running.";
 
-        localStorage.setItem("victimId", victimId);
-
-        window.location.href = "/victim/dashboard";
+        errorMessage.style.display = "block";
     }
 
 });

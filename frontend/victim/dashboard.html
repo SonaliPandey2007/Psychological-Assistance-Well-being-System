@@ -1143,9 +1143,14 @@
                 </p>
 
 
-                <div class="trend-box">
+                <div class="trend-box" style="min-height:280px; position:relative;">
 
     <canvas id="trendChart"></canvas>
+
+    <div id="trendFallback"
+         style="display:none; padding:25px; text-align:center;">
+        Loading your well-being history...
+    </div>
 
 </div>
 
@@ -1512,7 +1517,7 @@
         );
 
         window.location.href =
-            "login.html";
+            "/victim-login";
 
     }
 
@@ -1766,264 +1771,156 @@
 ========================================== */
 
 async function loadWellbeingTrend() {
+    const canvas = document.getElementById("trendChart");
+    const fallback = document.getElementById("trendFallback");
 
     try {
+        if (!canvas) {
+            console.error("trendChart canvas not found");
+            return;
+        }
 
         const response = await fetch(
-
-            "http://127.0.0.1:5000/victim/" +
-            victimId +
-            "/checkins"
-
+            "/api/victims/" + encodeURIComponent(victimId) + "/history",
+            {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json"
+                }
+            }
         );
-
 
         const data = await response.json();
 
-
-        console.log(
-            "Check-in History:",
-            data
-        );
-
-
-        const checkins = data.checkins;
-
-
-        /* --------------------------------------
-           CHECK IF CHECK-INS EXIST
-        -------------------------------------- */
-
-        if (!checkins || checkins.length === 0) {
-
-            return;
-
-        }
-
-
-        /* --------------------------------------
-           LABELS
-        -------------------------------------- */
-
-        const labels = checkins.map(
-
-            (checkin, index) =>
-
-                "Check-in " +
-                (index + 1)
-
-        );
-
-
-        /* --------------------------------------
-           DDI SCORES
-        -------------------------------------- */
-
-        const ddiScores = checkins.map(
-
-            checkin =>
-                checkin.ddi_score
-
-        );
-
-
-        /* --------------------------------------
-           DESTROY OLD CHART
-        -------------------------------------- */
-
-        if (trendChart) {
-
-            trendChart.destroy();
-
-        }
-
-
-        /* --------------------------------------
-           CREATE CHART
-        -------------------------------------- */
-
-        const chartCanvas =
-
-            document.getElementById(
-                "trendChart"
+        if (!response.ok) {
+            throw new Error(
+                data.error || "History request failed"
             );
-
-
-        trendChart = new Chart(
-
-            chartCanvas,
-
-            {
-
-                type: "line",
-
-
-                data: {
-
-                    labels: labels,
-
-
-                    datasets: [
-
-                        {
-
-                            label:
-                                "DDI Score",
-
-
-                            data:
-                                ddiScores,
-
-
-                            borderColor:
-                                "#365f8b",
-
-
-                            backgroundColor:
-                                "rgba(54, 95, 139, 0.15)",
-
-
-                            borderWidth:
-                                3,
-
-
-                            tension:
-                                0.4,
-
-
-                            fill:
-                                true,
-
-
-                            pointRadius:
-                                5,
-
-
-                            pointHoverRadius:
-                                7
-
-                        }
-
-                    ]
-
-                },
-
-
-                options: {
-
-                    responsive:
-                        true,
-
-
-                    maintainAspectRatio:
-                        false,
-
-
-                    plugins: {
-
-                        legend: {
-
-                            display:
-                                false
-
-                        },
-
-
-                        tooltip: {
-
-                            callbacks: {
-
-                                label:
-                                    function(context) {
-
-                                        return (
-                                            "DDI Score: " +
-
-                                            context.parsed.y
-
-                                        );
-
-                                    }
-
-                            }
-
-                        }
-
-                    },
-
-
-                    scales: {
-
-                        y: {
-
-                            beginAtZero:
-                                true,
-
-
-                            max:
-                                100,
-
-
-                            ticks: {
-
-                                stepSize:
-                                    20
-
-                            },
-
-
-                            title: {
-
-                                display:
-                                    true,
-
-
-                                text:
-                                    "DDI Score"
-
-                            }
-
-                        },
-
-
-                        x: {
-
-                            title: {
-
-                                display:
-                                    true,
-
-
-                                text:
-                                    "Check-in History"
-
-                            }
-
-                        }
-
-                    }
-
-                }
-
+        }
+
+        const history = Array.isArray(data.history)
+            ? data.history
+            : [];
+
+        if (history.length === 0) {
+            canvas.style.display = "none";
+
+            if (fallback) {
+                fallback.style.display = "block";
+                fallback.textContent =
+                    "Complete a check-in to see your well-being trend.";
             }
 
+            return;
+        }
+
+        if (typeof Chart === "undefined") {
+            console.error("Chart.js is not loaded");
+
+            if (fallback) {
+                fallback.style.display = "block";
+                fallback.textContent =
+                    "Well-being history is available, but the chart could not load.";
+            }
+
+            return;
+        }
+
+        const sortedHistory = history.slice().sort(
+            (a, b) =>
+                new Date(a.created_at) -
+                new Date(b.created_at)
         );
 
-    }
+        const labels = sortedHistory.map((item, index) => {
+            const date = new Date(item.created_at);
 
+            if (isNaN(date.getTime())) {
+                return "Check-in " + (index + 1);
+            }
 
-    catch (error) {
+            return date.toLocaleDateString("en-IN", {
+                day: "2-digit",
+                month: "short"
+            });
+        });
 
+        const scores = sortedHistory.map(item => {
+            const value = Number(item.distress_index);
+            return isNaN(value) ? 0 : value;
+        });
+
+        if (trendChart) {
+            trendChart.destroy();
+            trendChart = null;
+        }
+
+        if (fallback) {
+            fallback.style.display = "none";
+        }
+
+        canvas.style.display = "block";
+
+        trendChart = new Chart(
+            canvas.getContext("2d"),
+            {
+                type: "line",
+
+                data: {
+                    labels: labels,
+
+                    datasets: [{
+                        label: "Distress Index",
+                        data: scores,
+
+                        borderColor: "#365f8b",
+                        backgroundColor: "rgba(54,95,139,0.12)",
+
+                        borderWidth: 3,
+                        tension: 0.35,
+                        fill: true,
+
+                        pointRadius: 5,
+                        pointHoverRadius: 7
+                    }]
+                },
+
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+
+                    scales: {
+                        y: {
+                            min: 0,
+                            max: 100,
+
+                            ticks: {
+                                stepSize: 20
+                            }
+                        }
+                    },
+
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        );
+
+    } catch (error) {
         console.error(
-
-            "Error loading trend:",
-
+            "WELL-BEING TREND ERROR:",
             error
-
         );
 
+        if (fallback) {
+            fallback.style.display = "block";
+            fallback.textContent =
+                "Unable to load your well-being trend right now.";
+        }
     }
-
 }
 
 
@@ -2035,7 +1932,7 @@ async function loadWellbeingTrend() {
     function startCheckin() {
 
         window.location.href =
-            "checkin.html";
+            "/victim/checkin";
 
     }
 
@@ -2046,116 +1943,62 @@ async function loadWellbeingTrend() {
 ========================================== */
 
 async function needHelp() {
-
-    const confirmation = confirm(
-
+    const confirmation = window.confirm(
         "Are you sure you need immediate support?\n\n" +
-
         "Your request will be sent to the counsellor."
-
     );
 
+    if (!confirmation) return;
 
-    if (!confirmation) {
+    const token =
+        localStorage.getItem("paws_token") ||
+        localStorage.getItem("token") ||
+        localStorage.getItem("jwtToken") ||
+        localStorage.getItem("access_token");
 
+    if (!token) {
+        window.alert(
+            "Your login session is missing.\n\n" +
+            "Please log in again using the PAWS link."
+        );
+
+        window.location.href = "/victim-login";
         return;
-
     }
-
 
     try {
+        const response = await fetch("/api/victims/help", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                victim_id: Number(victimId)
+            })
+        });
 
+        const data = await response.json();
 
-        const response = await fetch(
-
-            "http://127.0.0.1:5000/victim/" +
-            victimId +
-            "/help",
-
-            {
-
-                method: "POST",
-
-                headers: {
-
-                    "Content-Type":
-                        "application/json"
-
-                }
-
-            }
-
-        );
-
-
-        const result =
-            await response.json();
-
-
-        console.log(
-            "Help Request:",
-            result
-        );
-
-
-        /* --------------------------------------
-           SUCCESS
-        -------------------------------------- */
-
-        if (response.ok) {
-
-            alert(
-
-                "🚨 Your help request has been sent.\n\n" +
-
-                "A counsellor has been notified.\n\n" +
-
-                "Alert ID: " +
-                result.alert_id
-
+        if (!response.ok) {
+            throw new Error(
+                data.error || "Unable to send help request."
             );
-
         }
 
-
-        /* --------------------------------------
-           ERROR
-        -------------------------------------- */
-
-        else {
-
-            alert(
-
-                result.error ||
-                "Unable to send your help request."
-
-            );
-
-        }
-
-
-    }
-
-
-    catch (error) {
-
-
-        console.error(
-            "Help request error:",
-            error
+        window.alert(
+            "Your request has been sent successfully.\n\n" +
+            "A counsellor has been notified."
         );
 
+    } catch (error) {
+        console.error("HELP REQUEST ERROR:", error);
 
-        alert(
-
-            "Unable to connect to the PAWS server.\n\n" +
-
-            "Please make sure the backend is running."
-
+        window.alert(
+            "We could not send the request right now.\n\n" +
+            "Please try again."
         );
-
     }
-
 }
 
 /* ==========================================
@@ -2695,7 +2538,7 @@ function playCalmingSound(type) {
 
     if (type === "rain") {
 
-        audioFile = "assets/audio/rain.mp3";
+        audioFile = "/victim/audio/rain.mp3";
 
         soundName = "Rain";
 
@@ -2704,7 +2547,7 @@ function playCalmingSound(type) {
 
     else if (type === "ocean") {
 
-        audioFile = "assets/audio/ocean.mp3";
+        audioFile = "/victim/audio/ocean.mp3";
 
         soundName = "Ocean Waves";
 
@@ -2713,7 +2556,7 @@ function playCalmingSound(type) {
 
     else if (type === "forest") {
 
-        audioFile = "assets/audio/forest.mp3";
+        audioFile = "/victim/audio/forest.mp3";
 
         soundName = "Forest";
 
@@ -3005,7 +2848,7 @@ function createBubble() {
 
 
         window.location.href =
-            "login.html";
+            "/victim-login";
 
     }
 
