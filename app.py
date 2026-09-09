@@ -79,6 +79,9 @@ def victim_audio(filename):
         filename
     )
 
+@app.route("/officer-dashboard")
+def officer_dashboard():
+    return send_from_directory("templates", "officer_dashboard.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
