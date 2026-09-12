@@ -1,5 +1,5 @@
 from routes.victim import victim_bp
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, send_from_directory, request, redirect, session, url_for
 from flask_cors import CORS
 from database.db import get_db_connection
 from routes.case import case_bp
@@ -74,9 +74,11 @@ def victim_checkin():
 
 @app.route("/counsellor/dashboard")
 def counsellor_dashboard_page():
-    return send_from_directory("frontend/counsellor", "officer_dashboard.html")
+    return send_from_directory(
+        "frontend/counsellor",
+        "dashboard.html"
+    )
 
-<<<<<<< HEAD
 @app.route("/victim/audio/<path:filename>")
 def victim_audio(filename):
     return send_from_directory(
@@ -84,13 +86,13 @@ def victim_audio(filename):
         filename
     )
 
-@app.route("/officer-dashboard")
-=======
 
 @app.route("/officer/dashboard")
->>>>>>> 3b7c167 (Completed the counsellor page follow-up and ui)
 def officer_dashboard():
-    return send_from_directory("frontend/officer", "dashboard.html")
+    return send_from_directory(
+        "frontend/officer",
+        "officer_dashboard.html"
+    )
 
 
 if __name__ == "__main__":

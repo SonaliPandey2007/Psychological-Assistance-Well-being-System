@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>PAWS Officer Dashboard</title>
 
     <style>
@@ -10,233 +11,497 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --navy: #173f5f;
+            --navy-dark: #102f48;
+            --blue: #2f80ed;
+            --background: #f5f7fb;
+            --card: #ffffff;
+            --text: #1d2a35;
+            --muted: #7b8794;
+            --border: #e5eaf0;
+            --danger: #d9534f;
+            --warning: #d99a2b;
+            --success: #3d9562;
+        }
+
         body {
             margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f7fa;
-            color: #1d2a35;
+            font-family: Inter, Arial, Helvetica, sans-serif;
+            background: var(--background);
+            color: var(--text);
+        }
+
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+
+        .sidebar {
+            width: 245px;
+            background: var(--navy);
+            color: white;
+            padding: 28px 18px;
+            flex-shrink: 0;
+        }
+
+        .brand {
+            padding: 0 14px 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .brand-name {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .brand-subtitle {
+            margin-top: 5px;
+            font-size: 12px;
+            line-height: 1.5;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .nav-title {
+            margin: 30px 14px 12px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 14px;
+            margin-bottom: 6px;
+            border-radius: 9px;
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.2s ease;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(255,255,255,0.14);
+            color: white;
+        }
+
+        .nav-icon {
+            width: 20px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .sidebar-footer {
+            margin-top: 50px;
+            padding: 14px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.08);
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.5;
+        }
+
+        /* Main area */
+
+        .main {
+            flex: 1;
+            min-width: 0;
         }
 
         .topbar {
-            height: 74px;
-            background: #173f5f;
-            color: white;
+            height: 78px;
+            background: white;
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 34px;
         }
 
-        .brand {
-            font-size: 25px;
+        .page-heading {
+            font-size: 21px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .page-subtitle {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 5px;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .profile-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e7eef6;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: 700;
         }
 
-        .subtitle {
+        .profile-name {
             font-size: 13px;
-            opacity: 0.82;
-            margin-top: 4px;
+            font-weight: 700;
         }
 
-        .officer {
-            background: rgba(255,255,255,0.12);
-            padding: 10px 15px;
-            border-radius: 9px;
-            font-size: 14px;
+        .profile-role {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 3px;
         }
 
-        .container {
-            width: min(1200px, 92%);
-            margin: 32px auto 50px;
+        .content {
+            padding: 32px;
+            max-width: 1500px;
+        }
+
+        .welcome {
+            margin-bottom: 25px;
         }
 
         .welcome h1 {
-            margin: 0 0 8px;
-            font-size: 30px;
+            margin: 0;
+            font-size: 28px;
+            font-weight: 750;
         }
 
         .welcome p {
-            margin: 0 0 26px;
-            color: #6c7a88;
-            font-size: 15px;
+            margin: 8px 0 0;
+            color: var(--muted);
+            font-size: 14px;
         }
 
         .demo-note {
             background: #fff8e8;
-            border: 1px solid #efd9a0;
-            color: #795f1b;
-            border-radius: 9px;
-            padding: 11px 14px;
+            border: 1px solid #f0dca9;
+            color: #80631c;
+            padding: 13px 16px;
+            border-radius: 10px;
             font-size: 13px;
-            margin-bottom: 22px;
+            margin-bottom: 25px;
         }
 
-        .cards {
+        /* Statistics */
+
+        .stats {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
-            margin-bottom: 24px;
+            gap: 20px;
+            margin-bottom: 25px;
         }
 
-        .card {
-            background: white;
-            border: 1px solid #e1e7ec;
-            border-radius: 12px;
-            padding: 21px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 3px 12px rgba(23,63,95,0.04);
         }
 
-        .card-label {
+        .stat-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .stat-label {
             font-size: 13px;
-            color: #71808f;
-            margin-bottom: 12px;
+            color: var(--muted);
+            font-weight: 600;
         }
 
-        .card-value {
-            font-size: 31px;
-            font-weight: 700;
-            color: #173f5f;
+        .stat-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
         }
 
-        .layout {
+        .icon-blue {
+            background: #e8f1ff;
+            color: #3479d4;
+        }
+
+        .icon-purple {
+            background: #f0eaff;
+            color: #7656c8;
+        }
+
+        .icon-green {
+            background: #e7f5ed;
+            color: #3d9562;
+        }
+
+        .icon-red {
+            background: #fdeaea;
+            color: #d9534f;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-top: 20px;
+        }
+
+        .stat-footer {
+            margin-top: 8px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        /* Panels */
+
+        .dashboard-grid {
             display: grid;
-            grid-template-columns: 1.55fr 1fr;
-            gap: 22px;
+            grid-template-columns: 1.35fr 1fr;
+            gap: 24px;
         }
 
         .panel {
             background: white;
-            border: 1px solid #e1e7ec;
-            border-radius: 12px;
-            padding: 22px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            margin-bottom: 22px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 3px 12px rgba(23,63,95,0.04);
+            margin-bottom: 24px;
         }
 
-        .panel h2 {
-            margin: 0 0 18px;
-            font-size: 18px;
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 18px;
         }
+
+        .panel-title {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 750;
+        }
+
+        .panel-link {
+            color: var(--blue);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .panel-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Alerts */
 
         .alert {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
-            padding: 14px 0;
-            border-bottom: 1px solid #edf1f4;
+            gap: 13px;
+            padding: 16px 0;
+            border-bottom: 1px solid #edf1f5;
         }
 
         .alert:last-child {
             border-bottom: none;
+            padding-bottom: 0;
         }
 
-        .dot {
+        .alert:first-child {
+            padding-top: 0;
+        }
+
+        .alert-dot {
             width: 10px;
             height: 10px;
-            min-width: 10px;
             border-radius: 50%;
             margin-top: 5px;
+            flex-shrink: 0;
         }
 
-        .red {
-            background: #d65a56;
+        .dot-red {
+            background: var(--danger);
         }
 
-        .amber {
-            background: #dda33d;
+        .dot-yellow {
+            background: var(--warning);
         }
 
-        .blue {
+        .dot-blue {
             background: #4d7fa6;
         }
 
         .alert-title {
             font-size: 14px;
             font-weight: 700;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
 
-        .alert-text {
+        .alert-description {
             font-size: 13px;
-            color: #72808d;
-            line-height: 1.45;
+            color: var(--muted);
+            line-height: 1.5;
         }
 
-        .case-row {
+        .alert-time {
+            margin-top: 6px;
+            color: #9aa5af;
+            font-size: 11px;
+        }
+
+        /* Cases */
+
+        .case {
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            gap: 12px;
-            padding: 14px 0;
-            border-bottom: 1px solid #edf1f4;
+            gap: 15px;
+            padding: 16px 0;
+            border-bottom: 1px solid #edf1f5;
         }
 
-        .case-row:last-child {
+        .case:first-child {
+            padding-top: 0;
+        }
+
+        .case:last-child {
             border-bottom: none;
+            padding-bottom: 0;
         }
 
         .case-id {
             font-size: 14px;
-            font-weight: 700;
+            font-weight: 750;
+            color: var(--navy);
         }
 
         .case-type {
+            margin-top: 5px;
             font-size: 12px;
-            color: #778592;
-            margin-top: 4px;
+            color: var(--muted);
         }
 
-        .risk-pill {
-            align-self: center;
-            padding: 6px 10px;
+        .risk {
+            padding: 7px 11px;
             border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
+            font-size: 10px;
+            font-weight: 800;
             white-space: nowrap;
         }
 
-        .high {
-            color: #963434;
-            background: #fbe6e6;
+        .risk-high {
+            color: #a33c3c;
+            background: #fde8e8;
         }
 
-        .moderate {
-            color: #896219;
-            background: #fff2d3;
+        .risk-moderate {
+            color: #916b20;
+            background: #fff2d2;
         }
 
-        .low {
-            color: #2f6f47;
-            background: #e5f3ea;
+        .risk-low {
+            color: #31734d;
+            background: #e5f4eb;
         }
 
         .footer-note {
-            margin-top: 5px;
+            margin-top: 22px;
+            padding-top: 16px;
+            border-top: 1px solid #edf1f5;
             font-size: 12px;
-            color: #7a8793;
-            line-height: 1.5;
+            color: var(--muted);
+            line-height: 1.6;
         }
 
-        @media (max-width: 900px) {
-            .cards {
+        /* Responsive */
+
+        @media (max-width: 1100px) {
+            .stats {
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .layout {
+            .dashboard-grid {
                 grid-template-columns: 1fr;
             }
         }
 
-        @media (max-width: 600px) {
-            .cards {
-                grid-template-columns: 1fr;
+        @media (max-width: 750px) {
+            .sidebar {
+                width: 75px;
+                padding: 20px 10px;
+            }
+
+            .brand {
+                padding: 0 0 25px;
+                text-align: center;
+            }
+
+            .brand-name {
+                font-size: 22px;
+            }
+
+            .brand-subtitle,
+            .nav-title,
+            .nav-label,
+            .sidebar-footer {
+                display: none;
+            }
+
+            .nav-item {
+                justify-content: center;
+                padding: 14px 8px;
             }
 
             .topbar {
-                padding: 0 18px;
+                padding: 0 20px;
             }
 
-            .officer {
+            .profile-details {
                 display: none;
+            }
+
+            .content {
+                padding: 24px 18px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome h1 {
+                font-size: 24px;
+            }
+
+            .panel {
+                padding: 19px;
+            }
+
+            .case {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 10px;
             }
         }
     </style>
@@ -244,149 +509,259 @@
 
 <body>
 
-<header class="topbar">
-    <div>
-        <div class="brand">PAWS</div>
-        <div class="subtitle">Officer Support & Case Dashboard</div>
-    </div>
+<div class="app">
 
-    <div class="officer">
-        Officer Portal
-    </div>
-</header>
+    <aside class="sidebar">
 
-<main class="container">
+        <div class="brand">
+            <div class="brand-name">PAWS</div>
+            <div class="brand-subtitle">
+                Protection, Assistance<br>
+                & Welfare Support
+            </div>
+        </div>
 
-    <section class="welcome">
-        <h1>Officer Dashboard</h1>
-        <p>Overview of current cases, priority signals and support follow-ups.</p>
+        <div class="nav-title">Main Menu</div>
+
+        <a href="/officer/dashboard" class="nav-item active">
+            <span class="nav-icon">▦</span>
+            <span class="nav-label">Dashboard</span>
+        </a>
+
+        <a href="#" class="nav-item">
+            <span class="nav-icon">◫</span>
+            <span class="nav-label">All Cases</span>
+        </a>
+
+        <a href="#" class="nav-item">
+            <span class="nav-icon">⚠</span>
+            <span class="nav-label">Priority Cases</span>
+        </a>
+
+        <a href="#" class="nav-item">
+            <span class="nav-icon">◉</span>
+            <span class="nav-label">Alerts</span>
+        </a>
+
+        <a href="#" class="nav-item">
+            <span class="nav-icon">♧</span>
+            <span class="nav-label">Support Updates</span>
+        </a>
+
+        <div class="nav-title">Account</div>
+
+        <a href="#" class="nav-item">
+            <span class="nav-icon">⚙</span>
+            <span class="nav-label">Settings</span>
+        </a>
+
+        <a href="/" class="nav-item">
+            <span class="nav-icon">↪</span>
+            <span class="nav-label">Logout</span>
+        </a>
+
+        <div class="sidebar-footer">
+            Officer portal<br>
+            Secure case monitoring
+        </div>
+
+    </aside>
+
+    <section class="main">
+
+        <header class="topbar">
+
+            <div>
+                <h2 class="page-heading">Officer Dashboard</h2>
+                <div class="page-subtitle">
+                    Monitor cases, alerts and support follow-ups
+                </div>
+            </div>
+
+            <div class="profile">
+                <div class="profile-avatar">O</div>
+
+                <div class="profile-details">
+                    <div class="profile-name">Officer Portal</div>
+                    <div class="profile-role">Authorized Officer</div>
+                </div>
+            </div>
+
+        </header>
+
+        <main class="content">
+
+            <section class="welcome">
+                <h1>Welcome back, Officer</h1>
+                <p>Here is an overview of current cases and priority support signals.</p>
+            </section>
+
+            <div class="demo-note">
+                Demo overview: priority signals, recent alerts and support follow-ups for active caseloads.
+            </div>
+
+            <section class="stats">
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <div class="stat-label">Total Victims</div>
+                        <div class="stat-icon icon-blue">◉</div>
+                    </div>
+
+                    <div class="stat-value">24</div>
+                    <div class="stat-footer">Registered in the system</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <div class="stat-label">Total Cases</div>
+                        <div class="stat-icon icon-purple">▦</div>
+                    </div>
+
+                    <div class="stat-value">18</div>
+                    <div class="stat-footer">Cases recorded</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <div class="stat-label">Active Cases</div>
+                        <div class="stat-icon icon-green">↻</div>
+                    </div>
+
+                    <div class="stat-value">11</div>
+                    <div class="stat-footer">Currently under follow-up</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <div class="stat-label">High-Priority Cases</div>
+                        <div class="stat-icon icon-red">⚠</div>
+                    </div>
+
+                    <div class="stat-value">4</div>
+                    <div class="stat-footer">Require immediate review</div>
+                </div>
+
+            </section>
+
+            <section class="dashboard-grid">
+
+                <div class="panel">
+
+                    <div class="panel-header">
+                        <h2 class="panel-title">Recent Alerts</h2>
+                        <a href="#" class="panel-link">View all</a>
+                    </div>
+
+                    <div class="alert">
+                        <span class="alert-dot dot-red"></span>
+
+                        <div>
+                            <div class="alert-title">
+                                CASE-2026-014 requires review
+                            </div>
+
+                            <div class="alert-description">
+                                Elevated distress indicators were reported during recent check-ins.
+                            </div>
+
+                            <div class="alert-time">
+                                High-priority alert
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert">
+                        <span class="alert-dot dot-yellow"></span>
+
+                        <div>
+                            <div class="alert-title">
+                                Welfare follow-up pending
+                            </div>
+
+                            <div class="alert-description">
+                                Support coordination has not yet been completed for an active case.
+                            </div>
+
+                            <div class="alert-time">
+                                Follow-up required
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert">
+                        <span class="alert-dot dot-blue"></span>
+
+                        <div>
+                            <div class="alert-title">
+                                Counsellor update received
+                            </div>
+
+                            <div class="alert-description">
+                                A new case-support update is available for officer review.
+                            </div>
+
+                            <div class="alert-time">
+                                New support update
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="panel">
+
+                    <div class="panel-header">
+                        <h2 class="panel-title">Priority Cases</h2>
+                        <a href="#" class="panel-link">View all</a>
+                    </div>
+
+                    <div class="case">
+                        <div>
+                            <div class="case-id">CASE-2026-014</div>
+                            <div class="case-type">Atrocity response</div>
+                        </div>
+
+                        <div class="risk risk-high">
+                            HIGH CONCERN
+                        </div>
+                    </div>
+
+                    <div class="case">
+                        <div>
+                            <div class="case-id">CASE-2026-011</div>
+                            <div class="case-type">Domestic violence</div>
+                        </div>
+
+                        <div class="risk risk-moderate">
+                            MODERATE
+                        </div>
+                    </div>
+
+                    <div class="case">
+                        <div>
+                            <div class="case-id">CASE-2026-009</div>
+                            <div class="case-type">Assault</div>
+                        </div>
+
+                        <div class="risk risk-low">
+                            LOW
+                        </div>
+                    </div>
+
+                    <div class="footer-note">
+                        Risk indicators support officer prioritisation and human review. They are not a diagnosis.
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
     </section>
 
-    <div class="demo-note">
-        Officer case overview — priority signals, recent alerts, and support follow-ups for active caseloads.
-    </div>
-
-    <section class="cards">
-
-        <div class="card">
-            <div class="card-label">Total Victims</div>
-            <div class="card-value">24</div>
-        </div>
-
-        <div class="card">
-            <div class="card-label">Total Cases</div>
-            <div class="card-value">18</div>
-        </div>
-
-        <div class="card">
-            <div class="card-label">Active Cases</div>
-            <div class="card-value">11</div>
-        </div>
-
-        <div class="card">
-            <div class="card-label">High-Priority Cases</div>
-            <div class="card-value">4</div>
-        </div>
-
-    </section>
-
-    <section class="layout">
-
-        <div class="panel">
-
-            <h2>Recent Alerts</h2>
-
-            <div class="alert">
-                <span class="dot red"></span>
-
-                <div>
-                    <div class="alert-title">
-                        CASE-2026-014 requires review
-                    </div>
-
-                    <div class="alert-text">
-                        Elevated distress indicators reported during recent check-ins.
-                    </div>
-                </div>
-            </div>
-
-            <div class="alert">
-                <span class="dot amber"></span>
-
-                <div>
-                    <div class="alert-title">
-                        Welfare follow-up pending
-                    </div>
-
-                    <div class="alert-text">
-                        Support coordination has not yet been completed for an active case.
-                    </div>
-                </div>
-            </div>
-
-            <div class="alert">
-                <span class="dot blue"></span>
-
-                <div>
-                    <div class="alert-title">
-                        Counsellor update received
-                    </div>
-
-                    <div class="alert-text">
-                        A new case-support update is available for officer review.
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-
-        <div class="panel">
-
-            <h2>Priority Cases</h2>
-
-            <div class="case-row">
-                <div>
-                    <div class="case-id">CASE-2026-014</div>
-                    <div class="case-type">Atrocity response</div>
-                </div>
-
-                <div class="risk-pill high">
-                    HIGH CONCERN
-                </div>
-            </div>
-
-            <div class="case-row">
-                <div>
-                    <div class="case-id">CASE-2026-011</div>
-                    <div class="case-type">Domestic violence</div>
-                </div>
-
-                <div class="risk-pill moderate">
-                    MODERATE
-                </div>
-            </div>
-
-            <div class="case-row">
-                <div>
-                    <div class="case-id">CASE-2026-009</div>
-                    <div class="case-type">Assault</div>
-                </div>
-
-                <div class="risk-pill low">
-                    LOW
-                </div>
-            </div>
-
-            <div class="footer-note">
-                Risk indicators support officer prioritisation and human review; they are not a diagnosis.
-            </div>
-
-        </div>
-
-    </section>
-
-</main>
+</div>
 
 </body>
 </html>
