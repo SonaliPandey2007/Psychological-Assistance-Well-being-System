@@ -12,24 +12,35 @@
         }
 
         :root {
-            --navy: #173f5f;
-            --navy-dark: #102f48;
-            --blue: #2f80ed;
+            --sidebar: #102f48;
+            --sidebar-light: #173f5f;
+            --sidebar-text: #b8c7d5;
+            --sidebar-active: #2f80ed;
+
             --background: #f5f7fb;
             --card: #ffffff;
-            --text: #1d2a35;
-            --muted: #7b8794;
-            --border: #e5eaf0;
-            --danger: #d9534f;
-            --warning: #d99a2b;
-            --success: #3d9562;
+            --text: #172b3a;
+            --muted: #7d8b99;
+            --border: #e7edf3;
+
+            --blue: #2f80ed;
+            --purple: #8064d8;
+            --green: #35a46b;
+            --red: #e05252;
+            --yellow: #d99a2b;
         }
 
         body {
             margin: 0;
-            font-family: Inter, Arial, Helvetica, sans-serif;
+            font-family: Inter, -apple-system, BlinkMacSystemFont,
+                "Segoe UI", Arial, sans-serif;
             background: var(--background);
             color: var(--text);
+        }
+
+        button,
+        a {
+            font: inherit;
         }
 
         .app {
@@ -37,78 +48,228 @@
             min-height: 100vh;
         }
 
-        /* Sidebar */
+        /* ================= SIDEBAR ================= */
 
         .sidebar {
-            width: 245px;
-            background: var(--navy);
+            width: 270px;
+            min-height: 100vh;
+            background: linear-gradient(
+                180deg,
+                var(--sidebar) 0%,
+                #0c263b 100%
+            );
             color: white;
-            padding: 28px 18px;
+            padding: 25px 16px;
+            display: flex;
+            flex-direction: column;
             flex-shrink: 0;
+            transition: width 0.25s ease;
         }
 
         .brand {
-            padding: 0 14px 30px;
-            border-bottom: 1px solid rgba(255,255,255,0.15);
-        }
-
-        .brand-name {
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .brand-subtitle {
-            margin-top: 5px;
-            font-size: 12px;
-            line-height: 1.5;
-            color: rgba(255,255,255,0.7);
-        }
-
-        .nav-title {
-            margin: 30px 14px 12px;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: rgba(255,255,255,0.5);
-        }
-
-        .nav-item {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 13px 14px;
-            margin-bottom: 6px;
-            border-radius: 9px;
-            color: rgba(255,255,255,0.75);
-            text-decoration: none;
-            font-size: 14px;
-            transition: 0.2s ease;
+            padding: 4px 12px 26px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
         }
 
-        .nav-item:hover,
-        .nav-item.active {
-            background: rgba(255,255,255,0.14);
+        .brand-mark {
+            width: 43px;
+            height: 43px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #4f9cff, #2167c8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+        }
+
+        .brand-name {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            line-height: 1;
+        }
+
+        .brand-subtitle {
+            margin-top: 6px;
+            color: rgba(255, 255, 255, 0.62);
+            font-size: 10px;
+            line-height: 1.5;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-section {
+            margin-top: 30px;
+        }
+
+        .nav-title {
+            padding: 0 13px;
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.42);
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .nav-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 13px 14px;
+            margin-bottom: 6px;
+            border-radius: 12px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.08);
             color: white;
+            transform: translateX(2px);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(
+                90deg,
+                rgba(47, 128, 237, 0.95),
+                rgba(47, 128, 237, 0.72)
+            );
+            color: white;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-item.active::before {
+            content: "";
+            position: absolute;
+            left: -16px;
+            width: 4px;
+            height: 25px;
+            border-radius: 0 5px 5px 0;
+            background: #78b5ff;
         }
 
         .nav-icon {
-            width: 20px;
-            text-align: center;
-            font-size: 16px;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 7px;
+            background: rgba(255, 255, 255, 0.07);
+            font-size: 14px;
+            flex-shrink: 0;
         }
 
-        .sidebar-footer {
-            margin-top: 50px;
-            padding: 14px;
-            border-radius: 10px;
-            background: rgba(255,255,255,0.08);
+        .nav-item.active .nav-icon {
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .nav-label {
+            flex: 1;
+        }
+
+        .nav-badge {
+            min-width: 22px;
+            padding: 3px 6px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.16);
+            color: white;
+            font-size: 10px;
+            text-align: center;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+        .security-card {
+            margin: 24px 4px 18px;
+            padding: 15px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .security-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-size: 12px;
-            color: rgba(255,255,255,0.7);
+            font-weight: 700;
+        }
+
+        .security-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #57d58c;
+            box-shadow: 0 0 0 4px rgba(87, 213, 140, 0.12);
+        }
+
+        .security-text {
+            margin-top: 8px;
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 11px;
             line-height: 1.5;
         }
 
-        /* Main area */
+        .sidebar-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 8px 4px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .profile-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: #e7eef6;
+            color: var(--sidebar);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .profile-details {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .profile-name {
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .profile-role {
+            margin-top: 4px;
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 10px;
+        }
+
+        .logout-icon {
+            color: rgba(255, 255, 255, 0.65);
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .logout-icon:hover {
+            color: white;
+        }
+
+        /* ================= MAIN ================= */
 
         .main {
             flex: 1;
@@ -116,59 +277,116 @@
         }
 
         .topbar {
-            height: 78px;
+            min-height: 82px;
             background: white;
             border-bottom: 1px solid var(--border);
+            padding: 18px 34px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 34px;
+            gap: 20px;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .mobile-menu {
+            display: none;
+            border: 0;
+            background: #edf4fc;
+            color: var(--sidebar);
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 20px;
         }
 
         .page-heading {
-            font-size: 21px;
-            font-weight: 700;
             margin: 0;
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: -0.4px;
         }
 
         .page-subtitle {
-            font-size: 13px;
-            color: var(--muted);
             margin-top: 5px;
+            color: var(--muted);
+            font-size: 12px;
         }
 
-        .profile {
+        .topbar-right {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 18px;
         }
 
-        .profile-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #e7eef6;
-            color: var(--navy);
+        .notification {
+            position: relative;
+            width: 38px;
+            height: 38px;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 11px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
+            font-size: 18px;
         }
 
-        .profile-name {
-            font-size: 13px;
-            font-weight: 700;
+        .notification-badge {
+            position: absolute;
+            top: -4px;
+            right: -3px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--red);
+            color: white;
+            font-size: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
         }
 
-        .profile-role {
-            font-size: 11px;
-            color: var(--muted);
+        .top-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .top-profile-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #e8f1ff;
+            color: var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+        }
+
+        .top-profile-name {
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .top-profile-role {
             margin-top: 3px;
+            color: var(--muted);
+            font-size: 10px;
         }
+
+        /* ================= CONTENT ================= */
 
         .content {
             padding: 32px;
-            max-width: 1500px;
+            max-width: 1600px;
         }
 
         .welcome {
@@ -178,40 +396,61 @@
         .welcome h1 {
             margin: 0;
             font-size: 28px;
-            font-weight: 750;
+            font-weight: 800;
+            letter-spacing: -0.7px;
         }
 
         .welcome p {
             margin: 8px 0 0;
             color: var(--muted);
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .demo-note {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             background: #fff8e8;
             border: 1px solid #f0dca9;
             color: #80631c;
             padding: 13px 16px;
-            border-radius: 10px;
-            font-size: 13px;
+            border-radius: 12px;
+            font-size: 12px;
             margin-bottom: 25px;
         }
 
-        /* Statistics */
+        .demo-note-icon {
+            font-size: 16px;
+        }
+
+        /* ================= STATISTICS ================= */
 
         .stats {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+            gap: 18px;
             margin-bottom: 25px;
         }
 
         .stat-card {
+            position: relative;
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 22px;
-            box-shadow: 0 3px 12px rgba(23,63,95,0.04);
+            border-radius: 17px;
+            padding: 21px;
+            overflow: hidden;
+            box-shadow: 0 5px 18px rgba(23, 63, 95, 0.035);
+        }
+
+        .stat-card::after {
+            content: "";
+            position: absolute;
+            right: -28px;
+            bottom: -32px;
+            width: 105px;
+            height: 105px;
+            border-radius: 50%;
+            background: rgba(47, 128, 237, 0.035);
         }
 
         .stat-top {
@@ -222,19 +461,19 @@
         }
 
         .stat-label {
-            font-size: 13px;
             color: var(--muted);
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: 700;
         }
 
         .stat-icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
+            width: 42px;
+            height: 42px;
+            border-radius: 13px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 19px;
         }
 
         .icon-blue {
@@ -258,33 +497,34 @@
         }
 
         .stat-value {
-            font-size: 32px;
-            font-weight: 800;
-            color: var(--navy);
             margin-top: 20px;
+            color: var(--sidebar);
+            font-size: 32px;
+            font-weight: 850;
+            letter-spacing: -1px;
         }
 
         .stat-footer {
-            margin-top: 8px;
-            font-size: 12px;
+            margin-top: 7px;
             color: var(--muted);
+            font-size: 11px;
         }
 
-        /* Panels */
+        /* ================= PANELS ================= */
 
         .dashboard-grid {
             display: grid;
             grid-template-columns: 1.35fr 1fr;
-            gap: 24px;
+            gap: 22px;
         }
 
         .panel {
             background: white;
             border: 1px solid var(--border);
-            border-radius: 14px;
+            border-radius: 17px;
             padding: 24px;
-            box-shadow: 0 3px 12px rgba(23,63,95,0.04);
-            margin-bottom: 24px;
+            box-shadow: 0 5px 18px rgba(23, 63, 95, 0.035);
+            margin-bottom: 22px;
         }
 
         .panel-header {
@@ -292,27 +532,28 @@
             align-items: center;
             justify-content: space-between;
             gap: 15px;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
 
         .panel-title {
             margin: 0;
-            font-size: 17px;
-            font-weight: 750;
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: -0.2px;
         }
 
         .panel-link {
             color: var(--blue);
             text-decoration: none;
-            font-size: 12px;
-            font-weight: 700;
+            font-size: 11px;
+            font-weight: 800;
         }
 
         .panel-link:hover {
             text-decoration: underline;
         }
 
-        /* Alerts */
+        /* ================= ALERTS ================= */
 
         .alert {
             display: flex;
@@ -322,13 +563,13 @@
             border-bottom: 1px solid #edf1f5;
         }
 
+        .alert:first-child {
+            padding-top: 0;
+        }
+
         .alert:last-child {
             border-bottom: none;
             padding-bottom: 0;
-        }
-
-        .alert:first-child {
-            padding-top: 0;
         }
 
         .alert-dot {
@@ -340,11 +581,11 @@
         }
 
         .dot-red {
-            background: var(--danger);
+            background: var(--red);
         }
 
         .dot-yellow {
-            background: var(--warning);
+            background: var(--yellow);
         }
 
         .dot-blue {
@@ -352,24 +593,25 @@
         }
 
         .alert-title {
-            font-size: 14px;
-            font-weight: 700;
+            font-size: 13px;
+            font-weight: 800;
             margin-bottom: 5px;
         }
 
         .alert-description {
-            font-size: 13px;
             color: var(--muted);
-            line-height: 1.5;
+            font-size: 12px;
+            line-height: 1.6;
         }
 
         .alert-time {
             margin-top: 6px;
             color: #9aa5af;
-            font-size: 11px;
+            font-size: 10px;
+            font-weight: 600;
         }
 
-        /* Cases */
+        /* ================= CASES ================= */
 
         .case {
             display: flex;
@@ -390,22 +632,22 @@
         }
 
         .case-id {
-            font-size: 14px;
-            font-weight: 750;
-            color: var(--navy);
+            color: var(--sidebar);
+            font-size: 13px;
+            font-weight: 800;
         }
 
         .case-type {
             margin-top: 5px;
-            font-size: 12px;
             color: var(--muted);
+            font-size: 11px;
         }
 
         .risk {
             padding: 7px 11px;
             border-radius: 20px;
-            font-size: 10px;
-            font-weight: 800;
+            font-size: 9px;
+            font-weight: 850;
             white-space: nowrap;
         }
 
@@ -428,14 +670,18 @@
             margin-top: 22px;
             padding-top: 16px;
             border-top: 1px solid #edf1f5;
-            font-size: 12px;
             color: var(--muted);
+            font-size: 11px;
             line-height: 1.6;
         }
 
-        /* Responsive */
+        /* ================= RESPONSIVE ================= */
 
-        @media (max-width: 1100px) {
+        @media (max-width: 1150px) {
+            .sidebar {
+                width: 235px;
+            }
+
             .stats {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -445,47 +691,38 @@
             }
         }
 
-        @media (max-width: 750px) {
+        @media (max-width: 800px) {
             .sidebar {
-                width: 75px;
-                padding: 20px 10px;
+                position: fixed;
+                z-index: 1000;
+                left: -280px;
+                top: 0;
+                bottom: 0;
+                transition: left 0.25s ease;
             }
 
-            .brand {
-                padding: 0 0 25px;
-                text-align: center;
+            .sidebar.open {
+                left: 0;
             }
 
-            .brand-name {
-                font-size: 22px;
-            }
-
-            .brand-subtitle,
-            .nav-title,
-            .nav-label,
-            .sidebar-footer {
-                display: none;
-            }
-
-            .nav-item {
-                justify-content: center;
-                padding: 14px 8px;
+            .mobile-menu {
+                display: block;
             }
 
             .topbar {
-                padding: 0 20px;
-            }
-
-            .profile-details {
-                display: none;
+                padding: 16px 20px;
             }
 
             .content {
-                padding: 24px 18px;
+                padding: 25px 20px;
+            }
+
+            .top-profile-details {
+                display: none;
             }
         }
 
-        @media (max-width: 500px) {
+        @media (max-width: 520px) {
             .stats {
                 grid-template-columns: 1fr;
             }
@@ -503,6 +740,14 @@
                 flex-direction: column;
                 gap: 10px;
             }
+
+            .topbar-right {
+                gap: 8px;
+            }
+
+            .notification {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -511,58 +756,90 @@
 
 <div class="app">
 
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
 
         <div class="brand">
-            <div class="brand-name">PAWS</div>
-            <div class="brand-subtitle">
-                Protection, Assistance<br>
-                & Welfare Support
+            <div class="brand-mark">🛡</div>
+
+            <div>
+                <div class="brand-name">PAWS</div>
+                <div class="brand-subtitle">
+                    Protection, Assistance<br>
+                    & Welfare Support
+                </div>
             </div>
         </div>
 
-        <div class="nav-title">Main Menu</div>
+        <nav class="nav-section">
+            <div class="nav-title">Main Menu</div>
 
-        <a href="/officer/dashboard" class="nav-item active">
-            <span class="nav-icon">▦</span>
-            <span class="nav-label">Dashboard</span>
-        </a>
+            <a href="/officer/dashboard" class="nav-item active">
+                <span class="nav-icon">▦</span>
+                <span class="nav-label">Dashboard</span>
+            </a>
 
-        <a href="#" class="nav-item">
-            <span class="nav-icon">◫</span>
-            <span class="nav-label">All Cases</span>
-        </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">▤</span>
+                <span class="nav-label">All Cases</span>
+                <span class="nav-badge">18</span>
+            </a>
 
-        <a href="#" class="nav-item">
-            <span class="nav-icon">⚠</span>
-            <span class="nav-label">Priority Cases</span>
-        </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">⚠</span>
+                <span class="nav-label">Priority Cases</span>
+                <span class="nav-badge">4</span>
+            </a>
 
-        <a href="#" class="nav-item">
-            <span class="nav-icon">◉</span>
-            <span class="nav-label">Alerts</span>
-        </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">◉</span>
+                <span class="nav-label">Alerts</span>
+                <span class="nav-badge">3</span>
+            </a>
 
-        <a href="#" class="nav-item">
-            <span class="nav-icon">♧</span>
-            <span class="nav-label">Support Updates</span>
-        </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">♧</span>
+                <span class="nav-label">Support Updates</span>
+            </a>
+        </nav>
 
-        <div class="nav-title">Account</div>
+        <nav class="nav-section">
+            <div class="nav-title">Account</div>
 
-        <a href="#" class="nav-item">
-            <span class="nav-icon">⚙</span>
-            <span class="nav-label">Settings</span>
-        </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">⚙</span>
+                <span class="nav-label">Settings</span>
+            </a>
 
-        <a href="/" class="nav-item">
-            <span class="nav-icon">↪</span>
-            <span class="nav-label">Logout</span>
-        </a>
+            <a href="/" class="nav-item">
+                <span class="nav-icon">↪</span>
+                <span class="nav-label">Logout</span>
+            </a>
+        </nav>
 
-        <div class="sidebar-footer">
-            Officer portal<br>
-            Secure case monitoring
+        <div class="sidebar-bottom">
+
+            <div class="security-card">
+                <div class="security-title">
+                    <span class="security-dot"></span>
+                    Secure portal
+                </div>
+
+                <div class="security-text">
+                    Your officer session is protected. Handle all case information responsibly.
+                </div>
+            </div>
+
+            <div class="sidebar-profile">
+                <div class="profile-avatar">O</div>
+
+                <div class="profile-details">
+                    <div class="profile-name">PAWS Officer</div>
+                    <div class="profile-role">Authorized Officer</div>
+                </div>
+
+                <a href="/" class="logout-icon" title="Logout">↪</a>
+            </div>
+
         </div>
 
     </aside>
@@ -571,20 +848,36 @@
 
         <header class="topbar">
 
-            <div>
-                <h2 class="page-heading">Officer Dashboard</h2>
-                <div class="page-subtitle">
-                    Monitor cases, alerts and support follow-ups
+            <div class="topbar-left">
+                <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation">
+                    ☰
+                </button>
+
+                <div>
+                    <h2 class="page-heading">Officer Dashboard</h2>
+
+                    <div class="page-subtitle">
+                        Monitor cases, alerts and support follow-ups
+                    </div>
                 </div>
             </div>
 
-            <div class="profile">
-                <div class="profile-avatar">O</div>
+            <div class="topbar-right">
 
-                <div class="profile-details">
-                    <div class="profile-name">Officer Portal</div>
-                    <div class="profile-role">Authorized Officer</div>
+                <div class="notification">
+                    🔔
+                    <span class="notification-badge">3</span>
                 </div>
+
+                <div class="top-profile">
+                    <div class="top-profile-avatar">O</div>
+
+                    <div class="top-profile-details">
+                        <div class="top-profile-name">Officer Portal</div>
+                        <div class="top-profile-role">Authorized Officer</div>
+                    </div>
+                </div>
+
             </div>
 
         </header>
@@ -593,11 +886,16 @@
 
             <section class="welcome">
                 <h1>Welcome back, Officer</h1>
-                <p>Here is an overview of current cases and priority support signals.</p>
+                <p>
+                    Here is an overview of current cases and priority support signals.
+                </p>
             </section>
 
             <div class="demo-note">
-                Demo overview: priority signals, recent alerts and support follow-ups for active caseloads.
+                <span class="demo-note-icon">ⓘ</span>
+                <span>
+                    Demo overview: priority signals, recent alerts and support follow-ups for active caseloads.
+                </span>
             </div>
 
             <section class="stats">
@@ -750,7 +1048,8 @@
                     </div>
 
                     <div class="footer-note">
-                        Risk indicators support officer prioritisation and human review. They are not a diagnosis.
+                        Risk indicators support officer prioritisation and human review.
+                        They are not a diagnosis.
                     </div>
 
                 </div>
@@ -762,6 +1061,15 @@
     </section>
 
 </div>
+
+<script>
+    const sidebar = document.getElementById("sidebar");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    mobileMenu.addEventListener("click", function () {
+        sidebar.classList.toggle("open");
+    });
+</script>
 
 </body>
 </html>

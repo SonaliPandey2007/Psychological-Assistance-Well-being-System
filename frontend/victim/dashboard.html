@@ -978,6 +978,230 @@
 
         }
 
+        /* ================= APP LAYOUT ================= */
+
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar {
+    width: 250px;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #173f5f, #102f48);
+    color: white;
+    padding: 26px 18px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 10px 28px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.sidebar-brand-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+    font-size: 22px;
+}
+
+.sidebar-brand-name {
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.sidebar-brand-subtitle {
+    margin-top: 3px;
+    font-size: 10px;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.68);
+}
+
+.sidebar-section-title {
+    margin: 30px 10px 12px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: rgba(255, 255, 255, 0.48);
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 14px;
+    margin-bottom: 6px;
+    border-radius: 11px;
+    color: rgba(255, 255, 255, 0.76);
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.2s ease;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    transform: translateX(2px);
+}
+
+.sidebar-icon {
+    width: 22px;
+    text-align: center;
+    font-size: 17px;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+}
+
+.sidebar-help {
+    margin: 22px 0;
+    padding: 15px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.09);
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.sidebar-logout {
+    color: #ffd1d1;
+}
+
+/* ================= MAIN AREA ================= */
+
+.main-area {
+    flex: 1;
+    min-width: 0;
+}
+
+/* ================= TOPBAR ================= */
+
+.topbar {
+    height: 78px;
+    background: white;
+    border-bottom: 1px solid #e5eaf0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 35px;
+}
+
+.topbar-title {
+    font-size: 21px;
+    font-weight: 750;
+    color: #243b55;
+}
+
+.topbar-subtitle {
+    margin-top: 5px;
+    font-size: 13px;
+    color: #718096;
+}
+
+.topbar-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.topbar-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eaf1f8;
+    color: #365f8b;
+    font-weight: 800;
+}
+
+.topbar-user-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #243b55;
+}
+
+.topbar-user-role {
+    margin-top: 3px;
+    font-size: 11px;
+    color: #718096;
+}
+
+/* Existing container becomes content area */
+
+.main-area .container {
+    max-width: 1500px;
+    padding: 35px;
+}
+
+/* ================= RESPONSIVE SIDEBAR ================= */
+
+@media (max-width: 800px) {
+    .sidebar {
+        width: 76px;
+        padding: 22px 10px;
+    }
+
+    .sidebar-brand {
+        justify-content: center;
+        padding: 0 0 25px;
+    }
+
+    .sidebar-brand-name {
+        font-size: 20px;
+    }
+
+    .sidebar-brand-subtitle,
+    .sidebar-section-title,
+    .sidebar-link span:last-child,
+    .sidebar-help {
+        display: none;
+    }
+
+    .sidebar-link {
+        justify-content: center;
+        padding: 14px 8px;
+    }
+
+    .topbar {
+        padding: 0 20px;
+    }
+
+    .topbar-user-details {
+        display: none;
+    }
+
+    .main-area .container {
+        padding: 25px 18px;
+    }
+}
+
+@media (max-width: 500px) {
+    .topbar-title {
+        font-size: 17px;
+    }
+
+    .topbar-subtitle {
+        font-size: 11px;
+    }
+}
+
 
     </style>
 
@@ -993,58 +1217,113 @@
 
 <!-- ================= NAVBAR ================= -->
 
-<nav class="navbar">
+<div class="app-layout">
 
+    <aside class="sidebar">
 
-    <div class="brand">
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-icon">🛡️</div>
 
+            <div>
+                <div class="sidebar-brand-name">PAWS</div>
 
-        <div class="brand-icon">
+                <div class="sidebar-brand-subtitle">
+                    Psychological Assistance<br>
+                    & Wellbeing System
+                </div>
+            </div>
+        </div>
 
-            🛡️
+        <div class="sidebar-section-title">
+            Main Menu
+        </div>
+
+        <a href="/victim/dashboard" class="sidebar-link active">
+            <span class="sidebar-icon">▦</span>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="/victim/checkin" class="sidebar-link">
+            <span class="sidebar-icon">🌿</span>
+            <span>Daily Check-in</span>
+        </a>
+
+        <a href="#wellbeingTrend" class="sidebar-link">
+            <span class="sidebar-icon">📈</span>
+            <span>Well-being Trend</span>
+        </a>
+
+        <a href="#supportActivities" class="sidebar-link">
+            <span class="sidebar-icon">🧘</span>
+            <span>Support Activities</span>
+        </a>
+
+        <div class="sidebar-section-title">
+            Account
+        </div>
+
+        <a href="#profile" class="sidebar-link">
+            <span class="sidebar-icon">👤</span>
+            <span>My Profile</span>
+        </a>
+
+        <a href="#settings" class="sidebar-link">
+            <span class="sidebar-icon">⚙️</span>
+            <span>Settings</span>
+        </a>
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-help">
+                You are not alone.<br>
+                PAWS is here to support you.
+            </div>
+
+            <a href="#" class="sidebar-link sidebar-logout"
+               onclick="logout(); return false;">
+                <span class="sidebar-icon">↪</span>
+                <span>Logout</span>
+            </a>
 
         </div>
 
+    </aside>
 
-        <div>
+    <section class="main-area">
 
-            <h2>PAWS</h2>
+        <header class="topbar">
 
-            <p>
-                Psychological Assistance & Wellbeing System
-            </p>
+            <div>
+                <div class="topbar-title">
+                    Victim Dashboard
+                </div>
 
-        </div>
+                <div class="topbar-subtitle">
+                    Your personal well-being and support space
+                </div>
+            </div>
 
+            <div class="topbar-user">
 
-    </div>
+                <div class="topbar-avatar">
+                    👤
+                </div>
 
+                <div class="topbar-user-details">
+                    <div class="topbar-user-name">
+                        <span id="topbarUserName">PAWS User</span>
+                    </div>
 
+                    <div class="topbar-user-role">
+                        Victim Portal
+                    </div>
+                </div>
 
-    <div class="user-section">
+            </div>
 
+        </header>
 
-        <div class="user-icon">
-
-            👤
-
-        </div>
-
-
-        <button
-            class="logout"
-            onclick="logout()"
-        >
-
-            Logout
-
-        </button>
-
-
-    </div>
-
-
-</nav>
+        <main class="container">
 
 
 
@@ -1125,7 +1404,7 @@
 
             <!-- WELL-BEING TREND -->
 
-            <div class="card">
+            <div class="card" id="wellbeingTrend">
 
 
                 <h2>
@@ -1165,7 +1444,7 @@
 
             <!-- CALMING SUPPORT -->
 
-            <div class="card">
+            <div class="card" id="supportActivities">
 
 
                 <h2>
@@ -1481,6 +1760,8 @@
 
 
     </div>
+     </main>
+    </section>
 
 
 </div>
@@ -1530,6 +1811,12 @@
             .innerText =
             "Welcome back, " +
             victimId;
+
+            const topbarUserName = document.getElementById("topbarUserName");
+
+if (topbarUserName) {
+    topbarUserName.innerText = "Victim " + victimId;
+}
 
 
         /* LOAD REAL DATA */
