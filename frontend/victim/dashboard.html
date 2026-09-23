@@ -490,17 +490,11 @@
         /* ================= SUPPORT ================= */
 
         .support-grid {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(4, 1fr);
-
-            gap: 15px;
-
-            margin-top: 20px;
-
-        }
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
 
 
         .support-item {
@@ -952,14 +946,21 @@
         }
 
 
-        @media (max-width: 600px) {
+        @media (max-width: 900px) {
 
+    .support-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 
-            .support-grid {
+}
 
-                grid-template-columns: repeat(2, 1fr);
+@media (max-width: 600px) {
 
-            }
+    .support-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
 
 
             .navbar {
@@ -989,13 +990,30 @@
 
 .sidebar {
     width: 250px;
-    min-height: 100vh;
-    background: linear-gradient(180deg, #173f5f, #102f48);
+    height: 100vh;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    background: linear-gradient(
+        180deg,
+        #173f5f,
+        #102f48
+    );
+
     color: white;
+
     padding: 26px 18px;
-    flex-shrink: 0;
+
     display: flex;
     flex-direction: column;
+
+    overflow-y: auto;
+
+    z-index: 1000;
+
+    flex-shrink: 0;
 }
 
 .sidebar-brand {
@@ -1085,7 +1103,8 @@
 /* ================= MAIN AREA ================= */
 
 .main-area {
-    flex: 1;
+    margin-left: 250px;
+    width: calc(100% - 250px);
     min-width: 0;
 }
 
@@ -1158,6 +1177,11 @@
         padding: 22px 10px;
     }
 
+    .main-area {
+    margin-left: 76px;
+    width: calc(100% - 76px);
+}
+
     .sidebar-brand {
         justify-content: center;
         padding: 0 0 25px;
@@ -1200,6 +1224,154 @@
     .topbar-subtitle {
         font-size: 11px;
     }
+}
+
+/* ================= MINDFUL MOVEMENT ================= */
+
+.meditation-video-wrap {
+    width: 100%;
+    background: #edf4fb;
+    border-radius: 18px;
+    overflow: hidden;
+    margin: 22px 0 18px;
+}
+
+.meditation-video {
+    width: 100%;
+    height: 260px;
+    display: block;
+    object-fit: cover;
+    background: #edf4fb;
+}
+
+.meditation-pose {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: #243b55;
+    margin-top: 10px;
+}
+
+.meditation-instruction {
+    text-align: center;
+    color: #718096;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 8px 20px 18px;
+}
+
+.meditation-timer {
+    text-align: center;
+    font-size: 42px;
+    font-weight: 700;
+    color: #365f8b;
+    letter-spacing: 2px;
+    margin: 12px 0;
+}
+
+.meditation-progress {
+    width: 100%;
+    height: 7px;
+    background: #e5edf5;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 12px 0 22px;
+}
+
+.meditation-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(
+        90deg,
+        #365f8b,
+        #78a6cf
+    );
+    border-radius: 20px;
+    transition: width 1s linear;
+}
+
+.meditation-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.meditation-control {
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    background: #edf4fb;
+    color: #365f8b;
+}
+
+.meditation-control.primary {
+    background: linear-gradient(
+        135deg,
+        #365f8b,
+        #547ca8
+    );
+    color: white;
+}
+
+.meditation-control:hover {
+    transform: translateY(-1px);
+}
+
+.meditation-steps {
+    margin-top: 25px;
+    display: grid;
+    gap: 8px;
+}
+
+.meditation-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #f7f9fc;
+    color: #718096;
+    font-size: 13px;
+}
+
+.meditation-step.active {
+    background: #eaf1f8;
+    color: #365f8b;
+    font-weight: bold;
+}
+
+.meditation-step.completed {
+    color: #2f855a;
+}
+
+.meditation-sound {
+    margin-top: 18px;
+    padding: 12px;
+    border-radius: 10px;
+    background: #f7f9fc;
+    text-align: center;
+    font-size: 13px;
+}
+
+.meditation-note {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 11px;
+    color: #8a96a8;
+}
+
+.meditation-percentage {
+    text-align: center;
+    margin-top: -12px;
+    margin-bottom: 18px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    color: #365f8b;
 }
 
 
@@ -1323,7 +1495,7 @@
 
         </header>
 
-        <main class="container">
+        <main>
 
 
 
@@ -1519,6 +1691,19 @@
         <p>Relax & Reset</p>
 
     </div>
+
+    <!-- MINDFUL MOVEMENT -->
+
+<div
+    class="support-item"
+    onclick="mindfulMovement()"
+>
+
+    <span>🧘</span>
+
+    <p>Mindful Movement</p>
+
+</div>
 
 
 </div>
@@ -3111,6 +3296,987 @@ function createBubble() {
 
 }
 
+/* ==========================================
+   MINDFUL MOVEMENT & MEDITATION
+========================================== */
+
+let meditationTimer = null;
+let meditationRemaining = 0;
+let meditationTotal = 0;
+let meditationStepIndex = 0;
+let meditationPaused = false;
+let meditationAudio = null;
+let soothingAudio = null;
+let meditationAudioContext = null;
+
+
+/* ------------------------------------------
+   SESSION PLAN
+------------------------------------------ */
+
+const meditationSession = [
+
+    {
+        title: "🧘 Comfortable Seated Pose",
+        description:
+            "Sit comfortably. Relax your shoulders and let your breathing become natural.",
+        duration: 60,
+        video: "/victim/yoga/easy-pose.mp4"
+    },
+
+    {
+        title: "🌿 Gentle Cat–Cow",
+        description:
+            "Move slowly between the two positions. Keep the movement comfortable and gentle.",
+        duration: 120,
+        video: "/victim/yoga/cat-cow.mp4"
+    },
+
+    {
+        title: "🌱 Child's Pose",
+        description:
+            "Rest comfortably. Relax your shoulders and breathe slowly.",
+        duration: 120,
+        video: "/victim/yoga/child-pose.mp4"
+    },
+
+    {
+        title: "🐝 Humming Breath",
+        description:
+            "Breathe in gently. Breathe out with a soft humming sound. Never force your breath.",
+        duration: 120,
+        video: "/victim/yoga/humming.mp4",
+        humming: true
+    },
+
+    {
+        title: "🌙 Quiet Rest",
+        description:
+            "Close your eyes if comfortable. Simply notice your breathing and allow yourself to rest.",
+        duration: 120,
+        video: "/victim/yoga/meditation.mp4"
+    }
+
+];
+
+
+/* ------------------------------------------
+   START MEDITATION
+------------------------------------------ */
+
+function mindfulMovement() {
+
+    openActivity();
+
+    meditationStepIndex = 0;
+    meditationPaused = false;
+
+    document
+        .getElementById("activityContent")
+        .innerHTML = `
+
+        <h2 class="activity-title">
+            🧘 Mindful Movement
+        </h2>
+
+        <p class="activity-description">
+            A gentle guided session to help you
+            slow down, breathe and reset.
+        </p>
+
+        <div id="meditationContent"></div>
+
+        `;
+
+    showMeditationStep();
+
+}
+
+
+/* ------------------------------------------
+   SHOW CURRENT STEP
+------------------------------------------ */
+
+function showMeditationStep() {
+
+    clearMeditationTimer();
+
+    stopMeditationSound();
+
+    stopSoothingSound();
+
+
+    const step =
+        meditationSession[meditationStepIndex];
+
+    meditationRemaining = step.duration;
+    meditationTotal = step.duration;
+    meditationPaused = false;
+
+    const minutes =
+        Math.floor(step.duration / 60);
+
+    const seconds =
+        step.duration % 60;
+
+    document
+        .getElementById("meditationContent")
+        .innerHTML = `
+
+        <div class="meditation-video-wrap">
+
+            <video
+                class="meditation-video"
+                autoplay
+                muted
+                loop
+                playsinline
+            >
+
+                <source
+                    src="${step.video}"
+                    type="video/mp4"
+                >
+
+            </video>
+
+        </div>
+
+        <div class="meditation-pose">
+            ${step.title}
+        </div>
+
+        <p class="meditation-instruction">
+            ${step.description}
+        </p>
+
+        <div
+            id="meditationTimer"
+            class="meditation-timer"
+        >
+            ${formatMeditationTime(
+                meditationRemaining
+            )}
+        </div>
+
+        <div class="meditation-progress">
+
+    <div
+        id="meditationProgressBar"
+        class="meditation-progress-bar"
+    ></div>
+
+</div>
+
+<div
+    id="meditationPercentage"
+    class="meditation-percentage"
+>
+    0% completed
+</div>
+
+        <div class="meditation-controls">
+
+            <button
+                id="meditationPauseButton"
+                class="meditation-control primary"
+                onclick="toggleMeditationPause()"
+            >
+                ▶ Start
+            </button>
+
+            <button
+                class="meditation-control"
+                onclick="skipMeditationStep()"
+            >
+                Skip →
+            </button>
+
+        </div>
+
+        <div class="meditation-steps">
+
+            ${meditationSession.map(
+                (item, index) => `
+
+                <div
+                    class="
+                        meditation-step
+                        ${
+                            index === meditationStepIndex
+                                ? "active"
+                                : ""
+                        }
+                        ${
+                            index < meditationStepIndex
+                                ? "completed"
+                                : ""
+                        }
+                    "
+                >
+
+                    ${
+                        index < meditationStepIndex
+                            ? "✓"
+                            : index === meditationStepIndex
+                                ? "●"
+                                : "○"
+                    }
+
+                    ${item.title}
+
+                </div>
+
+            `
+            ).join("")}
+
+        </div>
+
+        ${
+            step.humming
+                ? `
+                <div class="meditation-sound">
+                    🐝 Humming sound
+                    <br><br>
+
+                    <button
+                        class="meditation-control"
+                        onclick="toggleHummingSound()"
+                    >
+                        🔊 Humming
+                    </button>
+                </div>
+                `
+                : ""
+        }
+
+        ${
+    !step.humming
+        ? `
+        <div class="meditation-sound">
+            🎵 Soothing background sound
+            <br><br>
+
+            <button
+                id="soothingSoundButton"
+                class="meditation-control"
+                onclick="toggleSoothingSound()"
+            >
+                🔊 Play Soothing Sound
+            </button>
+        </div>
+        `
+        : ""
+}
+
+        <p class="meditation-note">
+            Stop if you feel pain, dizziness or discomfort.
+            This is a gentle wellness activity.
+        </p>
+
+        `;
+
+        updateMeditationDisplay();
+
+}
+
+
+/* ------------------------------------------
+   START / PAUSE TIMER
+------------------------------------------ */
+
+function toggleMeditationPause() {
+    
+    prepareMeditationAudio();
+
+    const button =
+        document.getElementById(
+            "meditationPauseButton"
+        );
+
+    if (!button) {
+        return;
+    }
+
+
+    /* ================= PAUSE ================= */
+
+    if (meditationTimer) {
+
+        meditationPaused = true;
+
+        clearMeditationTimer();
+
+        stopMeditationSound();
+
+        button.innerText =
+            "▶ Resume";
+
+        return;
+    }
+
+
+    /* ================= START / RESUME ================= */
+
+    if (meditationRemaining <= 0) {
+        return;
+    }
+
+    meditationPaused = false;
+
+    button.innerText =
+        "⏸ Pause";
+
+    startMeditationTimer();
+
+
+    /* Automatically start humming
+       for the humming session */
+
+    const currentStep =
+        meditationSession[
+            meditationStepIndex
+        ];
+
+    if (
+        currentStep &&
+        currentStep.humming
+    ) {
+
+        startHummingSound();
+
+    }
+
+}
+
+/* ------------------------------------------
+   TIMER
+------------------------------------------ */
+
+function startMeditationTimer() {
+
+    clearMeditationTimer();
+
+    updateMeditationDisplay();
+
+    meditationTimer =
+        setInterval(() => {
+
+            meditationRemaining--;
+
+            updateMeditationDisplay();
+
+
+            if (
+                meditationRemaining <= 0
+            ) {
+
+                meditationRemaining = 0;
+
+                updateMeditationDisplay();
+
+                finishMeditationStep();
+
+            }
+
+        }, 1000);
+
+}
+
+
+/* ------------------------------------------
+   UPDATE TIMER + PROGRESS
+------------------------------------------ */
+
+function updateMeditationDisplay() {
+
+    const timer =
+        document.getElementById(
+            "meditationTimer"
+        );
+
+    const progress =
+        document.getElementById(
+            "meditationProgressBar"
+        );
+
+    const percentage =
+        document.getElementById(
+            "meditationPercentage"
+        );
+
+
+    /* ================= TIMER ================= */
+
+    if (timer) {
+
+        timer.innerText =
+            formatMeditationTime(
+                Math.max(
+                    0,
+                    meditationRemaining
+                )
+            );
+
+    }
+
+
+    /* ================= PROGRESS ================= */
+
+    let completed = 0;
+
+    if (meditationTotal > 0) {
+
+        completed =
+            (
+                (meditationTotal -
+                    meditationRemaining)
+                /
+                meditationTotal
+            ) * 100;
+
+    }
+
+
+    completed =
+        Math.min(
+            100,
+            Math.max(
+                0,
+                completed
+            )
+        );
+
+
+    /* ================= PROGRESS BAR ================= */
+
+    if (progress) {
+
+        progress.style.width =
+            completed + "%";
+
+    }
+
+
+    /* ================= PERCENTAGE TEXT ================= */
+
+    if (percentage) {
+
+        percentage.innerText =
+            Math.round(completed) +
+            "% completed";
+
+    }
+
+}
+
+/* ------------------------------------------
+   FINISH CURRENT STEP
+------------------------------------------ */
+
+function finishMeditationStep() {
+
+    clearMeditationTimer();
+
+    stopMeditationSound();
+
+    playMeditationChime();
+
+    if (
+        meditationStepIndex <
+        meditationSession.length - 1
+    ) {
+
+        meditationStepIndex++;
+
+        setTimeout(() => {
+
+            showMeditationStep();
+
+        }, 1200);
+
+    }
+
+    else {
+
+        showMeditationComplete();
+
+    }
+
+}
+
+
+/* ------------------------------------------
+   SKIP
+------------------------------------------ */
+
+function skipMeditationStep() {
+
+    clearMeditationTimer();
+
+    stopMeditationSound();
+
+     stopSoothingSound();
+
+    if (
+        meditationStepIndex <
+        meditationSession.length - 1
+    ) {
+
+        meditationStepIndex++;
+
+        showMeditationStep();
+
+    }
+
+    else {
+
+        showMeditationComplete();
+
+    }
+
+}
+
+
+/* ------------------------------------------
+   COMPLETE SESSION
+------------------------------------------ */
+
+function showMeditationComplete() {
+
+    document
+        .getElementById("meditationContent")
+        .innerHTML = `
+
+        <div
+            style="
+                text-align:center;
+                padding:35px 10px;
+            "
+        >
+
+            <div
+                style="
+                    font-size:55px;
+                    margin-bottom:15px;
+                "
+            >
+                🌿
+            </div>
+
+            <h2
+                style="
+                    color:#365f8b;
+                    margin-bottom:12px;
+                "
+            >
+                Session Complete
+            </h2>
+
+            <p
+                style="
+                    color:#718096;
+                    line-height:1.7;
+                "
+            >
+                You gave yourself a few quiet
+                moments today. Well done.
+            </p>
+
+            <button
+                class="activity-button"
+                onclick="closeActivity()"
+            >
+                Finish
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* ------------------------------------------
+   FORMAT TIMER
+------------------------------------------ */
+
+function formatMeditationTime(seconds) {
+
+    const minutes =
+        Math.floor(seconds / 60);
+
+    const remainingSeconds =
+        seconds % 60;
+
+    return (
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(remainingSeconds).padStart(2, "0")
+    );
+
+}
+
+
+/* ------------------------------------------
+   CLEAR TIMER
+------------------------------------------ */
+
+function clearMeditationTimer() {
+
+    if (meditationTimer) {
+
+        clearInterval(
+            meditationTimer
+        );
+
+        meditationTimer = null;
+
+    }
+
+}
+
+
+/* ------------------------------------------
+   HUMMING SOUND
+------------------------------------------ */
+
+function startHummingSound() {
+
+    if (meditationAudio) {
+        return;
+    }
+
+
+    meditationAudio =
+        new Audio(
+            "/victim/audio/humming.mp3"
+        );
+
+    meditationAudio.loop = true;
+
+    meditationAudio.volume = 0.35;
+
+
+    meditationAudio
+        .play()
+        .catch(error => {
+
+            console.error(
+                "Humming audio error:",
+                error
+            );
+
+        });
+
+
+    updateHummingButton();
+
+}
+
+
+/* ------------------------------------------
+   TOGGLE HUMMING
+------------------------------------------ */
+
+function toggleHummingSound() {
+
+    if (meditationAudio) {
+
+        stopMeditationSound();
+
+        return;
+
+    }
+
+    startHummingSound();
+
+}
+
+
+/* ------------------------------------------
+   UPDATE HUMMING BUTTON
+------------------------------------------ */
+
+function updateHummingButton() {
+
+    const button =
+        document.getElementById(
+            "hummingButton"
+        );
+
+    if (!button) {
+        return;
+    }
+
+
+    if (meditationAudio) {
+
+        button.innerText =
+            "🔇 Stop Humming";
+
+    }
+
+    else {
+
+        button.innerText =
+            "🔊 Start Humming";
+
+    }
+
+}
+
+
+/* ------------------------------------------
+   STOP HUMMING
+------------------------------------------ */
+
+function stopMeditationSound() {
+
+    if (meditationAudio) {
+
+        meditationAudio.pause();
+
+        meditationAudio.currentTime = 0;
+
+        meditationAudio = null;
+
+    }
+
+    updateHummingButton();
+
+}
+
+/* ------------------------------------------
+   SOOTHING YOGA SOUND
+------------------------------------------ */
+
+function toggleSoothingSound() {
+
+    const button =
+        document.getElementById(
+            "soothingSoundButton"
+        );
+
+    /* If already playing → stop */
+
+    if (soothingAudio) {
+
+        stopSoothingSound();
+
+        return;
+
+    }
+
+    /* Create audio */
+
+    soothingAudio =
+        new Audio(
+            "/victim/audio/soothing-yoga.mp3"
+        );
+
+    soothingAudio.loop = true;
+
+    soothingAudio.volume = 0.25;
+
+    soothingAudio.play()
+
+        .then(() => {
+
+            if (button) {
+
+                button.innerText =
+                    "🔇 Stop Soothing Sound";
+
+            }
+
+        })
+
+        .catch(error => {
+
+            console.error(
+                "Soothing audio error:",
+                error
+            );
+
+            soothingAudio = null;
+
+            if (button) {
+
+                button.innerText =
+                    "🔊 Play Soothing Sound";
+
+            }
+
+            alert(
+                "Could not play the soothing sound. Please check that soothing-yoga.mp3 is inside victim/assets/audio/."
+            );
+
+        });
+
+}
+
+
+/* ------------------------------------------
+   STOP SOOTHING SOUND
+------------------------------------------ */
+
+function stopSoothingSound() {
+
+    if (soothingAudio) {
+
+        soothingAudio.pause();
+
+        soothingAudio.currentTime = 0;
+
+        soothingAudio = null;
+
+    }
+
+    updateSoothingSoundButton();
+
+}
+
+
+/* ------------------------------------------
+   UPDATE SOOTHING BUTTON
+------------------------------------------ */
+
+function updateSoothingSoundButton() {
+
+    const button =
+        document.getElementById(
+            "soothingSoundButton"
+        );
+
+    if (!button) {
+
+        return;
+
+    }
+
+    if (soothingAudio) {
+
+        button.innerText =
+            "🔇 Stop Soothing Sound";
+
+    }
+
+    else {
+
+        button.innerText =
+            "🔊 Play Soothing Sound";
+
+    }
+
+}
+
+/* ------------------------------------------
+   PREPARE AUDIO CONTEXT
+------------------------------------------ */
+
+function prepareMeditationAudio() {
+
+    if (!meditationAudioContext) {
+
+        meditationAudioContext =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+    }
+
+    if (
+        meditationAudioContext.state ===
+        "suspended"
+    ) {
+
+        meditationAudioContext.resume();
+
+    }
+
+}
+
+
+/* ------------------------------------------
+   SOFT COMPLETION CHIME
+------------------------------------------ */
+
+function playMeditationChime() {
+
+    prepareMeditationAudio();
+
+    const audioContext =
+        meditationAudioContext;
+
+    if (!audioContext) {
+
+        return;
+
+    }
+
+    const oscillator =
+        audioContext.createOscillator();
+
+    const gain =
+        audioContext.createGain();
+
+    oscillator.type =
+        "sine";
+
+    oscillator.frequency.setValueAtTime(
+        660,
+        audioContext.currentTime
+    );
+
+    gain.gain.setValueAtTime(
+        0.0001,
+        audioContext.currentTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        0.10,
+        audioContext.currentTime + 0.03
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        audioContext.currentTime + 0.8
+    );
+
+    oscillator.connect(gain);
+
+    gain.connect(
+        audioContext.destination
+    );
+
+    oscillator.start();
+
+    oscillator.stop(
+        audioContext.currentTime + 0.8
+    );
+
+}
+
+/* ------------------------------------------
+   CLOSE MODAL CLEANUP
+------------------------------------------ */
+
+const originalCloseActivity =
+    closeActivity;
+
+closeActivity = function() {
+
+    clearMeditationTimer();
+
+    stopMeditationSound();
+
+    stopSoothingSound();
+
+    originalCloseActivity();
+
+};
 
 
 

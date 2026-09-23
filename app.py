@@ -86,6 +86,13 @@ def victim_audio(filename):
         filename
     )
 
+@app.route("/victim/yoga/<path:filename>")
+def victim_yoga(filename):
+    return send_from_directory(
+        "frontend/victim/assets/yoga",
+        filename
+    )
+
 
 @app.route("/officer/dashboard")
 def officer_dashboard():
