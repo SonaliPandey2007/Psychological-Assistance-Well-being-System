@@ -150,97 +150,418 @@ function updateProgress() {
     }
 }
 
-/* ================= SUBMIT TO YOUR FLASK + AI BACKEND ================= */
+/* ================= SUBMIT CHECK-IN ================= */
+
 async function submitCheckin() {
 
-    const victimId = localStorage.getItem("victimId");
+    /* GET VICTIM ID */
+
+    const victimId =
+        localStorage.getItem("victimId");
 
     if (!victimId) {
-        alert("Victim ID not found. Please log in again.");
-        window.location.href = "login.html";
+
+        alert(
+            "Victim ID not found. Please log in again."
+        );
+
+        window.location.href =
+            "login.html";
+
         return;
+
     }
 
-    const fearLevel = parseInt(document.getElementById("fearSlider").value);
-    const checkinText = document.getElementById("checkinText").value.trim();
 
-    /*
-     * Convert the UI answers into the numeric values
-     * expected by the existing PAWS Flask/AI backend.
-     */
-    const moodMap = {
-        "Happy": 9,
-        "Okay": 7,
-        "Stressed": 5,
-        "Sad": 4,
-        "Scared": 3
-    };
+    /* GET FEAR LEVEL */
 
-    const moodScore = moodMap[selectedMood] || 5;
-    const safetyScore = selectedSafety === "Yes" ? 10 : 2;
-    const engagementScore = 50;
+    const fearLevel =
+        document.getElementById(
+            "fearSlider"
+        ).value;
+
+
+    /* GET TEXT RESPONSE */
+
+    const checkinText =
+        document.getElementById(
+            "checkinText"
+        )
+        .value
+        .trim();
+
+
+    /* CREATE CHECK-IN DATA */
 
     const checkinData = {
-    mood_score: moodScore,
-    safety_score: safetyScore,
-    stress_level: fearLevel,
-    engagement_score: engagementScore,
-    text_response: checkinText
-};
 
-    console.log("Sending PAWS Check-in:", checkinData);
+        victimId: victimId,
+
+        mood: selectedMood,
+
+        safety: selectedSafety,
+
+        fearLevel: parseInt(fearLevel),
+
+        text: checkinText
+
+    };
+
+
+    console.log(
+        "Check-in Data:",
+        checkinData
+    );
+
+
+    /* ==========================================
+       OFFLINE MODE
+    ========================================== */
+
+    if (!navigator.onLine) {
+
+        saveOfflineCheckin(checkinData);
+
+        return;
+
+    }
+
+
+    /* ==========================================
+       ONLINE MODE
+    ========================================== */
 
     try {
+
         const response = await fetch(
-            `http://127.0.0.1:5000/api/victims/${victimId}/check-in`,
+            "http://127.0.0.1:5000/checkin",
             {
                 method: "POST",
+
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type":
+                        "application/json"
                 },
-                body: JSON.stringify(checkinData)
+
+                body:
+                    JSON.stringify(checkinData)
             }
         );
 
-        const result = await response.json();
 
-        console.log("PAWS AI Response:", result);
+        const result =
+            await response.json();
+
 
         if (!response.ok) {
-            alert(
+
+            throw new Error(
                 result.error ||
                 "Something went wrong while submitting your check-in."
             );
-            return;
+
         }
+
+
+        /* STORE RESULT */
 
         localStorage.setItem(
             "latestCheckinResult",
             JSON.stringify(result)
         );
 
-        const ddi =
-    result.distress_result?.distress_index ?? "N/A";
 
-        const risk =
-    result.distress_result?.risk_level ?? "N/A";
+        /* SUCCESS */
 
         alert(
-            "Check-in completed successfully!\\n\\n" +
-            "Distress Index: " + ddi +
-            "\\nRisk Level: " + risk
+            "Check-in completed successfully!\n\n" +
+            "Well-being Score: " +
+            result.ddi_score +
+            "\nRisk Level: " +
+            result.risk_level
         );
 
-        window.location.href = "/victim/dashboard";
+
+        /* RETURN TO DASHBOARD */
+
+        window.location.href =
+            "dashboard.html";
+
 
     } catch (error) {
-        console.error("PAWS Check-in Error:", error);
-        alert(
-            "Unable to connect to the PAWS server.\\n\\n" +
-            "Please make sure your Flask backend is running."
+
+        console.error(
+            "Check-in submission error:",
+            error
         );
+
+
+        /*
+           If the server cannot be reached,
+           save the check-in locally.
+        */
+
+        saveOfflineCheckin(checkinData);
+
     }
+
 }
+
+/* ==========================================
+   SAVE CHECK-IN OFFLINE
+========================================== */
+
+function saveOfflineCheckin(checkinData) {
+
+    const existingQueue =
+        JSON.parse(
+            localStorage.getItem(
+                "pawsOfflineCheckins"
+            ) || "[]"
+        );
+
+
+    existingQueue.push({
+
+        id:
+            Date.now(),
+
+        data:
+            checkinData,
+
+        savedAt:
+            new Date().toISOString()
+
+    });
+
+
+    localStorage.setItem(
+        "pawsOfflineCheckins",
+        JSON.stringify(existingQueue)
+    );
+
+
+    /* STORE A SMALL STATUS FLAG */
+
+    localStorage.setItem(
+        "pawsOfflineCheckinPending",
+        "true"
+    );
+
+
+    alert(
+        "You are currently offline.\n\n" +
+        "Your check-in has been saved safely on this device " +
+        "and will be sent automatically when your connection returns."
+    );
+
+
+    /* RETURN TO DASHBOARD */
+
+    window.location.href =
+        "dashboard.html";
+
+}
+
+/* ==========================================
+   SYNC OFFLINE CHECK-INS
+========================================== */
+
+async function syncOfflineCheckins() {
+
+    /* GET PENDING CHECK-INS */
+
+    const queue =
+        JSON.parse(
+            localStorage.getItem(
+                "pawsOfflineCheckins"
+            ) || "[]"
+        );
+
+
+    /* NOTHING TO SYNC */
+
+    if (!queue.length) {
+
+        localStorage.removeItem(
+            "pawsOfflineCheckinPending"
+        );
+
+        return;
+
+    }
+
+
+    /* INTERNET STILL UNAVAILABLE */
+
+    if (!navigator.onLine) {
+
+        return;
+
+    }
+
+
+    console.log(
+        "Syncing offline check-ins:",
+        queue.length
+    );
+
+
+    const remainingQueue = [];
+
+
+    /* SEND EACH PENDING CHECK-IN */
+
+    for (const item of queue) {
+
+        try {
+
+            const response = await fetch(
+                "http://127.0.0.1:5000/checkin",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(item.data)
+                }
+            );
+
+
+            const result =
+                await response.json();
+
+
+            /* SERVER ACCEPTED CHECK-IN */
+
+            if (response.ok) {
+
+                console.log(
+                    "Offline check-in synced:",
+                    item.id
+                );
+
+                /*
+                   Keep the latest result so the
+                   dashboard can use it.
+                */
+
+                localStorage.setItem(
+                    "latestCheckinResult",
+                    JSON.stringify(result)
+                );
+
+            }
+
+            else {
+
+                /*
+                   Server rejected it.
+                   Keep it in the queue so it
+                   can be retried later.
+                */
+
+                console.warn(
+                    "Offline check-in could not be synced:",
+                    result.error
+                );
+
+                remainingQueue.push(item);
+
+            }
+
+        }
+
+        catch (error) {
+
+            /*
+               Internet/server problem.
+               Keep the check-in locally.
+            */
+
+            console.error(
+                "Offline sync failed:",
+                error
+            );
+
+            remainingQueue.push(item);
+
+        }
+
+    }
+
+
+    /* UPDATE QUEUE */
+
+    if (remainingQueue.length > 0) {
+
+        localStorage.setItem(
+            "pawsOfflineCheckins",
+            JSON.stringify(remainingQueue)
+        );
+
+        localStorage.setItem(
+            "pawsOfflineCheckinPending",
+            "true"
+        );
+
+    }
+
+    else {
+
+        localStorage.removeItem(
+            "pawsOfflineCheckins"
+        );
+
+        localStorage.removeItem(
+            "pawsOfflineCheckinPending"
+        );
+
+        console.log(
+            "All offline check-ins synced successfully."
+        );
+
+    }
+
+}
+
+/* ==========================================
+   AUTOMATIC OFFLINE SYNC
+========================================== */
+
+window.addEventListener(
+    "online",
+    function () {
+
+        console.log(
+            "Internet connection restored."
+        );
+
+        syncOfflineCheckins();
+
+    }
+);
+
+/* ==========================================
+   CHECK FOR PENDING CHECK-INS
+========================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        if (navigator.onLine) {
+
+            syncOfflineCheckins();
+
+        }
+
+    }
+);
 
 function goBack() {
     window.location.href = "/victim/dashboard";

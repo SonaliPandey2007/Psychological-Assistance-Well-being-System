@@ -954,3 +954,357 @@ def request_help():
 
         if connection and connection.is_connected():
             connection.close()
+
+# =========================================================
+# VICTIM MESSAGING
+# =========================================================
+
+@victim_bp.route("/messages", methods=["GET"])
+@token_required
+@role_required("VICTIM")
+def get_victim_messages():
+
+    connection = None
+    cursor = None
+
+    try:
+
+        user_id = request.user["user_id"]
+
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+
+        # -------------------------------------------------
+        # Find the victim linked to the logged-in user
+        # -------------------------------------------------
+
+        cursor.execute("""
+            SELECT victim_id
+            FROM victims
+            WHERE user_id = %s
+        """, (user_id,))
+
+        victim = cursor.fetchone()
+
+        if not victim:
+
+            return jsonify({
+                "error": "Victim profile not found"
+            }), 404
+
+        victim_id = victim["victim_id"]
+
+        # -------------------------------------------------
+        # Get conversation
+        # -------------------------------------------------
+
+        cursor.execute("""
+            SELECT
+                m.message_id,
+                m.sender_id,
+                m.receiver_id,
+                m.message,
+                m.is_read,
+                m.created_at,
+
+                sender.name AS sender_name,
+                receiver.name AS receiver_name
+
+            FROM messages m
+
+            JOIN users sender
+                ON m.sender_id = sender.user_id
+
+            JOIN users receiver
+                ON m.receiver_id = receiver.user_id
+
+            WHERE
+                (m.sender_id = %s OR m.receiver_id = %s)
+
+            ORDER BY m.created_at ASC
+        """, (
+            user_id,
+            user_id
+        ))
+
+        messages = cursor.fetchall()
+
+        # -------------------------------------------------
+        # Mark messages received by victim as read
+        # -------------------------------------------------
+
+        cursor.execute("""
+            UPDATE messages
+            SET is_read = TRUE
+            WHERE receiver_id = %s
+              AND is_read = FALSE
+        """, (user_id,))
+
+        connection.commit()
+
+        return jsonify({
+            "messages": messages
+        }), 200
+
+    except Exception as error:
+
+        print(
+            "VICTIM MESSAGES ERROR:",
+            error
+        )
+
+        return jsonify({
+            "error": "Could not load messages"
+        }), 500
+
+    finally:
+
+        if cursor:
+            cursor.close()
+
+        if connection and connection.is_connected():
+            connection.close()
+
+
+@victim_bp.route("/messages", methods=["POST"])
+@token_required
+@role_required("VICTIM")
+def send_victim_message():
+
+    connection = None
+    cursor = None
+
+    try:
+
+        data = request.get_json() or {}
+
+        message = (
+            data.get("message") or ""
+        ).strip()
+
+        if not message:
+
+            return jsonify({
+                "error": "Message cannot be empty"
+            }), 400
+
+        user_id = request.user["user_id"]
+
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+
+        # -------------------------------------------------
+        # Find victim
+        # -------------------------------------------------
+
+        cursor.execute("""
+            SELECT victim_id
+            FROM victims
+            WHERE user_id = %s
+        """, (user_id,))
+
+        victim = cursor.fetchone()
+
+        if not victim:
+
+            return jsonify({
+                "error": "Victim profile not found"
+            }), 404
+
+        victim_id = victim["victim_id"]
+
+        # -------------------------------------------------
+        # Find counsellor assigned to this victim
+        # -------------------------------------------------
+
+        cursor.execute("""
+            SELECT assigned_counsellor
+            FROM cases
+            WHERE victim_id = %s
+              AND assigned_counsellor IS NOT NULL
+            ORDER BY created_at DESC
+            LIMIT 1
+        """, (victim_id,))
+
+        case = cursor.fetchone()
+
+        counsellor_id = (
+            case["assigned_counsellor"]
+            if case
+            else None
+        )
+
+        # -------------------------------------------------
+        # If no counsellor is assigned, use an available
+        # counsellor for the prototype.
+        # -------------------------------------------------
+
+        if not counsellor_id:
+
+            cursor.execute("""
+                SELECT user_id
+                FROM users
+                WHERE role = 'COUNSELLOR'
+                ORDER BY user_id ASC
+                LIMIT 1
+            """)
+
+            counsellor = cursor.fetchone()
+
+            if not counsellor:
+
+                return jsonify({
+                    "error":
+                        "No counsellor is currently available"
+                }), 404
+
+            counsellor_id = counsellor["user_id"]
+
+        # -------------------------------------------------
+        # Insert message
+        # -------------------------------------------------
+
+        cursor.execute("""
+            INSERT INTO messages
+            (
+                sender_id,
+                receiver_id,
+                message
+            )
+            VALUES (%s, %s, %s)
+        """, (
+            user_id,
+            counsellor_id,
+            message
+        ))
+
+        connection.commit()
+
+        message_id = cursor.lastrowid
+
+        return jsonify({
+            "message":
+                "Message sent successfully",
+            "message_id":
+                message_id
+        }), 201
+
+    except Exception as error:
+
+        if connection and connection.is_connected():
+            connection.rollback()
+
+        print(
+            "SEND VICTIM MESSAGE ERROR:",
+            error
+        )
+
+        return jsonify({
+            "error": "Could not send message"
+        }), 500
+
+    finally:
+
+        if cursor:
+            cursor.close()
+
+        if connection and connection.is_connected():
+            connection.close()
+
+# =========================================================
+# VICTIM VIDEO COUNSELLING
+# =========================================================
+
+@victim_bp.route("/video-sessions", methods=["GET"])
+@token_required
+@role_required("VICTIM")
+def get_victim_video_session():
+
+    connection = None
+    cursor = None
+
+    try:
+
+        user_id = request.user["user_id"]
+
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+
+        # -------------------------------------------------
+        # Find victim linked to logged-in user
+        # -------------------------------------------------
+
+        cursor.execute("""
+            SELECT victim_id
+            FROM victims
+            WHERE user_id = %s
+        """, (user_id,))
+
+        victim = cursor.fetchone()
+
+        if not victim:
+            return jsonify({
+                "error": "Victim profile not found"
+            }), 404
+
+        victim_id = victim["victim_id"]
+
+        # -------------------------------------------------
+        # Find latest active video session
+        # -------------------------------------------------
+
+        cursor.execute("""
+            SELECT
+                session_id,
+                victim_id,
+                counsellor_id,
+                room_code,
+                status,
+                started_at,
+                ended_at,
+                created_at
+            FROM video_sessions
+            WHERE victim_id = %s
+              AND status != 'ENDED'
+            ORDER BY created_at DESC
+            LIMIT 1
+        """, (victim_id,))
+
+        session = cursor.fetchone()
+
+        if not session:
+            return jsonify({
+                "session": None
+            }), 200
+
+        # -------------------------------------------------
+        # Build Jitsi room URL
+        # -------------------------------------------------
+
+        session["room_url"] = (
+            "https://meet.jit.si/" +
+            session["room_code"]
+        )
+
+        return jsonify({
+            "session": session
+        }), 200
+
+    except Exception as error:
+
+        print(
+            "VICTIM VIDEO SESSION ERROR:",
+            error
+        )
+
+        return jsonify({
+            "error": "Could not load video session"
+        }), 500
+
+    finally:
+
+        if cursor:
+            cursor.close()
+
+        if connection and connection.is_connected():
+            connection.close()

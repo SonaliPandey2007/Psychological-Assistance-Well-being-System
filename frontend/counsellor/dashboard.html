@@ -574,6 +574,85 @@ body {
 }
 
 /* =========================================================
+   VICTIM CONTACT INFORMATION
+========================================================= */
+
+.victim-contact-card {
+    background: #f8fafc;
+    border: 1px solid #e1eaf4;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.contact-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 18px;
+}
+
+.contact-header h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.contact-header p {
+    color: #718096;
+    font-size: 13px;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.contact-item {
+    background: white;
+    border: 1px solid #edf2f7;
+    border-radius: 12px;
+    padding: 13px;
+}
+
+.contact-item span {
+    display: block;
+    color: #718096;
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+
+.contact-item strong {
+    display: block;
+    color: #243b55;
+    font-size: 14px;
+    word-break: break-word;
+}
+
+.contact-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+@media (max-width: 700px) {
+
+    .contact-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+@media (max-width: 500px) {
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* =========================================================
    DDI SUMMARY
 ========================================================= */
 
@@ -646,6 +725,7 @@ body {
 
     line-height: 1.7;
 }
+
 
 
 
@@ -737,6 +817,360 @@ body {
     margin-bottom: 20px;
 
     font-size: 14px;
+}
+
+/* =========================================================
+   FEATURE 12 — EXPLAIN THE CHANGE
+========================================================= */
+
+.explain-change-box {
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f5f9fd
+        );
+
+    border: 1px solid #dfe9f3;
+
+    border-radius: 18px;
+
+    padding: 24px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 8px 25px rgba(
+            31,
+            55,
+            80,
+            0.05
+        );
+}
+
+
+.explain-change-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+}
+
+
+.explain-change-header h3 {
+
+    font-size: 18px;
+
+    margin-bottom: 5px;
+
+}
+
+
+.explain-change-header p {
+
+    color: #718096;
+
+    font-size: 13px;
+
+}
+
+
+.explain-badge {
+
+    background: #edf5ff;
+
+    color: #365f8b;
+
+    padding: 7px 12px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    letter-spacing: 0.7px;
+
+    white-space: nowrap;
+}
+
+
+/* DISTRESS JOURNEY */
+
+.journey-section {
+
+    background: #f8fafc;
+
+    border-radius: 15px;
+
+    padding: 18px;
+
+    margin-bottom: 22px;
+}
+
+
+.journey-title {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 20px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    color: #526581;
+}
+
+
+.distress-journey {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 8px;
+
+    overflow-x: auto;
+
+    padding: 5px 0 10px;
+}
+
+
+.journey-point {
+
+    min-width: 75px;
+
+    text-align: center;
+
+    position: relative;
+
+    flex: 1;
+}
+
+
+.journey-score {
+
+    font-size: 25px;
+
+    font-weight: bold;
+
+    color: #243b55;
+
+}
+
+
+.journey-risk {
+
+    display: inline-block;
+
+    margin-top: 5px;
+
+    padding: 4px 9px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+
+.journey-date {
+
+    margin-top: 7px;
+
+    color: #718096;
+
+    font-size: 10px;
+}
+
+
+.journey-arrow {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 28px;
+
+    padding-top: 10px;
+
+    color: #a0aec0;
+
+    font-size: 18px;
+}
+
+
+/* CHANGE METRICS */
+
+.change-section {
+
+    margin-bottom: 22px;
+}
+
+
+.change-section h4 {
+
+    font-size: 16px;
+
+    margin-bottom: 5px;
+}
+
+
+.change-period {
+
+    color: #718096;
+
+    font-size: 12px;
+
+    margin-bottom: 15px;
+}
+
+
+.change-metric {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 12px 14px;
+
+    background: white;
+
+    border: 1px solid #edf0f4;
+
+    border-radius: 11px;
+
+    margin-bottom: 8px;
+}
+
+
+.change-metric-name {
+
+    font-size: 13px;
+
+    color: #526581;
+
+}
+
+
+.change-value {
+
+    font-weight: bold;
+
+    font-size: 14px;
+
+}
+
+
+.change-up {
+
+    color: #c53030;
+}
+
+
+.change-down {
+
+    color: #2f855a;
+}
+
+
+.change-neutral {
+
+    color: #718096;
+}
+
+
+/* PAWS INSIGHT */
+
+.paws-insight {
+
+    display: flex;
+
+    gap: 14px;
+
+    align-items: flex-start;
+
+    padding: 18px;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef6ff,
+            #f7fbff
+        );
+
+    border: 1px solid #dce9f5;
+}
+
+
+.insight-icon {
+
+    width: 40px;
+
+    height: 40px;
+
+    min-width: 40px;
+
+    border-radius: 12px;
+
+    background: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 20px;
+}
+
+
+.insight-title {
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    color: #365f8b;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.7px;
+
+    margin-bottom: 5px;
+}
+
+
+.insight-text {
+
+    color: #526581;
+
+    font-size: 14px;
+
+    line-height: 1.65;
 }
 
 /* =========================================================
@@ -1077,6 +1511,239 @@ body {
     .main-area .container {
         padding: 30px 16px;
     }
+}
+
+/* =========================================================
+   COMMUNICATION CENTER
+========================================================= */
+
+.communication-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    z-index: 9999;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.communication-window {
+    width: min(650px, 100%);
+    height: min(700px, 90vh);
+
+    background: white;
+    border-radius: 18px;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.communication-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 18px 20px;
+
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.communication-header h3 {
+    margin: 0 0 4px;
+    color: #243b55;
+}
+
+.communication-header span {
+    font-size: 13px;
+    color: #718096;
+}
+
+.close-communication {
+    border: none;
+    background: transparent;
+
+    font-size: 28px;
+    cursor: pointer;
+
+    color: #718096;
+}
+
+.message-list {
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding: 20px;
+
+    background: #f7fafc;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.message-bubble {
+    max-width: 75%;
+
+    padding: 11px 14px;
+
+    border-radius: 14px;
+
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.message-sent {
+    align-self: flex-end;
+
+    background: #365f8b;
+    color: white;
+
+    border-bottom-right-radius: 4px;
+}
+
+.message-received {
+    align-self: flex-start;
+
+    background: white;
+    color: #243b55;
+
+    border: 1px solid #e2e8f0;
+
+    border-bottom-left-radius: 4px;
+}
+
+.message-time {
+    display: block;
+
+    margin-top: 5px;
+
+    font-size: 10px;
+
+    opacity: 0.7;
+}
+
+.message-composer {
+    display: flex;
+    gap: 10px;
+
+    padding: 15px;
+
+    border-top: 1px solid #e2e8f0;
+
+    background: white;
+}
+
+.message-composer textarea {
+    flex: 1;
+
+    resize: none;
+
+    border: 1px solid #cbd5e0;
+
+    border-radius: 10px;
+
+    padding: 11px;
+
+    font-family: inherit;
+
+    outline: none;
+}
+
+.message-composer textarea:focus {
+    border-color: #365f8b;
+}
+
+/* =========================================================
+   INTERVENTION HISTORY
+========================================================= */
+
+.intervention-history-item {
+
+    border: 1px solid #e4eaf1;
+
+    border-radius: 12px;
+
+    padding: 15px;
+
+    margin-bottom: 12px;
+
+    background: #ffffff;
+
+}
+
+.intervention-history-top {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+    margin-bottom: 8px;
+
+}
+
+.intervention-counsellor {
+
+    color: #718096;
+
+    font-size: 12px;
+
+    margin-left: 7px;
+
+}
+
+.intervention-date {
+
+    color: #718096;
+
+    font-size: 12px;
+
+    white-space: nowrap;
+
+}
+
+.intervention-notes {
+
+    color: #4a5568;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    margin-top: 8px;
+
+}
+
+.intervention-outcome {
+
+    margin-top: 10px;
+
+    font-size: 13px;
+
+    color: #365f8b;
+
+}
+
+.intervention-followup {
+
+    margin-top: 8px;
+
+    font-size: 13px;
+
+    color: #805ad5;
+
 }
 
 </style>
@@ -1466,6 +2133,87 @@ body {
 
         </div>
 
+        <!-- =====================================================
+     VICTIM CONTACT / BASIC INFORMATION
+====================================================== -->
+
+<div class="victim-contact-card">
+
+    <div class="contact-header">
+        <div>
+            <h3>👤 Victim Information</h3>
+            <p>Basic details and contact information</p>
+        </div>
+
+        <span id="profileSafetyStatus" class="badge low">
+            SAFE
+        </span>
+    </div>
+
+    <div class="contact-grid">
+
+        <div class="contact-item">
+            <span>Full Name</span>
+            <strong id="profileVictimName">—</strong>
+        </div>
+
+        <div class="contact-item">
+            <span>Victim Code</span>
+            <strong id="profileVictimCode">—</strong>
+        </div>
+
+        <div class="contact-item">
+            <span>Email</span>
+            <strong id="profileVictimEmail">—</strong>
+        </div>
+
+        <div class="contact-item">
+            <span>Age</span>
+            <strong id="profileVictimAge">—</strong>
+        </div>
+
+        <div class="contact-item">
+            <span>Gender</span>
+            <strong id="profileVictimGender">—</strong>
+        </div>
+
+        <div class="contact-item">
+            <span>Preferred Language</span>
+            <strong id="profileVictimLanguage">—</strong>
+        </div>
+
+    </div>
+
+    <div class="contact-actions">
+
+        <button
+            class="primary-button"
+            type="button"
+            onclick="openCommunicationCenter()"
+        >
+            💬 Message
+        </button>
+
+        <button
+            class="secondary-button"
+            type="button"
+            onclick="startVideoCounselling()"
+        >
+            🎥 Video Counselling
+        </button>
+
+        <button
+    class="secondary-button"
+    type="button"
+    onclick="endVideoCounselling()"
+>
+    ⛔ End Video Session
+</button>
+
+    </div>
+
+</div>
+
 
         <!-- DDI SUMMARY -->
 
@@ -1536,6 +2284,102 @@ body {
             </p>
 
         </div>
+
+        <!-- =====================================================
+     FEATURE 12 — EXPLAIN THE CHANGE
+====================================================== -->
+
+<div class="explain-change-box">
+
+    <div class="explain-change-header">
+        <div>
+            <h3>🔎 Explain the Change</h3>
+            <p>
+                Understand what changed between the latest
+                distress assessments.
+            </p>
+        </div>
+
+        <span class="explain-badge">
+            PAWS INSIGHT
+        </span>
+    </div>
+
+
+    <!-- DISTRESS JOURNEY -->
+
+    <div class="journey-section">
+
+        <div class="journey-title">
+            <span>📈 Distress Journey</span>
+            <span id="journeyVictimCode"></span>
+        </div>
+
+        <div
+            id="distressJourney"
+            class="distress-journey"
+        >
+            <div class="empty-state">
+                Loading distress journey...
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- WHY DID DISTRESS CHANGE? -->
+
+    <div class="change-section">
+
+        <h4>
+            Why did distress change?
+        </h4>
+
+        <p
+            id="changePeriod"
+            class="change-period"
+        >
+            Previous assessment → Latest assessment
+        </p>
+
+
+        <div id="changeMetrics">
+
+            <div class="empty-state">
+                Select a victim to view changes.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PAWS INSIGHT -->
+
+    <div class="paws-insight">
+
+        <div class="insight-icon">
+            🧠
+        </div>
+
+        <div>
+
+            <div class="insight-title">
+                PAWS Insight
+            </div>
+
+            <div
+                id="pawsInsightText"
+                class="insight-text"
+            >
+                Select a victim to view the explanation.
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
         <!-- =====================================================
      COUNSELLOR INTERVENTION
@@ -1689,6 +2533,31 @@ body {
 
 </div>
 
+<!-- =====================================================
+     INTERVENTION HISTORY
+===================================================== -->
+
+<div class="ai-box" style="margin-top:25px;">
+
+    <h3>
+        📋 Intervention History
+    </h3>
+
+    <p style="margin-bottom:15px;">
+        Previous counselling actions and follow-up records
+        for this victim.
+    </p>
+
+    <div id="interventionHistory">
+
+        <div class="empty-state">
+            No intervention history available.
+        </div>
+
+    </div>
+
+</div>
+
 
         <!-- TREND -->
 
@@ -1716,6 +2585,78 @@ body {
 
     </div>
 
+
+</div>
+
+<!-- =====================================================
+     COMMUNICATION CENTER
+====================================================== -->
+
+<div
+    id="communicationModal"
+    class="communication-modal"
+>
+
+    <div class="communication-window">
+
+        <div class="communication-header">
+
+            <div>
+
+                <h3>
+                    💬 Communication Center
+                </h3>
+
+                <span
+                    id="communicationVictimName"
+                >
+                    Victim
+                </span>
+
+            </div>
+
+            <button
+                type="button"
+                class="close-communication"
+                onclick="closeCommunicationCenter()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            id="messageList"
+            class="message-list"
+        >
+
+            <div class="empty-state">
+                Loading messages...
+            </div>
+
+        </div>
+
+
+        <div class="message-composer">
+
+            <textarea
+                id="messageInput"
+                placeholder="Write a message to the victim..."
+                rows="2"
+            ></textarea>
+
+            <button
+                type="button"
+                class="primary-button"
+                onclick="sendMessage()"
+            >
+                Send
+            </button>
+
+        </div>
+
+    </div>
 
 </div>
    
@@ -3046,6 +3987,85 @@ async function loadVictim(
             data.victim ||
             {};
 
+    /* =====================================================
+   VICTIM BASIC INFORMATION
+===================================================== */
+
+document
+    .getElementById("profileVictimName")
+    .textContent =
+    victim.victim_name ||
+    "Not available";
+
+document
+    .getElementById("profileVictimCode")
+    .textContent =
+    victim.victim_code ||
+    "—";
+
+document
+    .getElementById("profileVictimEmail")
+    .textContent =
+    victim.victim_email ||
+    "Not available";
+
+document
+    .getElementById("profileVictimAge")
+    .textContent =
+    victim.age !== null &&
+    victim.age !== undefined
+        ? victim.age
+        : "—";
+
+document
+    .getElementById("profileVictimGender")
+    .textContent =
+    victim.gender ||
+    "—";
+
+document
+    .getElementById("profileVictimLanguage")
+    .textContent =
+    victim.preferred_language ||
+    "—";
+
+/* =====================================================
+   SAFETY STATUS
+===================================================== */
+
+const safetyStatus =
+    String(
+        victim.safety_status ||
+        "SAFE"
+    ).toUpperCase();
+
+const safetyElement =
+    document.getElementById(
+        "profileSafetyStatus"
+    );
+
+safetyElement.textContent =
+    safetyStatus;
+
+safetyElement.className =
+    "badge";
+
+if (safetyStatus === "DANGER") {
+
+    safetyElement.classList.add("high");
+
+}
+else if (safetyStatus === "CONCERN") {
+
+    safetyElement.classList.add("moderate");
+
+}
+else {
+
+    safetyElement.classList.add("low");
+
+}
+
 
         const latest =
             data.latest_distress ||
@@ -3060,14 +4080,13 @@ async function loadVictim(
         /* PROFILE */
 
         document
-            .getElementById(
-                "profileVictim"
-            )
-            .textContent =
-
-            victim.victim_code ||
-            "Victim #" +
-            id;
+    .getElementById(
+        "profileVictim"
+    )
+    .textContent =
+    victim.victim_name ||
+    victim.victim_code ||
+    "Victim #" + id;
 
 
         /* DDI */
@@ -3189,16 +4208,30 @@ async function loadVictim(
 
         /* CHART */
 
-        createTrendChart(
-            history
-        );
+createTrendChart(
+    history
+);
 
 
-        /* HISTORY */
+/* FEATURE 12 — EXPLAIN THE CHANGE */
 
-        renderHistory(
-            history
-        );
+renderExplainTheChange(
+    history,
+    victim.victim_code || ("Victim #" + id)
+);
+
+
+/* HISTORY */
+
+renderHistory(
+    history
+);
+
+        /* INTERVENTION HISTORY */
+
+await loadInterventionHistory(
+    id
+);
 
 
         /* SCROLL */
@@ -3442,6 +4475,735 @@ function createTrendChart(
         );
 
 }
+
+/* =========================================================
+   LOAD INTERVENTION HISTORY
+========================================================= */
+
+async function loadInterventionHistory(
+    victimId
+) {
+
+    const box =
+        document.getElementById(
+            "interventionHistory"
+        );
+
+    box.innerHTML =
+        `
+        <div class="empty-state">
+            Loading intervention history...
+        </div>
+        `;
+
+    try {
+
+        const response =
+            await fetch(
+                API +
+                "/api/counsellor/victims/" +
+                victimId +
+                "/interventions",
+                {
+                    headers:
+                        authHeaders()
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Could not load intervention history."
+            );
+
+        }
+
+        const interventions =
+            data.interventions || [];
+
+        if (
+            interventions.length === 0
+        ) {
+
+            box.innerHTML =
+                `
+                <div class="empty-state">
+                    No interventions recorded yet.
+                </div>
+                `;
+
+            return;
+        }
+
+        box.innerHTML =
+            interventions
+                .map(
+                    intervention => {
+
+                        const date =
+                            intervention.created_at
+                                ? new Date(
+                                    intervention.created_at
+                                ).toLocaleString(
+                                    "en-IN"
+                                )
+                                : "Unknown date";
+
+                        const followup =
+                            intervention.follow_up_date
+                                ? new Date(
+                                    intervention.follow_up_date
+                                ).toLocaleDateString(
+                                    "en-IN"
+                                )
+                                : null;
+
+                        return `
+                            <div class="intervention-history-item">
+
+                                <div class="intervention-history-top">
+
+                                    <div>
+                                        <strong>
+                                            ${escapeHtml(
+                                                intervention.intervention_type ||
+                                                "Intervention"
+                                            )}
+                                        </strong>
+
+                                        
+
+                                    </div>
+
+                                    <span class="intervention-date">
+                                        ${date}
+                                    </span>
+
+                                </div>
+
+                                ${
+                                    intervention.notes
+                                        ? `
+                                            <div class="intervention-notes">
+                                                ${escapeHtml(
+                                                    intervention.notes
+                                                )}
+                                            </div>
+                                          `
+                                        : ""
+                                }
+
+                                ${
+                                    intervention.outcome
+                                        ? `
+                                            <div class="intervention-outcome">
+                                                <strong>Outcome:</strong>
+                                                ${escapeHtml(
+                                                    intervention.outcome
+                                                )}
+                                            </div>
+                                          `
+                                        : ""
+                                }
+
+                                ${
+                                    followup
+                                        ? `
+                                            <div class="intervention-followup">
+                                                📅 Follow-up:
+                                                ${followup}
+                                            </div>
+                                          `
+                                        : ""
+                                }
+
+                            </div>
+                        `;
+
+                    }
+                )
+                .join("");
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Intervention history error:",
+            error
+        );
+
+        box.innerHTML =
+            `
+            <div class="error">
+                Could not load intervention history.
+            </div>
+            `;
+
+    }
+
+}
+
+
+/* =========================================================
+   FEATURE 12 — EXPLAIN THE CHANGE
+========================================================= */
+
+function renderExplainTheChange(
+    history,
+    victimCode
+) {
+
+    const journey =
+        document.getElementById(
+            "distressJourney"
+        );
+
+    const metrics =
+        document.getElementById(
+            "changeMetrics"
+        );
+
+    const insight =
+        document.getElementById(
+            "pawsInsightText"
+        );
+
+    const journeyCode =
+        document.getElementById(
+            "journeyVictimCode"
+        );
+
+    const period =
+        document.getElementById(
+            "changePeriod"
+        );
+
+
+    if (!journey || !metrics || !insight) {
+        return;
+    }
+
+
+    if (journeyCode) {
+        journeyCode.textContent =
+            victimCode;
+    }
+
+
+    if (!history || history.length === 0) {
+
+        journey.innerHTML = `
+            <div class="empty-state">
+                No distress journey available yet.
+            </div>
+        `;
+
+        metrics.innerHTML = `
+            <div class="empty-state">
+                Not enough data to explain a change.
+            </div>
+        `;
+
+        insight.textContent =
+            "PAWS needs at least two distress assessments to explain a change.";
+
+        return;
+    }
+
+
+    /* -----------------------------------------------------
+       DISTRESS JOURNEY
+    ----------------------------------------------------- */
+
+    const journeyItems =
+        history.slice(-5);
+
+
+    journey.innerHTML =
+        journeyItems.map(
+            (item, index) => {
+
+                const score =
+                    Number(
+                        item.distress_index
+                    );
+
+                const risk =
+                    String(
+                        item.risk_level ||
+                        "LOW"
+                    ).toUpperCase();
+
+
+                const riskClass =
+                    risk === "HIGH"
+                        ? "high"
+                        : risk === "MODERATE"
+                            ? "moderate"
+                            : "low";
+
+
+                const date =
+                    item.created_at
+                        ? new Date(
+                            item.created_at
+                        ).toLocaleDateString(
+                            "en-IN",
+                            {
+                                day: "numeric",
+                                month: "short"
+                            }
+                        )
+                        : "—";
+
+
+                return `
+                    <div class="journey-point">
+
+                        <div class="journey-score">
+                            ${Number.isFinite(score)
+                                ? Math.round(score)
+                                : "—"}
+                        </div>
+
+                        <span
+                            class="journey-risk ${riskClass}"
+                        >
+                            ${risk}
+                        </span>
+
+                        <div class="journey-date">
+                            ${date}
+                        </div>
+
+                    </div>
+
+                    ${
+                        index <
+                        journeyItems.length - 1
+                            ? `
+                                <div class="journey-arrow">
+                                    →
+                                </div>
+                              `
+                            : ""
+                    }
+                `;
+            }
+        ).join("");
+
+
+    /* -----------------------------------------------------
+       NEED AT LEAST TWO SCORES
+    ----------------------------------------------------- */
+
+    if (history.length < 2) {
+
+        metrics.innerHTML = `
+            <div class="empty-state">
+                A second assessment is needed
+                to compare changes.
+            </div>
+        `;
+
+        insight.textContent =
+            "PAWS needs two assessments before it can explain why distress changed.";
+
+        return;
+    }
+
+
+    /* -----------------------------------------------------
+       PREVIOUS → LATEST
+    ----------------------------------------------------- */
+
+    const previous =
+        history[history.length - 2];
+
+    const latest =
+        history[history.length - 1];
+
+
+    const fearChange =
+        calculateChange(
+            previous.fear_score,
+            latest.fear_score
+        );
+
+
+    const stressChange =
+        calculateChange(
+            previous.stress_score,
+            latest.stress_score
+        );
+
+
+    const engagementChange =
+        calculateChange(
+            previous.engagement_score,
+            latest.engagement_score
+        );
+
+
+    const negativeEmotionChange =
+        calculateChange(
+            previous.negative_emotion_score,
+            latest.negative_emotion_score
+        );
+
+
+    if (period) {
+
+        const previousDate =
+            formatChangeDate(
+                previous.created_at
+            );
+
+        const latestDate =
+            formatChangeDate(
+                latest.created_at
+            );
+
+        period.textContent =
+            `${previousDate} → ${latestDate}`;
+
+    }
+
+
+    metrics.innerHTML = [
+
+        createChangeMetric(
+            "Fear",
+            fearChange
+        ),
+
+        createChangeMetric(
+            "Stress",
+            stressChange
+        ),
+
+        createChangeMetric(
+            "Engagement",
+            engagementChange,
+            true
+        ),
+
+        createChangeMetric(
+            "Negative emotion",
+            negativeEmotionChange
+        )
+
+    ].join("");
+
+
+    /* -----------------------------------------------------
+       PAWS INSIGHT
+    ----------------------------------------------------- */
+
+    insight.textContent =
+        generatePawsInsight({
+            fear: fearChange,
+            stress: stressChange,
+            engagement: engagementChange,
+            negativeEmotion: negativeEmotionChange,
+            distress:
+                calculateChange(
+                    previous.distress_index,
+                    latest.distress_index
+                )
+        });
+}
+
+
+/* =========================================================
+   CALCULATE CHANGE
+========================================================= */
+
+function calculateChange(
+    previous,
+    latest
+) {
+
+    const oldValue =
+        Number(previous);
+
+    const newValue =
+        Number(latest);
+
+
+    if (
+        !Number.isFinite(oldValue) ||
+        !Number.isFinite(newValue)
+    ) {
+        return null;
+    }
+
+
+    return Number(
+        (newValue - oldValue).toFixed(1)
+    );
+}
+
+
+/* =========================================================
+   FORMAT DATE
+========================================================= */
+
+function formatChangeDate(
+    value
+) {
+
+    if (!value) {
+        return "Previous";
+    }
+
+
+    return new Date(
+        value
+    ).toLocaleDateString(
+        "en-IN",
+        {
+            day: "numeric",
+            month: "short"
+        }
+    );
+}
+
+
+/* =========================================================
+   CHANGE METRIC
+========================================================= */
+
+function createChangeMetric(
+    label,
+    value,
+    lowerIsBetter
+) {
+
+    if (value === null) {
+
+        return `
+            <div class="change-metric">
+
+                <span class="change-metric-name">
+                    ${label}
+                </span>
+
+                <span class="change-value change-neutral">
+                    —
+                </span>
+
+            </div>
+        `;
+    }
+
+
+    let className =
+        "change-neutral";
+
+    let arrow =
+        "→";
+
+
+    if (value > 0) {
+
+        className =
+            lowerIsBetter
+                ? "change-down"
+                : "change-up";
+
+        arrow = "↑";
+
+    }
+
+    else if (value < 0) {
+
+        className =
+            lowerIsBetter
+                ? "change-up"
+                : "change-down";
+
+        arrow = "↓";
+    }
+
+
+    const sign =
+        value > 0
+            ? "+"
+            : "";
+
+
+    return `
+        <div class="change-metric">
+
+            <span class="change-metric-name">
+                ${label}
+            </span>
+
+            <span
+                class="change-value ${className}"
+            >
+                ${sign}${value} ${arrow}
+            </span>
+
+        </div>
+    `;
+}
+
+
+/* =========================================================
+   PAWS INSIGHT GENERATOR
+========================================================= */
+
+function generatePawsInsight(
+    changes
+) {
+
+    const distress =
+        changes.distress;
+
+    const fear =
+        changes.fear;
+
+    const stress =
+        changes.stress;
+
+    const engagement =
+        changes.engagement;
+
+    const negativeEmotion =
+        changes.negativeEmotion;
+
+
+    /* -----------------------------------------------------
+       DISTRESS IMPROVED
+    ----------------------------------------------------- */
+
+    if (
+        distress !== null &&
+        distress < -5
+    ) {
+
+        if (
+            engagement !== null &&
+            engagement > 5
+        ) {
+
+            return (
+                "Distress decreased alongside improved " +
+                "engagement, suggesting a positive change " +
+                "in the victim's recent wellbeing signals."
+            );
+
+        }
+
+        if (
+            fear !== null &&
+            fear < -5
+        ) {
+
+            return (
+                "Distress decreased primarily alongside " +
+                "lower fear-related responses."
+            );
+
+        }
+
+        return (
+            "Distress decreased compared with the " +
+            "previous assessment, with the latest " +
+            "wellbeing signals showing improvement."
+        );
+    }
+
+
+    /* -----------------------------------------------------
+       DISTRESS INCREASED
+    ----------------------------------------------------- */
+
+    if (
+        distress !== null &&
+        distress > 5
+    ) {
+
+        if (
+            fear !== null &&
+            fear > 5 &&
+            engagement !== null &&
+            engagement < -5
+        ) {
+
+            return (
+                "Distress increased sharply alongside " +
+                "higher fear-related responses and reduced " +
+                "engagement."
+            );
+
+        }
+
+        if (
+            fear !== null &&
+            fear > 5 &&
+            stress !== null &&
+            stress > 5
+        ) {
+
+            return (
+                "Distress increased alongside higher " +
+                "fear and stress-related responses."
+            );
+
+        }
+
+        if (
+            engagement !== null &&
+            engagement < -5
+        ) {
+
+            return (
+                "Distress increased following a reduction " +
+                "in engagement in the latest assessment."
+            );
+
+        }
+
+        if (
+            negativeEmotion !== null &&
+            negativeEmotion > 5
+        ) {
+
+            return (
+                "Distress increased alongside an increase " +
+                "in negative emotional responses."
+            );
+
+        }
+
+        return (
+            "Distress increased compared with the " +
+            "previous assessment. The latest assessment " +
+            "shows stronger distress-related signals."
+        );
+    }
+
+
+    /* -----------------------------------------------------
+       STABLE
+    ----------------------------------------------------- */
+
+    return (
+        "Distress remained relatively stable between " +
+        "the latest two assessments, with no major " +
+        "change detected in the measured signals."
+    );
+}
+
+
 
 
 /* =========================================================
@@ -3695,6 +5457,580 @@ async function initializeDashboard() {
 
 
 initializeDashboard();
+
+/* =========================================================
+   COMMUNICATION CENTER
+========================================================= */
+
+async function openCommunicationCenter() {
+
+    if (!selectedVictimId) {
+
+        alert(
+            "Please select a victim first."
+        );
+
+        return;
+    }
+
+    const modal =
+        document.getElementById(
+            "communicationModal"
+        );
+
+    modal.style.display = "flex";
+
+    await loadMessages();
+}
+
+async function loadMessages() {
+
+    if (!selectedVictimId) {
+        return;
+    }
+
+    const list =
+        document.getElementById(
+            "messageList"
+        );
+
+    try {
+
+        const response = await fetch(
+            API +
+            "/api/counsellor/messages/" +
+            selectedVictimId,
+            {
+                headers: authHeaders()
+            }
+        );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Could not load messages."
+            );
+        }
+
+        renderMessages(
+            data.messages || []
+        );
+
+    }
+    catch (error) {
+
+        console.error(
+            "Load messages error:",
+            error
+        );
+
+        list.innerHTML = `
+            <div class="empty-state">
+                Could not load conversation.
+            </div>
+        `;
+    }
+}
+
+function renderMessages(messages) {
+
+    const list =
+        document.getElementById(
+            "messageList"
+        );
+
+    const victimName =
+        document.getElementById(
+            "profileVictimName"
+        )?.textContent ||
+        "Victim";
+
+    document.getElementById(
+        "communicationVictimName"
+    ).textContent =
+        victimName;
+
+
+    if (!messages.length) {
+
+        list.innerHTML = `
+            <div class="empty-state">
+                No messages yet.<br>
+                Start the conversation with the victim.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    /* -----------------------------------------
+       GET LOGGED-IN COUNSELLOR USER ID
+       ----------------------------------------- */
+
+    let currentUserId = null;
+
+    try {
+
+        const storedUser =
+            localStorage.getItem("pawsUser");
+
+        if (storedUser) {
+
+            const user =
+                JSON.parse(storedUser);
+
+            currentUserId =
+                Number(
+                    user.user_id ||
+                    user.id
+                );
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Could not read pawsUser:",
+            error
+        );
+    }
+
+
+    /* -----------------------------------------
+       FALLBACK: READ USER ID FROM JWT
+       ----------------------------------------- */
+
+    if (!currentUserId) {
+
+        try {
+
+            const token =
+                localStorage.getItem("pawsToken") ||
+                localStorage.getItem("paws_token") ||
+                localStorage.getItem("token") ||
+                localStorage.getItem("jwtToken") ||
+                localStorage.getItem("access_token");
+
+            if (token) {
+
+                const payload =
+                    JSON.parse(
+                        atob(
+                            token.split(".")[1]
+                        )
+                    );
+
+                currentUserId =
+                    Number(
+                        payload.user_id
+                    );
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Could not read user ID from token:",
+                error
+            );
+        }
+    }
+
+
+    console.log(
+        "Counsellor current user ID:",
+        currentUserId
+    );
+
+
+    /* -----------------------------------------
+       RENDER MESSAGES
+       ----------------------------------------- */
+
+    list.innerHTML =
+        messages.map(message => {
+
+            const senderId =
+                Number(
+                    message.sender_id
+                );
+
+            /*
+             * COUNSELLOR MESSAGE
+             * → RIGHT
+             * → BLUE
+             */
+
+            const isSent =
+                senderId === currentUserId;
+
+
+            const date =
+                message.created_at
+                    ? new Date(
+                        message.created_at
+                    ).toLocaleString("en-IN")
+                    : "";
+
+
+            return `
+                <div
+                    style="
+                        display:flex;
+                        width:100%;
+                        justify-content:${isSent ? "flex-end" : "flex-start"};
+                        margin-bottom:12px;
+                    "
+                >
+
+                    <div
+                        style="
+                            max-width:75%;
+                            padding:11px 14px;
+                            border-radius:14px;
+                            background:${isSent ? "#365f8b" : "#ffffff"};
+                            color:${isSent ? "#ffffff" : "#243b55"};
+                            border:${isSent ? "none" : "1px solid #e2e8f0"};
+                            box-shadow:0 2px 6px rgba(0,0,0,0.08);
+                            line-height:1.45;
+                            font-size:14px;
+
+                            ${isSent
+                                ? "border-bottom-right-radius:4px;"
+                                : "border-bottom-left-radius:4px;"
+                            }
+                        "
+                    >
+
+                        <div>
+                            ${escapeHtml(
+                                message.message
+                            )}
+                        </div>
+
+                        <div
+                            style="
+                                margin-top:5px;
+                                font-size:10px;
+                                opacity:0.7;
+                            "
+                        >
+                            ${date}
+                        </div>
+
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+
+
+    list.scrollTop =
+        list.scrollHeight;
+}
+
+function getCurrentUserId() {
+
+    const user =
+        localStorage.getItem(
+            "pawsUser"
+        );
+
+    if (!user) {
+        return null;
+    }
+
+    try {
+
+        const parsed =
+            JSON.parse(user);
+
+        return (
+            parsed.user_id ||
+            parsed.id ||
+            null
+        );
+
+    }
+    catch (error) {
+
+        return null;
+
+    }
+}
+
+async function sendMessage() {
+
+    if (!selectedVictimId) {
+        return;
+    }
+
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
+
+    const message =
+        input.value.trim();
+
+    if (!message) {
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                API +
+                "/api/counsellor/messages",
+                {
+                    method: "POST",
+
+                    headers: {
+                        ...authHeaders(),
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        victim_id:
+                            selectedVictimId,
+
+                        message:
+                            message
+                    })
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+
+            alert(
+                data.error ||
+                "Could not send message."
+            );
+
+            return;
+        }
+
+        input.value = "";
+
+        await loadMessages();
+
+    }
+    catch (error) {
+
+        console.error(
+            "Send message error:",
+            error
+        );
+
+        alert(
+            "Could not connect to PAWS backend."
+        );
+    }
+}
+
+function closeCommunicationCenter() {
+
+    document
+        .getElementById(
+            "communicationModal"
+        )
+        .style.display = "none";
+
+}
+
+
+
+
+
+/* =========================================================
+   VIDEO COUNSELLING
+========================================================= */
+
+async function startVideoCounselling() {
+
+    if (!selectedVictimId) {
+
+        alert(
+            "Please select a victim first."
+        );
+
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                API +
+                "/api/counsellor/video-sessions",
+                {
+                    method: "POST",
+
+                    headers: {
+                        ...authHeaders(),
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        victim_id:
+                            selectedVictimId
+                    })
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Could not start video counselling."
+            );
+
+        }
+
+        /*
+         * Open the counselling room.
+         */
+
+        const videoWindow =
+            window.open(
+                data.room_url,
+                "_blank"
+            );
+
+        if (!videoWindow) {
+
+            alert(
+                "Please allow pop-ups for the PAWS application."
+            );
+
+            return;
+        }
+
+        /*
+         * Store session ID temporarily
+         * so we can end it later.
+         */
+
+        window.currentVideoSessionId =
+            data.session_id;
+
+        console.log(
+            "Video session started:",
+            data
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Video counselling error:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Could not start video counselling."
+        );
+
+    }
+
+}
+
+
+async function endVideoCounselling() {
+
+    const sessionId =
+        window.currentVideoSessionId;
+
+    if (!sessionId) {
+
+        alert(
+            "No active video session found."
+        );
+
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                API +
+                "/api/counsellor/video-sessions/" +
+                sessionId +
+                "/end",
+                {
+                    method: "PUT",
+                    headers:
+                        authHeaders()
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Could not end video session."
+            );
+
+        }
+
+        window.currentVideoSessionId =
+            null;
+
+        alert(
+            "Video counselling session ended."
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "End video session error:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Could not end video session."
+        );
+
+    }
+
+}
+
+// This is different function
+
+function escapeHtml(value) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        value || "";
+
+    return div.innerHTML;
+}
 
 
 </script>

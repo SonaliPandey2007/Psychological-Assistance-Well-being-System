@@ -136,17 +136,22 @@ def victim_profile(victim_id):
         # -------------------------------------------------
 
         cursor.execute("""
-            SELECT
-                victim_id,
-                victim_code,
-                age,
-                gender,
-                preferred_language,
-                safety_status,
-                created_at
-            FROM victims
-            WHERE victim_id = %s
-        """, (victim_id,))
+    SELECT
+        v.victim_id,
+        v.user_id,
+        v.victim_code,
+        v.age,
+        v.gender,
+        v.preferred_language,
+        v.safety_status,
+        v.created_at,
+        u.name AS victim_name,
+        u.email AS victim_email
+    FROM victims v
+    LEFT JOIN users u
+        ON v.user_id = u.user_id
+    WHERE v.victim_id = %s
+""", (victim_id,))
 
         victim = cursor.fetchone()
 
@@ -160,21 +165,25 @@ def victim_profile(victim_id):
         # -------------------------------------------------
 
         cursor.execute("""
-            SELECT
-                score_id,
-                checkin_id,
-                distress_index,
-                risk_level,
-                fear_score,
-                stress_score,
-                negative_emotion_score,
-                behaviour_score,
-                explanation,
-                created_at
-            FROM distress_scores
-            WHERE victim_id = %s
-            ORDER BY created_at ASC
-        """, (victim_id,))
+    SELECT
+        ds.score_id,
+        ds.checkin_id,
+        ds.distress_index,
+        ds.risk_level,
+        ds.fear_score,
+        ds.stress_score,
+        ds.anxiety_score,
+        ds.negative_emotion_score,
+        ds.behaviour_score,
+        ds.explanation,
+        ds.created_at,
+        ci.engagement_score
+    FROM distress_scores ds
+    LEFT JOIN check_ins ci
+        ON ds.checkin_id = ci.checkin_id
+    WHERE ds.victim_id = %s
+    ORDER BY ds.created_at ASC
+""", (victim_id,))
 
         history = cursor.fetchall()
 
@@ -545,4 +554,391 @@ def complete_followup(intervention_id):
             cursor.close()
 
         if connection and connection.is_connected():
+            connection.close()
+
+@counsellor_bp.route(
+    "/messages/<int:victim_id>",
+    methods=["GET"]
+)
+@token_required
+@role_required("COUNSELLOR")
+def get_messages(victim_id):
+
+    connection = None
+    cursor = None
+
+    try:
+
+        connection = get_db_connection()
+
+        cursor = connection.cursor(
+            dictionary=True
+        )
+
+        counsellor_id = request.user["user_id"]
+
+        cursor.execute("""
+            SELECT
+                m.message_id,
+                m.sender_id,
+                m.receiver_id,
+                m.message,
+                m.is_read,
+                m.created_at,
+                sender.name AS sender_name
+            FROM messages m
+            JOIN users sender
+                ON m.sender_id = sender.user_id
+            WHERE
+                (
+                    m.sender_id = %s
+                    AND m.receiver_id = (
+                        SELECT user_id
+                        FROM victims
+                        WHERE victim_id = %s
+                    )
+                )
+                OR
+                (
+                    m.receiver_id = %s
+                    AND m.sender_id = (
+                        SELECT user_id
+                        FROM victims
+                        WHERE victim_id = %s
+                    )
+                )
+            ORDER BY m.created_at ASC
+        """, (
+            counsellor_id,
+            victim_id,
+            counsellor_id,
+            victim_id
+        ))
+
+        messages = cursor.fetchall()
+
+        # Mark victim messages as read
+        cursor.execute("""
+            UPDATE messages
+            SET is_read = TRUE
+            WHERE receiver_id = %s
+              AND sender_id = (
+                  SELECT user_id
+                  FROM victims
+                  WHERE victim_id = %s
+              )
+              AND is_read = FALSE
+        """, (
+            counsellor_id,
+            victim_id
+        ))
+
+        connection.commit()
+
+        return jsonify({
+            "victim_id": victim_id,
+            "messages": messages
+        }), 200
+
+    except Exception as error:
+
+        print(
+            "GET MESSAGES ERROR:",
+            error
+        )
+
+        return jsonify({
+            "error": "Could not load messages"
+        }), 500
+
+    finally:
+
+        if cursor:
+            cursor.close()
+
+        if connection and connection.is_connected():
+            connection.close()
+
+@counsellor_bp.route(
+    "/messages",
+    methods=["POST"]
+)
+@token_required
+@role_required("COUNSELLOR")
+def send_message():
+
+    connection = None
+    cursor = None
+
+    try:
+
+        data = request.get_json() or {}
+
+        victim_id = data.get(
+            "victim_id"
+        )
+
+        message = (
+            data.get("message") or ""
+        ).strip()
+
+        if not victim_id:
+            return jsonify({
+                "error": "victim_id is required"
+            }), 400
+
+        if not message:
+            return jsonify({
+                "error": "Message cannot be empty"
+            }), 400
+
+        connection = get_db_connection()
+
+        cursor = connection.cursor()
+
+        counsellor_id = request.user[
+            "user_id"
+        ]
+
+        # Find victim's user account
+        cursor.execute("""
+            SELECT user_id
+            FROM victims
+            WHERE victim_id = %s
+        """, (
+            victim_id,
+        ))
+
+        victim = cursor.fetchone()
+
+        if not victim:
+
+            return jsonify({
+                "error": "Victim not found"
+            }), 404
+
+        victim_user_id = victim[0]
+
+        cursor.execute("""
+            INSERT INTO messages
+            (
+                sender_id,
+                receiver_id,
+                message
+            )
+            VALUES
+            (
+                %s,
+                %s,
+                %s
+            )
+        """, (
+            counsellor_id,
+            victim_user_id,
+            message
+        ))
+
+        connection.commit()
+
+        message_id = cursor.lastrowid
+
+        return jsonify({
+            "message": "Message sent successfully",
+            "message_id": message_id
+        }), 201
+
+    except Exception as error:
+
+        if connection and connection.is_connected():
+            connection.rollback()
+
+        print(
+            "SEND MESSAGE ERROR:",
+            error
+        )
+
+        return jsonify({
+            "error": "Could not send message"
+        }), 500
+
+    finally:
+
+        if cursor:
+            cursor.close()
+
+        if connection and connection.is_connected():
+            connection.close()
+
+@counsellor_bp.route("/video-sessions", methods=["POST"])
+@token_required
+@role_required("COUNSELLOR")
+def create_video_session():
+
+    connection = None
+    cursor = None
+
+    try:
+
+        data = request.get_json() or {}
+
+        victim_id = data.get("victim_id")
+
+        if not victim_id:
+            return jsonify({
+                "error": "victim_id is required"
+            }), 400
+
+        connection = get_db_connection()
+
+        cursor = connection.cursor(dictionary=True)
+
+        counsellor_id = request.user["user_id"]
+
+        # Verify victim exists
+        cursor.execute("""
+            SELECT
+                victim_id,
+                user_id,
+                victim_code
+            FROM victims
+            WHERE victim_id = %s
+        """, (victim_id,))
+
+        victim = cursor.fetchone()
+
+        if not victim:
+
+            return jsonify({
+                "error": "Victim not found"
+            }), 404
+
+        # Generate unique room code
+        import uuid
+
+        room_code = (
+            "PAWS-Counselling-" +
+            str(victim_id) +
+            "-" +
+            uuid.uuid4().hex[:10]
+        )
+
+        cursor.execute("""
+            INSERT INTO video_sessions
+            (
+                victim_id,
+                counsellor_id,
+                room_code,
+                status
+            )
+            VALUES (%s, %s, %s, 'CREATED')
+        """, (
+            victim_id,
+            counsellor_id,
+            room_code
+        ))
+
+        connection.commit()
+
+        session_id = cursor.lastrowid
+
+        return jsonify({
+            "message": "Video session created successfully",
+            "session_id": session_id,
+            "victim_id": victim_id,
+            "room_code": room_code,
+            "room_url": "https://meet.jit.si/" + room_code
+        }), 201
+
+    except Exception as error:
+
+        if connection and connection.is_connected():
+            connection.rollback()
+
+        print(
+            "CREATE VIDEO SESSION ERROR:",
+            error
+        )
+
+        return jsonify({
+            "error": "Could not create video session"
+        }), 500
+
+    finally:
+
+        if cursor:
+            cursor.close()
+
+        if (
+            connection
+            and connection.is_connected()
+        ):
+            connection.close()
+
+@counsellor_bp.route(
+    "/video-sessions/<int:session_id>/end",
+    methods=["PUT"]
+)
+@token_required
+@role_required("COUNSELLOR")
+def end_video_session(session_id):
+
+    connection = None
+    cursor = None
+
+    try:
+
+        connection = get_db_connection()
+
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            UPDATE video_sessions
+            SET
+                status = 'ENDED',
+                ended_at = CURRENT_TIMESTAMP
+            WHERE
+                session_id = %s
+                AND counsellor_id = %s
+                AND status != 'ENDED'
+        """, (
+            session_id,
+            request.user["user_id"]
+        ))
+
+        if cursor.rowcount == 0:
+
+            return jsonify({
+                "error": "Video session not found"
+            }), 404
+
+        connection.commit()
+
+        return jsonify({
+            "message": "Video session ended successfully",
+            "session_id": session_id
+        }), 200
+
+    except Exception as error:
+
+        if connection and connection.is_connected():
+            connection.rollback()
+
+        print(
+            "END VIDEO SESSION ERROR:",
+            error
+        )
+
+        return jsonify({
+            "error": "Could not end video session"
+        }), 500
+
+    finally:
+
+        if cursor:
+            cursor.close()
+
+        if (
+            connection
+            and connection.is_connected()
+        ):
             connection.close()

@@ -1688,6 +1688,24 @@
 <div>
 <div class="topbar-title" data-en="Victim Dashboard" data-hi="पीड़ित डैशबोर्ड">
                     Victim Dashboard
+
+            <a href="#" class="sidebar-link sidebar-logout"
+               onclick="logout(); return false;">
+                <span class="sidebar-icon">↪</span>
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+    <section class="main-area">
+
+        <header class="topbar">
+
+            <div>
+                <div class="topbar-title">
+                My Well-being Dashboard
                 </div>
 <div class="topbar-subtitle" data-en="Your personal well-being and support space" data-hi="आपके व्यक्तिगत कल्याण और सहायता का स्थान">
                     Your personal well-being and support space
@@ -1703,6 +1721,14 @@
 </div>
 <div class="topbar-user-role" data-en="Victim Portal" data-hi="पीड़ित पोर्टल">
                         Victim Portal
+
+                <div class="topbar-user-details">
+                    <div class="topbar-user-name">
+                        <span id="topbarUserName">PAWS User</span>
+                    </div>
+
+                    <div class="topbar-user-role">
+                    Personal Well-being Space
                     </div>
 </div>
 </div>
@@ -1730,6 +1756,86 @@
 <!-- DAILY CHECK-IN -->
 <div class="card checkin-card">
 <h2 data-en="🌿 Daily Well-being Check-in" data-hi="🌿 दैनिक कल्याण चेक-इन">
+
+
+    </div>
+
+    <!-- ================= OFFLINE / CONNECTIVITY STATUS ================= -->
+
+<div id="offlineModeCard"
+     style="
+        margin-top:20px;
+        padding:16px 20px;
+        border-radius:14px;
+        background:#f8fafc;
+        border:1px solid #e2e8f0;
+        transition:0.3s;
+     ">
+
+    <div style="
+        display:flex;
+        align-items:center;
+        gap:10px;
+        flex-wrap:wrap;
+    ">
+
+        <span id="offlineStatus"
+              style="
+                padding:7px 13px;
+                border-radius:20px;
+                font-size:13px;
+                font-weight:600;
+                background:#e6fffa;
+                color:#276749;
+              ">
+            🟢 Online
+        </span>
+
+        <span id="offlineSyncText"
+              style="
+                font-size:13px;
+                color:#526581;
+              ">
+            Your connection is active.
+        </span>
+
+    </div>
+
+    <div id="offlineDetails"
+         style="
+            margin-top:12px;
+            font-size:13px;
+            color:#526581;
+            display:none;
+         ">
+
+        ✓ Last resources available<br>
+        ✓ Check-ins can be saved locally<br>
+        ✓ Help requests will be queued<br>
+        ✓ Data will sync automatically when connection returns
+
+    </div>
+
+</div>
+
+<!-- ================= END OFFLINE STATUS ================= -->
+
+
+
+    <div class="dashboard-grid">
+
+
+        <!-- ================= LEFT SECTION ================= -->
+
+        <div>
+
+
+            <!-- DAILY CHECK-IN -->
+
+            <div class="card checkin-card">
+
+
+                <h2>
 
                     🌿 Daily Well-being Check-in
 
@@ -1835,6 +1941,169 @@
 <!-- DDI CARD -->
 <div class="card">
 <h2 data-en="Your Well-being Status" data-hi="आपकी कल्याण स्थिति">
+
+
+
+
+
+            </div>
+
+
+        </div>
+
+<!-- =========================
+     VIDEO COUNSELLING
+========================== -->
+
+<div
+    class="card"
+    id="victimVideoSection"
+    style="margin-top:25px;"
+>
+    <h2>
+        🎥 Video Counselling
+    </h2>
+
+    <p class="card-description">
+        Join a private video counselling session with your counsellor.
+    </p>
+
+    <div
+        id="victimVideoStatus"
+        style="
+            margin-top:15px;
+            padding:16px;
+            background:#f8fafc;
+            border-radius:12px;
+            color:#526581;
+        "
+    >
+        Checking for an available counselling session...
+    </div>
+
+    <button
+        id="joinVideoButton"
+        class="primary-button"
+        type="button"
+        onclick="joinVictimVideoSession()"
+        style="
+            display:none;
+            margin-top:15px;
+        "
+    >
+        🎥 Join Video Counselling
+    </button>
+</div>
+
+<!-- =========================
+     MESSAGE COUNSELLOR
+========================== -->
+
+<div
+    class="card"
+    id="messagingSection"
+    style="margin-top:25px;"
+>
+
+    <h2>
+        💬 Message Counsellor
+    </h2>
+
+    <p class="card-description">
+
+        Send a private message to your counsellor
+        and continue your conversation.
+
+    </p>
+
+    <div
+        id="victimMessageList"
+        style="
+            height:280px;
+            overflow-y:auto;
+            padding:15px;
+            background:#f8fafc;
+            border-radius:12px;
+            margin-top:15px;
+            margin-bottom:15px;
+        "
+    >
+
+        <div class="empty-state">
+            Loading conversation...
+        </div>
+
+    </div>
+
+    <div
+        style="
+            display:flex;
+            gap:12px;
+            align-items:flex-end;
+        "
+    >
+
+        <textarea
+            id="victimMessageInput"
+            placeholder="Write a message to your counsellor..."
+            rows="2"
+            style="
+                flex:1;
+                resize:none;
+                padding:12px;
+                border:1px solid #dce4ed;
+                border-radius:10px;
+                font-family:inherit;
+                font-size:14px;
+            "
+        ></textarea>
+
+        <button
+    type="button"
+    class="primary-button"
+    onclick="sendVictimMessage()"
+    style="
+        min-width:110px;
+        height:48px;
+        padding:0 24px;
+        border:none;
+        border-radius:10px;
+        background:#365f8b;
+        color:#ffffff;
+        font-size:15px;
+        font-weight:600;
+        cursor:pointer;
+        white-space:nowrap;
+        box-shadow:0 2px 6px rgba(0,0,0,0.10);
+    "
+>
+    Send
+</button>
+
+    </div>
+
+    <div
+        id="victimMessageStatus"
+        style="
+            margin-top:10px;
+            font-size:13px;
+        "
+    ></div>
+
+</div>
+
+
+        <!-- ================= RIGHT SECTION ================= -->
+
+        <div>
+
+
+            <!-- DDI CARD -->
+
+            <div class="card">
+
+
+                <h2>
 
                     Your Well-being Status
 
@@ -1960,45 +2229,88 @@
 
 
     /* ==========================================
-       CHECK LOGIN
-    ========================================== */
+   CHECK LOGIN
+========================================== */
 
-    if (!victimId) {
+if (!victimId) {
 
-        alert(
-            "Please log in first."
-        );
+    alert(
+        "Please log in first."
+    );
 
-        window.location.href =
-            "/victim-login";
+    window.location.href =
+        "/victim-login";
 
-    }
-
-    else {
-
-        document
-            .getElementById(
-                "welcomeMessage"
-            )
-            .innerText =
-            "Welcome back, " +
-            victimId;
-
-            const topbarUserName = document.getElementById("topbarUserName");
-
-if (topbarUserName) {
-    topbarUserName.innerText = "Victim " + victimId;
 }
 
+else {
 
-        /* LOAD REAL DATA */
+    updateConnectivityStatus();
 
-        loadLatestCheckin();
-        loadWellbeingTrend();
+    let userName = "PAWS User";
+
+    try {
+        const storedUser = localStorage.getItem("pawsUser");
+
+        if (storedUser) {
+            const user = JSON.parse(storedUser);
+
+            if (user && user.name) {
+                userName = user.name;
+            }
+        }
+
+        // If pawsUser is not available, get the name from the logged-in account
+        if (userName === "PAWS User") {
+            const token =
+                localStorage.getItem("pawsToken") ||
+                localStorage.getItem("paws_token") ||
+                localStorage.getItem("token") ||
+                localStorage.getItem("jwtToken") ||
+                localStorage.getItem("access_token");
+
+            if (token) {
+                const payload = JSON.parse(atob(token.split(".")[1]));
+
+                if (payload.name) {
+                    userName = payload.name;
+                }
+            }
+        }
+
+    } catch (error) {
+        console.warn("Could not read user name:", error);
+    }
+
+
+    /* SHOW LOGGED-IN USER NAME */
+
+    document
+        .getElementById("welcomeMessage")
+        .innerText =
+        "Welcome back, " + userName;
+
+
+    const topbarUserName =
+        document.getElementById(
+            "topbarUserName"
+        );
+
+    if (topbarUserName) {
+
+        topbarUserName.innerText =
+            userName;
 
     }
 
 
+    /* LOAD REAL DATA */
+
+    loadLatestCheckin();
+
+    loadWellbeingTrend();
+
+}
 
     /* ==========================================
        LOAD LATEST CHECK-IN
@@ -2382,6 +2694,529 @@ async function loadWellbeingTrend() {
     }
 }
 
+// =========================================================
+// VICTIM VIDEO COUNSELLING
+// =========================================================
+
+async function loadVictimVideoSession() {
+
+    const status = document.getElementById(
+        "victimVideoStatus"
+    );
+
+    const joinButton = document.getElementById(
+        "joinVideoButton"
+    );
+
+    if (!status || !joinButton) {
+        return;
+    }
+
+    const token =
+        localStorage.getItem("pawsToken") ||
+        localStorage.getItem("paws_token") ||
+        localStorage.getItem("token") ||
+        localStorage.getItem("jwtToken") ||
+        localStorage.getItem("access_token");
+
+    if (!token) {
+
+        status.textContent =
+            "Please log in again to access video counselling.";
+
+        status.style.color = "#c53030";
+
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            "/api/victims/video-sessions",
+            {
+                method: "GET",
+                headers: {
+                    "Authorization":
+                        "Bearer " + token,
+                    "Accept":
+                        "application/json"
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.error ||
+                "Could not check video counselling."
+            );
+        }
+
+        // -------------------------------------------------
+        // No active session
+        // -------------------------------------------------
+
+        if (!data.session) {
+
+            status.textContent =
+                "No video counselling session is currently available.";
+
+            status.style.color = "#526581";
+
+            joinButton.style.display = "none";
+
+            return;
+        }
+
+        // -------------------------------------------------
+        // Active session found
+        // -------------------------------------------------
+
+        window.currentVictimVideoSession =
+            data.session;
+
+        status.innerHTML = `
+            <strong style="color:#243b55;">
+                Your counsellor has started a video counselling session.
+            </strong>
+            <br>
+            <span style="font-size:13px;">
+                You can join the session now.
+            </span>
+        `;
+
+        joinButton.style.display = "inline-block";
+
+    } catch (error) {
+
+        console.error(
+            "Victim video session error:",
+            error
+        );
+
+        status.textContent =
+            "Could not check video counselling.";
+
+        status.style.color = "#c53030";
+
+        joinButton.style.display = "none";
+    }
+}
+
+
+function joinVictimVideoSession() {
+
+    const session =
+        window.currentVictimVideoSession;
+
+    if (!session || !session.room_url) {
+
+        alert(
+            "No active video counselling session is available."
+        );
+
+        return;
+    }
+
+    const videoWindow =
+        window.open(
+            session.room_url,
+            "_blank"
+        );
+
+    if (!videoWindow) {
+
+        alert(
+            "Please allow pop-ups for the PAWS application."
+        );
+
+        return;
+    }
+
+    console.log(
+        "Joining victim video session:",
+        session
+    );
+}
+
+
+/* ==========================================
+   VICTIM MESSAGING
+========================================== */
+
+async function loadVictimMessages() {
+
+    const list =
+        document.getElementById(
+            "victimMessageList"
+        );
+
+    if (!list) {
+        return;
+    }
+
+    const token =
+    localStorage.getItem("pawsToken") ||
+    localStorage.getItem("paws_token") ||
+    localStorage.getItem("token") ||
+    localStorage.getItem("jwtToken") ||
+    localStorage.getItem("access_token");
+
+if (token) {
+    try {
+        const payload = JSON.parse(atob(token.split(".")[1]));
+
+        if (payload.role !== "VICTIM") {
+            localStorage.clear();
+            alert("Please log in again as a victim.");
+            window.location.href = "/victim-login";
+            return;
+        }
+    } catch (error) {
+        localStorage.clear();
+        window.location.href = "/victim-login";
+        return;
+    }
+}
+
+    if (!token) {
+
+        list.innerHTML = `
+            <div class="empty-state">
+                Please log in again to view messages.
+            </div>
+        `;
+
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/victims/messages",
+                {
+                    method: "GET",
+
+                    headers: {
+                        "Authorization":
+                            "Bearer " + token,
+
+                        "Accept":
+                            "application/json"
+                    }
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Could not load messages."
+            );
+
+        }
+
+        renderVictimMessages(
+            data.messages || []
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Victim messages error:",
+            error
+        );
+
+        list.innerHTML = `
+            <div class="empty-state">
+                Could not load conversation.
+            </div>
+        `;
+
+    }
+
+}
+
+
+function renderVictimMessages(messages) {
+
+    const list =
+        document.getElementById("victimMessageList");
+
+    if (!messages.length) {
+
+        list.innerHTML = `
+            <div
+                class="empty-state"
+                style="padding-top:90px;"
+            >
+                No messages yet.<br>
+                Start a conversation with your counsellor.
+            </div>
+        `;
+
+        return;
+    }
+
+    const currentUserId =
+        getVictimCurrentUserId();
+
+    list.innerHTML = messages.map(message => {
+
+        /*
+         * Victim's own messages → RIGHT
+         * Counsellor's messages → LEFT
+         */
+        const isSent =
+            Number(message.sender_id) ===
+            Number(currentUserId);
+
+        const date = message.created_at
+            ? new Date(
+                message.created_at
+              ).toLocaleString("en-IN")
+            : "";
+
+        return `
+            <div
+                style="
+                    display:flex;
+                    justify-content:${isSent ? "flex-end" : "flex-start"};
+                    margin-bottom:14px;
+                    width:100%;
+                "
+            >
+
+                <div
+                    style="
+                        max-width:70%;
+                        min-width:120px;
+                        padding:12px 16px;
+                        border-radius:16px;
+
+                        background:${isSent
+                            ? "#365f8b"
+                            : "#ffffff"};
+
+                        color:${isSent
+                            ? "#ffffff"
+                            : "#243b55"};
+
+                        border:${isSent
+                            ? "none"
+                            : "1px solid #e2e8f0"};
+
+                        box-shadow:
+                            0 2px 7px
+                            rgba(0,0,0,0.08);
+
+                        text-align:left;
+                        word-wrap:break-word;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size:15px;
+                            line-height:1.5;
+                        "
+                    >
+                        ${escapeHtml(message.message)}
+                    </div>
+
+                    <div
+                        style="
+                            margin-top:6px;
+                            font-size:10px;
+                            opacity:0.7;
+                            text-align:right;
+                        "
+                    >
+                        ${date}
+                    </div>
+
+                </div>
+
+            </div>
+        `;
+
+    }).join("");
+
+    list.scrollTop =
+        list.scrollHeight;
+}
+
+
+function getVictimCurrentUserId() {
+
+    // First try the saved user object
+    const user = localStorage.getItem("pawsUser");
+
+    if (user) {
+        try {
+            const parsed = JSON.parse(user);
+
+            if (parsed.user_id || parsed.id) {
+                return parsed.user_id || parsed.id;
+            }
+        } catch (error) {
+            console.warn("Could not read pawsUser.");
+        }
+    }
+
+    // Fallback: get user_id directly from JWT
+    const token =
+        localStorage.getItem("pawsToken") ||
+        localStorage.getItem("paws_token") ||
+        localStorage.getItem("token") ||
+        localStorage.getItem("jwtToken") ||
+        localStorage.getItem("access_token");
+
+    if (!token) {
+        return null;
+    }
+
+    try {
+        const payload = JSON.parse(
+            atob(token.split(".")[1])
+        );
+
+        return payload.user_id || null;
+
+    } catch (error) {
+
+        console.warn(
+            "Could not read user ID from token."
+        );
+
+        return null;
+    }
+}
+
+
+async function sendVictimMessage() {
+
+    const input =
+        document.getElementById(
+            "victimMessageInput"
+        );
+
+    const status =
+        document.getElementById(
+            "victimMessageStatus"
+        );
+
+    const message =
+        input.value.trim();
+
+    if (!message) {
+
+        status.textContent =
+            "Please write a message first.";
+
+        status.style.color =
+            "#c53030";
+
+        return;
+    }
+
+    const token =
+        localStorage.getItem("pawsToken") ||
+        localStorage.getItem("paws_token") ||
+        localStorage.getItem("token") ||
+        localStorage.getItem("jwtToken") ||
+        localStorage.getItem("access_token");
+
+    if (!token) {
+
+        status.textContent =
+            "Your login session has expired.";
+
+        status.style.color =
+            "#c53030";
+
+        return;
+    }
+
+    status.textContent =
+        "Sending...";
+
+    status.style.color =
+        "#718096";
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/victims/messages",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Authorization":
+                            "Bearer " + token,
+
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+                            message:
+                                message
+                        })
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Could not send message."
+            );
+
+        }
+
+        input.value = "";
+
+        status.textContent =
+            "✓ Message sent";
+
+        status.style.color =
+            "#2f855a";
+
+        await loadVictimMessages();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Send victim message error:",
+            error
+        );
+
+        status.textContent =
+            error.message ||
+            "Could not send message.";
+
+        status.style.color =
+            "#c53030";
+
+    }
+
+}
+
 
 
     /* ==========================================
@@ -2402,12 +3237,31 @@ async function loadWellbeingTrend() {
 ========================================== */
 
 async function needHelp() {
+
     const confirmation = window.confirm(
         "Are you sure you need immediate support?\n\n" +
         "Your request will be sent to the counsellor."
     );
 
     if (!confirmation) return;
+
+
+    /* ==========================================
+       OFFLINE MODE
+    ========================================== */
+
+    if (!navigator.onLine) {
+
+        saveOfflineHelpRequest();
+
+        return;
+
+    }
+
+
+    /* ==========================================
+       GET LOGIN TOKEN
+    ========================================== */
 
     const token =
         localStorage.getItem("paws_token") ||
@@ -2416,49 +3270,330 @@ async function needHelp() {
         localStorage.getItem("access_token");
 
     if (!token) {
+
         window.alert(
             "Your login session is missing.\n\n" +
             "Please log in again using the PAWS link."
         );
 
-        window.location.href = "/victim-login";
+        window.location.href =
+            "/victim-login";
+
         return;
+
     }
 
-    try {
-        const response = await fetch("/api/victims/help", {
-            method: "POST",
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                victim_id: Number(victimId)
-            })
-        });
 
-        const data = await response.json();
+    /* ==========================================
+       SEND HELP REQUEST
+    ========================================== */
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/victims/help",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Authorization":
+                            "Bearer " + token,
+
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+                            victim_id:
+                                Number(victimId)
+                        })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
 
         if (!response.ok) {
+
             throw new Error(
-                data.error || "Unable to send help request."
+                data.error ||
+                "Unable to send help request."
             );
+
         }
+
 
         window.alert(
             "Your request has been sent successfully.\n\n" +
             "A counsellor has been notified."
         );
 
-    } catch (error) {
-        console.error("HELP REQUEST ERROR:", error);
 
-        window.alert(
-            "We could not send the request right now.\n\n" +
-            "Please try again."
+    } catch (error) {
+
+        console.error(
+            "HELP REQUEST ERROR:",
+            error
         );
+
+
+        /*
+           If the server cannot be reached,
+           save the request locally.
+        */
+
+        saveOfflineHelpRequest();
+
     }
+
 }
+
+/* ==========================================
+   SAVE HELP REQUEST OFFLINE
+========================================== */
+
+function saveOfflineHelpRequest() {
+
+    const existingQueue =
+        JSON.parse(
+            localStorage.getItem(
+                "pawsOfflineHelpRequests"
+            ) || "[]"
+        );
+
+
+    existingQueue.push({
+
+        id:
+            Date.now(),
+
+        victimId:
+            Number(victimId),
+
+        savedAt:
+            new Date().toISOString()
+
+    });
+
+
+    localStorage.setItem(
+        "pawsOfflineHelpRequests",
+        JSON.stringify(existingQueue)
+    );
+
+
+    localStorage.setItem(
+        "pawsOfflineHelpPending",
+        "true"
+    );
+
+
+    window.alert(
+        "You are currently offline.\n\n" +
+        "Your help request has been saved and " +
+        "will be sent automatically when your connection returns."
+    );
+
+}
+
+/* ==========================================
+   SYNC OFFLINE HELP REQUESTS
+========================================== */
+
+async function syncOfflineHelpRequests() {
+
+    const queue =
+        JSON.parse(
+            localStorage.getItem(
+                "pawsOfflineHelpRequests"
+            ) || "[]"
+        );
+
+
+    /* NOTHING TO SYNC */
+
+    if (!queue.length) {
+
+        localStorage.removeItem(
+            "pawsOfflineHelpPending"
+        );
+
+        return;
+
+    }
+
+
+    /* INTERNET STILL UNAVAILABLE */
+
+    if (!navigator.onLine) {
+
+        return;
+
+    }
+
+
+    const token =
+        localStorage.getItem("paws_token") ||
+        localStorage.getItem("token") ||
+        localStorage.getItem("jwtToken") ||
+        localStorage.getItem("access_token");
+
+
+    if (!token) {
+
+        return;
+
+    }
+
+
+    console.log(
+        "Syncing offline help requests:",
+        queue.length
+    );
+
+
+    const remainingQueue = [];
+
+
+    for (const item of queue) {
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/victims/help",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Authorization":
+                                "Bearer " + token,
+
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+                                victim_id:
+                                    item.victimId
+                            })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (response.ok) {
+
+                console.log(
+                    "Offline help request synced:",
+                    item.id
+                );
+
+            }
+
+            else {
+
+                remainingQueue.push(item);
+
+                console.warn(
+                    "Help request could not be synced:",
+                    data.error
+                );
+
+            }
+
+
+        } catch (error) {
+
+            console.error(
+                "Offline help sync failed:",
+                error
+            );
+
+            remainingQueue.push(item);
+
+        }
+
+    }
+
+
+    /* ==========================================
+       UPDATE LOCAL QUEUE
+    ========================================== */
+
+    if (remainingQueue.length > 0) {
+
+        localStorage.setItem(
+            "pawsOfflineHelpRequests",
+            JSON.stringify(remainingQueue)
+        );
+
+        localStorage.setItem(
+            "pawsOfflineHelpPending",
+            "true"
+        );
+
+    }
+
+    else {
+
+        localStorage.removeItem(
+            "pawsOfflineHelpRequests"
+        );
+
+        localStorage.removeItem(
+            "pawsOfflineHelpPending"
+        );
+
+        console.log(
+            "All offline help requests synced successfully."
+        );
+
+    }
+
+}
+
+/* ==========================================
+   AUTOMATIC HELP REQUEST SYNC
+========================================== */
+
+window.addEventListener(
+    "online",
+    function () {
+
+        console.log(
+            "Internet restored. Syncing help requests..."
+        );
+
+        syncOfflineHelpRequests();
+
+    }
+);
+
+/* ==========================================
+   CHECK PENDING HELP REQUESTS
+========================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        if (navigator.onLine) {
+
+            syncOfflineHelpRequests();
+
+        }
+
+    }
+);
 
 /* ==========================================
    CALMING ACTIVITY MODAL
@@ -5423,6 +6558,83 @@ closeActivity = function() {
 
 };
 
+/* ==========================================
+   OFFLINE / ONLINE MODE
+========================================== */
+
+function updateConnectivityStatus() {
+
+    const status =
+        document.getElementById("offlineStatus");
+
+    const syncText =
+        document.getElementById("offlineSyncText");
+
+    const details =
+        document.getElementById("offlineDetails");
+
+    const card =
+        document.getElementById("offlineModeCard");
+
+    if (!status || !syncText || !details || !card) {
+        return;
+    }
+
+    if (navigator.onLine) {
+
+        status.innerHTML = "🟢 Online";
+
+        status.style.background = "#e6fffa";
+        status.style.color = "#276749";
+
+        syncText.innerText =
+            "Your connection is active.";
+
+        details.style.display = "none";
+
+        card.style.background = "#f8fafc";
+        card.style.borderColor = "#e2e8f0";
+
+    } else {
+
+        status.innerHTML = "🟠 Offline Mode";
+
+        status.style.background = "#fffaf0";
+        status.style.color = "#c05621";
+
+        syncText.innerText =
+            "You're currently using PAWS in low-connectivity mode.";
+
+        details.style.display = "block";
+
+        card.style.background = "#fffaf0";
+        card.style.borderColor = "#f6ad55";
+
+    }
+
+}
+
+
+/* Detect internet connection changes */
+
+window.addEventListener(
+    "online",
+    updateConnectivityStatus
+);
+
+window.addEventListener(
+    "offline",
+    updateConnectivityStatus
+);
+
+
+/* Check connection when dashboard loads */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    updateConnectivityStatus
+);
+
 
 
 
@@ -5570,6 +6782,19 @@ function watchAndUnwind() {
 
     }
 
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+loadVictimMessages();
+loadVictimVideoSession();
 
 </script>
 <script>
