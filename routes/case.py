@@ -1,6 +1,9 @@
 from flask import Blueprint, request, jsonify
 
 from database.db import get_db_connection
+from database.audit import log_audit
+import jwt
+import os
 
 
 case_bp = Blueprint(
@@ -17,6 +20,42 @@ VALID_STAGES = [
     "COMPENSATION",
     "REHABILITATION"
 ]
+
+
+def _optional_request_user():
+    """Read an authenticated PAWS user when the caller supplied a JWT.
+
+    Case endpoints historically allowed direct access, so this helper does not
+    enforce authentication; it only enables attribution when a valid token is
+    already present.
+    """
+    header = request.headers.get("Authorization", "")
+    if not header.startswith("Bearer "):
+        return {}
+    secret = os.getenv("JWT_SECRET")
+    if not secret:
+        return {}
+    token = header.split(" ", 1)[1]
+    try:
+        return jwt.decode(token, secret, algorithms=["HS256"]) or {}
+    except Exception:
+        return {}
+
+
+def _audit_case(action, case_id=None, victim_id=None, entity_type="CASE", description="Case action recorded."):
+    user = _optional_request_user()
+    log_audit(
+        user_id=user.get("user_id"),
+        action_role=user.get("role", "SYSTEM"),
+        action=action,
+        entity_type=entity_type,
+        entity_id=str(case_id) if case_id is not None else None,
+        victim_id=victim_id,
+        case_id=case_id,
+        description=description,
+        status="SUCCESS",
+        ip_address=request.headers.get("X-Forwarded-For", request.remote_addr),
+    )
 
 
 # =========================================================
@@ -116,6 +155,13 @@ def create_case():
         )
 
         connection.commit()
+
+        _audit_case(
+            "CASE_CREATED",
+            case_id=case_id,
+            victim_id=victim_id,
+            description=f"Case {case_number} was created at {current_stage} stage."
+        )
 
         return jsonify({
             "message": "Case created successfully",
@@ -218,6 +264,12 @@ def update_case_stage(case_id):
 
         connection.commit()
 
+        _audit_case(
+            "CASE_STAGE_CHANGED",
+            case_id=case_id,
+            description=f"Case {case_id} stage changed from {old_stage} to {new_stage}."
+        )
+
         return jsonify({
             "message": "Case stage updated successfully",
             "case_id": case_id,
@@ -292,6 +344,13 @@ def get_case(case_id):
                 "error": "Case not found"
             }), 404
 
+        _audit_case(
+            "VIEW_CASE_RECORD",
+            case_id=case_id,
+            victim_id=case.get("victim_id"),
+            description=f"Viewed case record {case.get('case_number') or case_id}."
+        )
+
         return jsonify(case), 200
 
     except Exception as error:
@@ -360,6 +419,12 @@ def get_case_timeline(case_id):
         )
 
         events = cursor.fetchall()
+
+        _audit_case(
+            "VIEW_CASE_TIMELINE",
+            case_id=case_id,
+            description=f"Viewed timeline for case {case['case_number']}."
+        )
 
         return jsonify({
             "case_id": case["case_id"],

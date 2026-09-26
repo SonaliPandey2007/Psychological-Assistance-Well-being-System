@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash
 
 from database.db import get_db_connection
+from database.audit import log_audit
 from ai.distress_engine import analyze_checkin, calculate_trend
 from routes.auth import token_required, role_required
 
@@ -439,6 +440,30 @@ def submit_checkin(victim_id):
         # =================================================
 
         connection.commit()
+
+
+        # Link the check-in to the corresponding PAWS user when the local schema supports it.
+        checkin_user_id = None
+        try:
+            cursor.execute("SELECT user_id FROM victims WHERE victim_id = %s", (victim_id,))
+            linked_victim = cursor.fetchone() or {}
+            checkin_user_id = linked_victim.get("user_id")
+        except Exception:
+            checkin_user_id = None
+
+        log_audit(
+            user_id=checkin_user_id,
+            action_role="VICTIM",
+            action="CHECKIN_SUBMITTED",
+            entity_type="VICTIM",
+            entity_id=str(victim_id),
+            victim_id=victim_id,
+            case_id=case_id,
+            description=f"Victim {victim_id} submitted a wellbeing check-in.",
+            status="SUCCESS",
+            ip_address=request.headers.get("X-Forwarded-For", request.remote_addr),
+        )
+
 
         # =================================================
         # RETURN AI ANALYSIS

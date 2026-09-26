@@ -158,3 +158,24 @@ CREATE TABLE alerts (
         REFERENCES users(user_id)
         ON DELETE SET NULL
 );
+
+-- 7. AUDIT LOGS
+CREATE TABLE audit_logs (
+    audit_id INT AUTO_INCREMENT PRIMARY KEY,
+    officer_id INT NULL,
+    action VARCHAR(60) NOT NULL,
+    entity_type VARCHAR(40) NOT NULL DEFAULT 'SYSTEM',
+    entity_id VARCHAR(100),
+    description VARCHAR(500) NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'SUCCESS',
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    INDEX idx_audit_created (created_at),
+    INDEX idx_audit_officer (officer_id),
+    INDEX idx_audit_action (action),
+    INDEX idx_audit_entity (entity_type, entity_id),
+
+    FOREIGN KEY (officer_id)
+        REFERENCES users(user_id)
+        ON DELETE SET NULL
+);

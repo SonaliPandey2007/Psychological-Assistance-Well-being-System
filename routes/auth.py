@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, after_this_request
 from werkzeug.security import check_password_hash
 import jwt
 import os
@@ -9,6 +9,7 @@ from datetime import datetime, timedelta, timezone
 from functools import wraps
 
 from database.db import get_db_connection
+from database.audit import log_audit, insert_audit_log, classify_request, request_audit_context
 
 
 auth_bp = Blueprint(
@@ -97,6 +98,19 @@ def login():
             algorithm="HS256"
         )
 
+        # Record successful sign-in for every PAWS role.
+        # Logging is best-effort and must never break authentication.
+        log_audit(
+            user_id=user["user_id"],
+            action_role=user["role"],
+            action="LOGIN_SUCCESS",
+            entity_type="AUTH",
+            entity_id=str(user["user_id"]),
+            description=f"{user['role'].title()} {user['name']} signed in",
+            status="SUCCESS",
+            ip_address=request.headers.get("X-Forwarded-For", request.remote_addr),
+        )
+
         return jsonify({
             "message": "Login successful",
             "token": token,
@@ -169,6 +183,42 @@ def token_required(f):
                 "error": "Invalid authentication token"
             }), 401
 
+        # Automatically audit meaningful actions performed by every authenticated role.
+        # Navigation/viewing the dashboard and audit endpoint are intentionally excluded
+        # to avoid creating repetitive noise.
+        metadata = classify_request(request.path, request.method)
+        if metadata:
+            @after_this_request
+            def _audit_authenticated_action(response):
+                try:
+                    enriched = request_audit_context(request, response, metadata)
+                    connection = get_db_connection()
+                    details = {
+                        "description": metadata.get("description"),
+                        "status": enriched.get("status"),
+                        "http_status": enriched.get("response_status"),
+                    }
+                    if enriched.get("details_alert_id") is not None:
+                        details["alert_id"] = enriched["details_alert_id"]
+                    insert_audit_log(
+                        connection,
+                        user_id=request.user.get("user_id"),
+                        action_role=request.user.get("role", "SYSTEM"),
+                        action=enriched["action"],
+                        entity_type=enriched.get("entity_type"),
+                        entity_id=str(enriched["entity_id"]) if enriched.get("entity_id") is not None else None,
+                        victim_id=enriched.get("victim_id"),
+                        case_id=None,
+                        description=enriched.get("description", "PAWS action recorded."),
+                        status=enriched.get("status", "INFO"),
+                        details=details,
+                        ip_address=request.headers.get("X-Forwarded-For", request.remote_addr),
+                    )
+                    connection.close()
+                except Exception as audit_error:
+                    print("GLOBAL AUDIT WARNING:", audit_error)
+                return response
+
         return f(*args, **kwargs)
 
     return decorated
@@ -216,4 +266,28 @@ def get_current_user():
     return jsonify({
         "message": "Authenticated successfully",
         "user": request.user
+    }), 200
+
+# =========================================================
+# LOGOUT (JWT IS STATELESS — CLIENT REMOVES TOKEN)
+# =========================================================
+
+@auth_bp.route("/logout", methods=["POST"])
+@token_required
+def logout():
+    user = getattr(request, "user", {})
+
+    log_audit(
+        user_id=user.get("user_id"),
+        action_role=user.get("role", "SYSTEM"),
+        action="LOGOUT",
+        entity_type="AUTH",
+        entity_id=str(user.get("user_id")) if user.get("user_id") is not None else None,
+        description=f"{user.get('role', 'User').title()} {user.get('name', 'User')} signed out",
+        status="SUCCESS",
+        ip_address=request.headers.get("X-Forwarded-For", request.remote_addr),
+    )
+
+    return jsonify({
+        "message": "Logout recorded"
     }), 200

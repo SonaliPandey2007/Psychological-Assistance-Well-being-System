@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 
 from database.db import get_db_connection
+from database.audit import log_audit
 from routes.auth import token_required, role_required
 
 
@@ -160,6 +161,18 @@ def victim_profile(victim_id):
                 "error": "Victim not found"
             }), 404
 
+        log_audit(
+            user_id=request.user["user_id"],
+            action_role="COUNSELLOR",
+            action="VICTIM_VIEW",
+            entity_type="VICTIM",
+            entity_id=str(victim_id),
+            victim_id=victim_id,
+            description=f"Counsellor viewed victim profile {victim_id}.",
+            status="SUCCESS",
+            ip_address=request.headers.get("X-Forwarded-For", request.remote_addr),
+        )
+
         # -------------------------------------------------
         # DISTRESS HISTORY
         # -------------------------------------------------
@@ -281,7 +294,17 @@ def review_alert(alert_id):
     try:
 
         connection = get_db_connection()
-        cursor = connection.cursor()
+        cursor = connection.cursor(dictionary=True)
+
+        cursor.execute("""
+            SELECT victim_id
+            FROM alerts
+            WHERE alert_id = %s
+        """, (alert_id,))
+        alert = cursor.fetchone()
+
+        if not alert:
+            return jsonify({"error": "Alert not found"}), 404
 
         cursor.execute("""
             UPDATE alerts
@@ -300,6 +323,18 @@ def review_alert(alert_id):
             }), 404
 
         connection.commit()
+
+        log_audit(
+            user_id=request.user["user_id"],
+            action_role="COUNSELLOR",
+            action="SOS_REVIEWED",
+            entity_type="ALERT",
+            entity_id=str(alert_id),
+            victim_id=alert.get("victim_id"),
+            description=f"Counsellor reviewed SOS alert {alert_id}.",
+            status="SUCCESS",
+            ip_address=request.headers.get("X-Forwarded-For", request.remote_addr),
+        )
 
         return jsonify({
             "message": "Alert reviewed successfully",
@@ -377,6 +412,18 @@ def create_intervention():
 
         intervention_id = cursor.lastrowid
 
+        log_audit(
+            user_id=request.user["user_id"],
+            action_role="COUNSELLOR",
+            action="INTERVENTION_RECORDED",
+            entity_type="INTERVENTION",
+            entity_id=str(intervention_id),
+            victim_id=victim_id,
+            description=f"Counsellor recorded an intervention for victim {victim_id}.",
+            status="SUCCESS",
+            ip_address=request.headers.get("X-Forwarded-For", request.remote_addr),
+        )
+
         return jsonify({
             "message": "Intervention recorded successfully",
             "intervention_id": intervention_id
@@ -426,6 +473,18 @@ def get_interventions(victim_id):
         """, (victim_id,))
 
         interventions = cursor.fetchall()
+
+        log_audit(
+            user_id=request.user["user_id"],
+            action_role="COUNSELLOR",
+            action="VIEW_INTERVENTIONS",
+            entity_type="INTERVENTION_HISTORY",
+            entity_id=str(victim_id),
+            victim_id=victim_id,
+            description=f"Counsellor viewed intervention history for victim {victim_id}.",
+            status="SUCCESS",
+            ip_address=request.headers.get("X-Forwarded-For", request.remote_addr),
+        )
 
         return jsonify({
             "victim_id": victim_id,
@@ -486,6 +545,17 @@ def get_followups():
 
         followups = cursor.fetchall()
 
+        log_audit(
+            user_id=request.user["user_id"],
+            action_role="COUNSELLOR",
+            action="VIEW_FOLLOWUPS",
+            entity_type="FOLLOWUP",
+            entity_id=None,
+            description="Counsellor viewed scheduled follow-ups.",
+            status="SUCCESS",
+            ip_address=request.headers.get("X-Forwarded-For", request.remote_addr),
+        )
+
         return jsonify({
             "followups": followups,
             "count": len(followups)
@@ -532,6 +602,29 @@ def complete_followup(intervention_id):
             }), 404
 
         connection.commit()
+
+        followup_victim_id = None
+        try:
+            cursor.execute(
+                "SELECT victim_id FROM interventions WHERE intervention_id = %s",
+                (intervention_id,)
+            )
+            followup = cursor.fetchone()
+            followup_victim_id = (followup or {}).get("victim_id") if isinstance(followup, dict) else None
+        except Exception:
+            followup_victim_id = None
+
+        log_audit(
+            user_id=request.user["user_id"],
+            action_role="COUNSELLOR",
+            action="FOLLOWUP_COMPLETED",
+            entity_type="INTERVENTION",
+            entity_id=str(intervention_id),
+            victim_id=followup_victim_id,
+            description=f"Counsellor completed follow-up {intervention_id}.",
+            status="SUCCESS",
+            ip_address=request.headers.get("X-Forwarded-For", request.remote_addr),
+        )
 
         return jsonify({
             "message": "Follow-up marked as completed",
