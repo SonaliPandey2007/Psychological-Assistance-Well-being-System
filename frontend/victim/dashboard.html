@@ -1,19 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>PAWS | Victim Dashboard</title>
-
-
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PAWS | Victim Dashboard</title>
+<style>
 
 
         /* ================= GLOBAL ================= */
@@ -491,7 +483,7 @@
 
         .support-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
     gap: 15px;
     margin-top: 20px;
 }
@@ -933,7 +925,25 @@
 }
 
 
-        /* ================= RESPONSIVE ================= */
+        
+/* ================= RESOURCE LIBRARY ================= */
+.resource-intro { text-align:center; color:#66788a; line-height:1.6; margin:8px auto 24px; max-width:560px; }
+.resource-section-title { margin:24px 0 12px; color:#365f8b; font-size:16px; }
+.resource-card-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+.resource-card { background:#f8fafc; border:1px solid #e1e8ef; border-radius:15px; padding:17px; transition:.25s ease; }
+.resource-card:hover { transform:translateY(-2px); box-shadow:0 8px 22px rgba(54,95,139,.10); border-color:#cbd9e7; }
+.resource-card h3 { margin:0 0 5px; color:#243b55; font-size:16px; }
+.resource-card .resource-author { color:#547ca8; font-weight:600; font-size:13px; margin-bottom:9px; }
+.resource-card p { margin:0 0 13px; color:#66788a; font-size:13px; line-height:1.55; }
+.resource-button { display:inline-block; border:none; border-radius:9px; padding:9px 13px; background:#365f8b; color:white; text-decoration:none; font-size:12px; font-weight:700; cursor:pointer; transition:.2s ease; }
+.resource-button:hover { background:#2d5279; transform:translateY(-1px); }
+.resource-button.secondary { background:#eaf1f8; color:#365f8b; margin-left:5px; }
+.resource-warning { margin-top:18px; padding:12px 14px; border-radius:11px; background:#fff8e8; border:1px solid #f2dfaa; color:#795d19; font-size:12px; line-height:1.5; }
+.resource-note { margin-top:16px; padding:12px 14px; border-radius:11px; background:#eef6f1; color:#38604a; font-size:12px; line-height:1.5; }
+.resource-video-icon { font-size:25px; margin-bottom:8px; }
+@media (max-width:600px) { .resource-card-grid{grid-template-columns:1fr;} .resource-button.secondary{margin-left:0;margin-top:7px;} }
+
+/* ================= RESPONSIVE ================= */
 
         @media (max-width: 900px) {
 
@@ -1375,586 +1385,563 @@
 }
 
 
+
+/* ================= COLOR & CREATE ================= */
+
+.color-therapy-wrap {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.coloring-canvas-wrap {
+    width: 100%;
+    max-width: 520px;
+    margin: 20px auto 15px;
+    padding: 12px;
+    background: #fafafa;
+    border: 1px solid #e3e8ef;
+    border-radius: 18px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.7);
+}
+
+.coloring-canvas-stack {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.coloring-canvas-stack canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 12px;
+}
+
+#coloringPatternCanvas {
+    pointer-events: none;
+    background: #ffffff;
+}
+
+#coloringCanvas {
+    z-index: 2;
+    touch-action: none;
+    cursor: crosshair;
+}
+
+.color-patterns,
+.color-palette {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.color-pattern-button,
+.color-tool-button {
+    padding: 9px 13px;
+    border: 1px solid #dce4ed;
+    border-radius: 9px;
+    background: #f7f9fc;
+    color: #365f8b;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.color-pattern-button.active,
+.color-tool-button.active,
+.color-pattern-button:hover,
+.color-tool-button:hover {
+    background: #eaf1f8;
+    border-color: #bfd1e3;
+}
+
+.color-swatch {
+    width: 29px;
+    height: 29px;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 0 1px #cbd5e0;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+.color-swatch:hover,
+.color-swatch.active {
+    transform: scale(1.12);
+    box-shadow: 0 0 0 2px #365f8b;
+}
+
+.color-therapy-status {
+    margin-top: 13px;
+    color: #718096;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* ================= SIMPLE MEDITATION TIMER ================= */
+
+.simple-timer-display {
+    text-align: center;
+    font-size: 58px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #365f8b;
+    margin: 28px 0 8px;
+}
+
+.simple-timer-label {
+    text-align: center;
+    color: #718096;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.timer-presets {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin: 18px 0;
+}
+
+.timer-preset {
+    padding: 10px 6px;
+    border: 1px solid #dce4ed;
+    border-radius: 9px;
+    background: #f7f9fc;
+    color: #365f8b;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.timer-preset.active,
+.timer-preset:hover {
+    background: #eaf1f8;
+    border-color: #bfd1e3;
+}
+
+.custom-timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 15px 0 22px;
+    flex-wrap: wrap;
+}
+
+.custom-timer input {
+    width: 105px;
+    padding: 10px;
+    border: 1px solid #dce3eb;
+    border-radius: 9px;
+    text-align: center;
+    outline: none;
+}
+
+.custom-timer input:focus {
+    border-color: #547ca8;
+}
+
+.simple-timer-progress {
+    width: 100%;
+    height: 8px;
+    background: #e5edf5;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 12px 0 22px;
+}
+
+.simple-timer-progress-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #365f8b, #78a6cf);
+    border-radius: 20px;
+    transition: width 1s linear;
+}
+
+.timer-sound-box {
+    margin-top: 20px;
+    padding: 13px;
+    border-radius: 11px;
+    background: #f7f9fc;
+    text-align: center;
+    font-size: 12px;
+    color: #718096;
+}
+
+@media (max-width: 600px) {
+    .timer-presets {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .simple-timer-display {
+        font-size: 48px;
+    }
+}
+
     </style>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
-</head>
-
-
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+/* ================= MULTILINGUAL DASHBOARD ================= */
+.language-switcher {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-right: 18px;
+    padding: 5px;
+    background: rgba(255,255,255,0.72);
+    border: 1px solid #dce4ed;
+    border-radius: 12px;
+}
+.language-switcher button {
+    border: none;
+    background: transparent;
+    color: #365f8b;
+    padding: 7px 11px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.language-switcher button:hover {
+    background: #edf4fb;
+}
+.language-switcher button.active {
+    background: #365f8b;
+    color: white;
+}
+@media (max-width: 700px) {
+    .language-switcher {
+        margin-right: 8px;
+    }
+    .language-switcher button {
+        padding: 6px 8px;
+        font-size: 11px;
+    }
+}
+</style></head>
 <body>
-
-
 <!-- ================= NAVBAR ================= -->
-
 <div class="app-layout">
-
-    <aside class="sidebar">
-
-        <div class="sidebar-brand">
-            <div class="sidebar-brand-icon">🛡️</div>
-
-            <div>
-                <div class="sidebar-brand-name">PAWS</div>
-
-                <div class="sidebar-brand-subtitle">
-                    Psychological Assistance<br>
-                    & Wellbeing System
+<aside class="sidebar">
+<div class="sidebar-brand">
+<div class="sidebar-brand-icon">🛡️</div>
+<div>
+<div class="sidebar-brand-name">PAWS</div>
+<div class="sidebar-brand-subtitle">
+                    Psychological Assistance<br/>
+                    &amp; Wellbeing System
                 </div>
-            </div>
-        </div>
-
-        <div class="sidebar-section-title">
+</div>
+</div>
+<div class="sidebar-section-title" data-en="Main Menu" data-hi="मुख्य मेनू">
             Main Menu
         </div>
-
-        <a href="/victim/dashboard" class="sidebar-link active">
-            <span class="sidebar-icon">▦</span>
-            <span>Dashboard</span>
-        </a>
-
-        <a href="/victim/checkin" class="sidebar-link">
-            <span class="sidebar-icon">🌿</span>
-            <span>Daily Check-in</span>
-        </a>
-
-        <a href="#wellbeingTrend" class="sidebar-link">
-            <span class="sidebar-icon">📈</span>
-            <span>Well-being Trend</span>
-        </a>
-
-        <a href="#supportActivities" class="sidebar-link">
-            <span class="sidebar-icon">🧘</span>
-            <span>Support Activities</span>
-        </a>
-
-        <div class="sidebar-section-title">
+<a class="sidebar-link active" href="/victim/dashboard">
+<span class="sidebar-icon">▦</span>
+<span data-en="Dashboard" data-hi="डैशबोर्ड">Dashboard</span>
+</a>
+<a class="sidebar-link" href="/victim/checkin">
+<span class="sidebar-icon">🌿</span>
+<span data-en="Daily Check-in" data-hi="दैनिक चेक-इन">Daily Check-in</span>
+</a>
+<a class="sidebar-link" href="#wellbeingTrend">
+<span class="sidebar-icon">📈</span>
+<span data-en="Well-being Trend" data-hi="कल्याण स्थिति">Well-being Trend</span>
+</a>
+<a class="sidebar-link" href="#supportActivities">
+<span class="sidebar-icon">🧘</span>
+<span data-en="Support Activities" data-hi="सहायता गतिविधियाँ">Support Activities</span>
+</a>
+<div class="sidebar-section-title" data-en="Account" data-hi="खाता">
             Account
         </div>
-
-        <a href="#profile" class="sidebar-link">
-            <span class="sidebar-icon">👤</span>
-            <span>My Profile</span>
-        </a>
-
-        <a href="#settings" class="sidebar-link">
-            <span class="sidebar-icon">⚙️</span>
-            <span>Settings</span>
-        </a>
-
-        <div class="sidebar-bottom">
-
-            <div class="sidebar-help">
-                You are not alone.<br>
-                PAWS is here to support you.
+<a class="sidebar-link" href="#profile">
+<span class="sidebar-icon">👤</span>
+<span data-en="My Profile" data-hi="मेरी प्रोफ़ाइल">My Profile</span>
+</a>
+<a class="sidebar-link" href="#settings">
+<span class="sidebar-icon">⚙️</span>
+<span data-en="Settings" data-hi="सेटिंग्स">Settings</span>
+</a>
+<div class="sidebar-bottom">
+<div class="sidebar-help">
+                <span data-en="You are not alone." data-hi="आप अकेले नहीं हैं।">You are not alone.</span><br/>
+                <span data-en="PAWS is here to support you." data-hi="PAWS आपका साथ देने के लिए यहाँ है।">PAWS is here to support you.</span>
             </div>
-
-            <a href="#" class="sidebar-link sidebar-logout"
-               onclick="logout(); return false;">
-                <span class="sidebar-icon">↪</span>
-                <span>Logout</span>
-            </a>
-
-        </div>
-
-    </aside>
-
-    <section class="main-area">
-
-        <header class="topbar">
-
-            <div>
-                <div class="topbar-title">
+<a class="sidebar-link sidebar-logout" href="#" onclick="logout(); return false;">
+<span class="sidebar-icon">↪</span>
+<span data-en="Logout" data-hi="लॉग आउट">Logout</span>
+</a>
+</div>
+</aside>
+<section class="main-area">
+<header class="topbar">
+<div>
+<div class="topbar-title" data-en="Victim Dashboard" data-hi="पीड़ित डैशबोर्ड">
                     Victim Dashboard
                 </div>
-
-                <div class="topbar-subtitle">
+<div class="topbar-subtitle" data-en="Your personal well-being and support space" data-hi="आपके व्यक्तिगत कल्याण और सहायता का स्थान">
                     Your personal well-being and support space
                 </div>
-            </div>
-
-            <div class="topbar-user">
-
-                <div class="topbar-avatar">
+</div>
+<div aria-label="Language selection" class="language-switcher"><button class="active" id="langEnglish" onclick="setDashboardLanguage('en')" type="button">English</button><button id="langHindi" onclick="setDashboardLanguage('hi')" type="button">हिन्दी</button></div><div class="topbar-user">
+<div class="topbar-avatar">
                     👤
                 </div>
-
-                <div class="topbar-user-details">
-                    <div class="topbar-user-name">
-                        <span id="topbarUserName">PAWS User</span>
-                    </div>
-
-                    <div class="topbar-user-role">
+<div class="topbar-user-details">
+<div class="topbar-user-name">
+<span id="topbarUserName">PAWS User</span>
+</div>
+<div class="topbar-user-role" data-en="Victim Portal" data-hi="पीड़ित पोर्टल">
                         Victim Portal
                     </div>
-                </div>
-
-            </div>
-
-        </header>
-
-        <main>
-
-
-
+</div>
+</div>
+</header>
+<main>
 <!-- ================= MAIN CONTENT ================= -->
-
 <div class="container">
-
-
-    <!-- ================= WELCOME ================= -->
-
-    <div class="welcome">
-
-
-        <h1 id="welcomeMessage">
+<!-- ================= WELCOME ================= -->
+<div class="welcome">
+<h1 data-en="Welcome back" data-hi="वापसी पर आपका स्वागत है" id="welcomeMessage">
 
             Welcome back
 
         </h1>
-
-
-        <p>
+<p data-en="Take a moment to check in with yourself today. We're here to support your well-being." data-hi="आज कुछ पल अपने मन की स्थिति को समझने के लिए निकालें। हम आपके कल्याण और सहायता के लिए यहाँ हैं।">
 
             Take a moment to check in with yourself today.
             We're here to support your well-being.
 
         </p>
-
-
-    </div>
-
-
-
-    <div class="dashboard-grid">
-
-
-        <!-- ================= LEFT SECTION ================= -->
-
-        <div>
-
-
-            <!-- DAILY CHECK-IN -->
-
-            <div class="card checkin-card">
-
-
-                <h2>
+</div>
+<div class="dashboard-grid">
+<!-- ================= LEFT SECTION ================= -->
+<div>
+<!-- DAILY CHECK-IN -->
+<div class="card checkin-card">
+<h2 data-en="🌿 Daily Well-being Check-in" data-hi="🌿 दैनिक कल्याण चेक-इन">
 
                     🌿 Daily Well-being Check-in
 
                 </h2>
-
-
-                <p class="card-description">
+<p class="card-description" data-en="A few moments of reflection can help us understand how you're feeling today." data-hi="कुछ पल आत्मचिंतन करने से हमें समझने में मदद मिलती है कि आप आज कैसा महसूस कर रहे हैं।">
 
                     A few moments of reflection can help us
                     understand how you're feeling today.
 
                 </p>
-
-
-                <button
-                    class="checkin-button"
-                    onclick="startCheckin()"
-                >
+<button class="checkin-button" data-en="Start Today's Check-in →" data-hi="आज का चेक-इन शुरू करें →" onclick="startCheckin()">
 
                     Start Today's Check-in →
 
                 </button>
-
-
-            </div>
-
-
-
-            <br>
-
-
-
-            <!-- WELL-BEING TREND -->
-
-            <div class="card" id="wellbeingTrend">
-
-
-                <h2>
+</div>
+<br/>
+<!-- WELL-BEING TREND -->
+<div class="card" id="wellbeingTrend">
+<h2 data-en="📈 Your Well-being Trend" data-hi="📈 आपका कल्याण ट्रेंड">
 
                     📈 Your Well-being Trend
 
                 </h2>
-
-
-                <p class="card-description">
+<p class="card-description" data-en="Your most recent well-being status based on your check-in." data-hi="आपके हालिया चेक-इन के आधार पर आपकी नवीनतम कल्याण स्थिति।">
 
                     Your most recent well-being status
                     based on your check-in.
 
                 </p>
-
-
-                <div class="trend-box" style="min-height:280px; position:relative;">
-
-    <canvas id="trendChart"></canvas>
-
-    <div id="trendFallback"
-         style="display:none; padding:25px; text-align:center;">
+<div class="trend-box" style="min-height:280px; position:relative;">
+<canvas id="trendChart"></canvas>
+<div id="trendFallback" style="display:none; padding:25px; text-align:center;">
         Loading your well-being history...
     </div>
-
 </div>
-
-
-            </div>
-
-
-
-            <br>
-
-
-
-            <!-- CALMING SUPPORT -->
-
-            <div class="card" id="supportActivities">
-
-
-                <h2>
+</div>
+<br/>
+<!-- CALMING SUPPORT -->
+<div class="card" id="supportActivities">
+<h2 data-en="🧘 Take a Moment for Yourself" data-hi="🧘 अपने लिए एक पल निकालें">
 
                     🧘 Take a Moment for Yourself
 
                 </h2>
-
-
-                <p class="card-description">
+<p class="card-description" data-en="Choose an activity that may help you feel calmer and more grounded." data-hi="ऐसी गतिविधि चुनें जो आपको अधिक शांत और संतुलित महसूस करने में मदद कर सके।">
 
                     Choose an activity that may help you feel
                     calmer and more grounded.
 
                 </p>
-
-
-                <div class="support-grid">
-
-
-    <!-- BREATHING -->
-
-    <div
-        class="support-item"
-        onclick="breathing()"
-    >
-
-        <span>🌬️</span>
-
-        <p>Breathing Exercise</p>
-
-    </div>
-
-
-    <!-- GROUNDING -->
-
-    <div
-        class="support-item"
-        onclick="grounding()"
-    >
-
-        <span>🌱</span>
-
-        <p>Grounding Activity</p>
-
-    </div>
-
-
-    <!-- CALMING SOUNDS -->
-
-    <div
-        class="support-item"
-        onclick="calmingSound()"
-    >
-
-        <span>🎵</span>
-
-        <p>Calming Sounds</p>
-
-    </div>
-
-
-    <!-- STRESS RELIEF GAME -->
-
-    <div
-        class="support-item"
-        onclick="stressGame()"
-    >
-
-        <span>🎮</span>
-
-        <p>Relax & Reset</p>
-
-    </div>
-
-    <!-- MINDFUL MOVEMENT -->
-
-<div
-    class="support-item"
-    onclick="mindfulMovement()"
->
-
-    <span>🧘</span>
-
-    <p>Mindful Movement</p>
-
+<div class="support-grid">
+<!-- BREATHING -->
+<div class="support-item" onclick="breathing()">
+<span>🌬️</span>
+<p data-en="Breathing Exercise" data-hi="श्वास अभ्यास">Breathing Exercise</p>
 </div>
-
-
+<!-- GROUNDING -->
+<div class="support-item" onclick="grounding()">
+<span>🌱</span>
+<p data-en="Grounding Activity" data-hi="ग्राउंडिंग गतिविधि">Grounding Activity</p>
 </div>
-
-
-
-
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- ================= RIGHT SECTION ================= -->
-
-        <div>
-
-
-            <!-- DDI CARD -->
-
-            <div class="card">
-
-
-                <h2>
+<!-- CALMING SOUNDS -->
+<div class="support-item" onclick="calmingSound()">
+<span>🎵</span>
+<p data-en="Calming Sounds" data-hi="शांत करने वाली ध्वनियाँ">Calming Sounds</p>
+</div>
+<!-- STRESS RELIEF GAME -->
+<div class="support-item" onclick="stressGame()">
+<span>🎮</span>
+<p data-en="Relax &amp; Reset" data-hi="आराम और रीसेट">Relax &amp; Reset</p>
+</div>
+<!-- MINDFUL MOVEMENT -->
+<div class="support-item" onclick="mindfulMovement()">
+<span>🧘</span>
+<p data-en="Mindful Movement" data-hi="सचेत गतिविधि">Mindful Movement</p>
+</div>
+<!-- COLOR & CREATE -->
+<div class="support-item" onclick="colorTherapy()">
+<span>🎨</span>
+<p data-en="Color &amp; Create" data-hi="रंग भरें और सृजन करें">Color &amp; Create</p>
+</div>
+<!-- MEDITATION TIMER -->
+<div class="support-item" onclick="meditationTimerActivity()">
+<span>⏱️</span>
+<p data-en="Meditation Timer" data-hi="ध्यान टाइमर">Meditation Timer</p>
+</div>
+<!-- STORIES THAT INSPIRE -->
+<div class="support-item" onclick="inspiringBooks()">
+<span>📚</span>
+<p data-en="Stories That Inspire" data-hi="प्रेरणादायक कहानियाँ">Stories That Inspire</p>
+</div>
+<!-- WATCH & UNWIND -->
+<div class="support-item" onclick="watchAndUnwind()">
+<span>🎥</span>
+<p data-en="Watch &amp; Unwind" data-hi="देखें और मन को शांत करें">Watch &amp; Unwind</p>
+</div>
+</div>
+</div>
+</div>
+<!-- ================= RIGHT SECTION ================= -->
+<div>
+<!-- DDI CARD -->
+<div class="card">
+<h2 data-en="Your Well-being Status" data-hi="आपकी कल्याण स्थिति">
 
                     Your Well-being Status
 
                 </h2>
-
-
-                <p class="card-description">
+<p class="card-description" data-en="Based on your most recent check-in." data-hi="आपके हालिया चेक-इन के आधार पर।">
 
                     Based on your most recent check-in.
 
                 </p>
-
-
-                <div class="ddi-score">
-
-
-                    <div
-                        class="score-circle"
-                        id="ddiScore"
-                    >
+<div class="ddi-score">
+<div class="score-circle" id="ddiScore">
 
                         --
 
                     </div>
-
-
-                    <div>
-
-
-                        <p
-                            id="statusText"
-                        >
+<div>
+<p data-en="No recent check-in" data-hi="कोई हालिया चेक-इन नहीं" id="statusText">
 
                             No recent check-in
 
                         </p>
-
-
-                        <br>
-
-
-                        <p
-                            id="riskLevel"
-                        >
+<br/>
+<p data-en="Complete a check-in to update" data-hi="अपडेट करने के लिए चेक-इन पूरा करें" id="riskLevel">
 
                             Complete a check-in to update
 
                         </p>
-
-
-                    </div>
-
-
-                </div>
-
-
-
-                <!-- LATEST CHECK-IN DETAILS -->
-
-                <div
-                    class="latest-details"
-                    id="latestDetails"
-                    style="display: none;"
-                >
-
-
-                    <div class="detail-row">
-
-                        <span class="detail-label">
+</div>
+</div>
+<!-- LATEST CHECK-IN DETAILS -->
+<div class="latest-details" id="latestDetails" style="display: none;">
+<div class="detail-row">
+<span class="detail-label">
 
                             Mood
 
                         </span>
-
-
-                        <span
-                            class="detail-value"
-                            id="latestMood"
-                        >
+<span class="detail-value" id="latestMood">
 
                             --
 
                         </span>
-
-
-                    </div>
-
-
-
-                    <div class="detail-row">
-
-                        <span class="detail-label">
+</div>
+<div class="detail-row">
+<span class="detail-label">
 
                             Safety
 
                         </span>
-
-
-                        <span
-                            class="detail-value"
-                            id="latestSafety"
-                        >
+<span class="detail-value" id="latestSafety">
 
                             --
 
                         </span>
-
-
-                    </div>
-
-
-
-                    <div class="detail-row">
-
-                        <span class="detail-label">
+</div>
+<div class="detail-row">
+<span class="detail-label">
 
                             Fear Level
 
                         </span>
-
-
-                        <span
-                            class="detail-value"
-                            id="latestFear"
-                        >
+<span class="detail-value" id="latestFear">
 
                             --
 
                         </span>
-
-
-                    </div>
-
-
-                </div>
-
-
-            </div>
-
-
-
-            <br>
-
-
-
-            <!-- EMERGENCY -->
-
-            <div class="card help-card">
-
-
-                <h2>
+</div>
+</div>
+</div>
+<br/>
+<!-- EMERGENCY -->
+<div class="card help-card">
+<h2 data-en="🚨 Need Immediate Support?" data-hi="🚨 क्या आपको तुरंत सहायता चाहिए?">
 
                     🚨 Need Immediate Support?
 
                 </h2>
-
-
-                <p class="card-description">
+<p class="card-description" data-en="If you feel unsafe or need immediate assistance, let us know." data-hi="यदि आप असुरक्षित महसूस कर रहे हैं या आपको तुरंत सहायता चाहिए, तो हमें बताएं।">
 
                     If you feel unsafe or need immediate
                     assistance, let us know.
 
                 </p>
-
-
-                <button
-                    class="help-button"
-                    onclick="needHelp()"
-                >
+<button class="help-button" data-en="🚨 I NEED HELP" data-hi="🚨 मुझे सहायता चाहिए" onclick="needHelp()">
 
                     🚨 I NEED HELP
 
                 </button>
-
-
-            </div>
-
-
-        </div>
-
-
-    </div>
-
-
 </div>
-
+</div>
+</div>
+</div>
 <!-- ================= CALMING ACTIVITY MODAL ================= -->
-
-<div
-    id="activityModal"
-    class="activity-modal"
->
-
-
-    <div class="activity-window">
-
-
-        <button
-            class="close-activity"
-            onclick="closeActivity()"
-        >
+<div class="activity-modal" id="activityModal">
+<div class="activity-window">
+<button class="close-activity" onclick="closeActivity()">
 
             ×
 
         </button>
-
-
-        <div
-            id="activityContent"
-        >
-
-        </div>
-
-
-    </div>
-     </main>
-    </section>
-
-
+<div id="activityContent">
 </div>
-
-
-
+</div>
+</div></main>
+</section>
+</div>
 <!-- ================= JAVASCRIPT ================= -->
-
 <script>
 
   
@@ -3296,6 +3283,1164 @@ function createBubble() {
 
 }
 
+
+/* ==========================================
+   COLOR & CREATE
+========================================== */
+
+let coloringCanvas = null;
+let coloringContext = null;
+let coloringPatternCanvas = null;
+let coloringPatternContext = null;
+let coloringDrawing = false;
+let coloringColor = "#e76f51";
+let coloringEraser = false;
+let coloringPattern = "mandala";
+
+const coloringColors = [
+    "#e76f51",
+    "#f4a261",
+    "#e9c46a",
+    "#2a9d8f",
+    "#457b9d",
+    "#6d597a",
+    "#c06c84",
+    "#8ab17d",
+    "#f28482",
+    "#9b5de5",
+    "#4cc9f0",
+    "#333333"
+];
+
+function colorTherapy() {
+
+    openActivity();
+
+    document.getElementById("activityContent").innerHTML = `
+
+        <h2 class="activity-title">
+            🎨 Color &amp; Create
+        </h2>
+
+        <p class="activity-description">
+            Slow down and color gently. There is no right or wrong way to create.
+            <br>
+            Try a mandala, flowers or a geometric pattern.
+        </p>
+
+        <div class="color-patterns">
+            <button type="button" id="patternMandala" class="color-pattern-button active" onclick="setColoringPattern('mandala')">
+                🌸 Mandala
+            </button>
+            <button type="button" id="patternFlowers" class="color-pattern-button" onclick="setColoringPattern('flowers')">
+                🌼 Flowers
+            </button>
+            <button type="button" id="patternGeometric" class="color-pattern-button" onclick="setColoringPattern('geometric')">
+                🔷 Geometric
+            </button>
+        </div>
+
+        <div class="coloring-canvas-wrap">
+            <div class="coloring-canvas-stack">
+                <canvas id="coloringPatternCanvas" width="520" height="520"></canvas>
+                <canvas id="coloringCanvas" width="520" height="520"></canvas>
+            </div>
+        </div>
+
+        <div class="color-palette">
+            ${coloringColors.map((color, index) => `
+                <button
+                    type="button"
+                    class="color-swatch ${index === 0 ? "active" : ""}"
+                    style="background-color:${color};"
+                    aria-label="Choose ${color}"
+                    title="${color}"
+                    data-color="${color}"
+                    onclick="chooseColor(this.dataset.color, this)"
+                ></button>
+            `).join("")}
+        </div>
+
+        <div class="color-patterns">
+            <button type="button" id="colorBrushButton" class="color-tool-button active" onclick="useColorBrush()">
+                🖌️ Brush
+            </button>
+            <button type="button" id="colorEraserButton" class="color-tool-button" onclick="useColorEraser()">
+                ◻️ Eraser
+            </button>
+            <button type="button" class="color-tool-button" onclick="resetColoring()">
+                ↺ Reset
+            </button>
+        </div>
+
+        <p id="colorTherapyStatus" class="color-therapy-status">
+            Pick a color and draw inside the pattern. The eraser removes only your coloring.
+        </p>
+
+        <button type="button" class="activity-button" onclick="finishColorTherapy()">
+            Done 🌿
+        </button>
+
+    `;
+
+    setupColoringCanvas();
+}
+
+function setupColoringCanvas() {
+
+    coloringCanvas = document.getElementById("coloringCanvas");
+    coloringPatternCanvas = document.getElementById("coloringPatternCanvas");
+
+    if (!coloringCanvas || !coloringPatternCanvas) {
+        return;
+    }
+
+    coloringContext = coloringCanvas.getContext("2d");
+    coloringPatternContext = coloringPatternCanvas.getContext("2d");
+
+    coloringCanvas.addEventListener("pointerdown", startColoringStroke);
+    coloringCanvas.addEventListener("pointermove", continueColoringStroke);
+    coloringCanvas.addEventListener("pointerup", stopColoringStroke);
+    coloringCanvas.addEventListener("pointercancel", stopColoringStroke);
+    coloringCanvas.addEventListener("pointerleave", stopColoringStroke);
+
+    resetColoring();
+}
+
+function getColoringPoint(event) {
+    const rect = coloringCanvas.getBoundingClientRect();
+    return {
+        x: (event.clientX - rect.left) * (coloringCanvas.width / rect.width),
+        y: (event.clientY - rect.top) * (coloringCanvas.height / rect.height)
+    };
+}
+
+function startColoringStroke(event) {
+
+    if (!coloringContext) return;
+    event.preventDefault();
+
+    try { coloringCanvas.setPointerCapture(event.pointerId); } catch (error) {}
+
+    coloringDrawing = true;
+    const point = getColoringPoint(event);
+    coloringContext.beginPath();
+    coloringContext.moveTo(point.x, point.y);
+    drawColoringPoint(point.x, point.y);
+}
+
+function continueColoringStroke(event) {
+
+    if (!coloringDrawing || !coloringContext) return;
+    event.preventDefault();
+
+    const point = getColoringPoint(event);
+    coloringContext.lineTo(point.x, point.y);
+    applyColoringStroke();
+}
+
+function stopColoringStroke(event) {
+
+    coloringDrawing = false;
+    if (coloringContext) coloringContext.closePath();
+
+    if (event && event.pointerId !== undefined) {
+        try { coloringCanvas.releasePointerCapture(event.pointerId); } catch (error) {}
+    }
+}
+
+function applyColoringStroke() {
+
+    if (!coloringContext) return;
+
+    coloringContext.lineCap = "round";
+    coloringContext.lineJoin = "round";
+
+    if (coloringEraser) {
+        coloringContext.globalCompositeOperation = "destination-out";
+        coloringContext.lineWidth = 24;
+        coloringContext.strokeStyle = "rgba(0,0,0,1)";
+    } else {
+        coloringContext.globalCompositeOperation = "source-over";
+        coloringContext.lineWidth = 16;
+        coloringContext.strokeStyle = coloringColor;
+    }
+
+    coloringContext.stroke();
+}
+
+function drawColoringPoint(x, y) {
+    if (!coloringContext) return;
+    coloringContext.lineTo(x, y);
+    applyColoringStroke();
+}
+
+function chooseColor(color, button) {
+
+    coloringColor = String(color || "#e76f51");
+    coloringEraser = false;
+
+    document.querySelectorAll(".color-swatch").forEach(item => item.classList.remove("active"));
+    if (button) button.classList.add("active");
+
+    useColorBrush();
+
+    const status = document.getElementById("colorTherapyStatus");
+    if (status) status.innerText = "Color selected. Draw slowly and enjoy the process. 🌸";
+}
+
+function useColorBrush() {
+
+    coloringEraser = false;
+    if (coloringContext) coloringContext.globalCompositeOperation = "source-over";
+
+    const brush = document.getElementById("colorBrushButton");
+    const eraser = document.getElementById("colorEraserButton");
+    if (brush) brush.classList.add("active");
+    if (eraser) eraser.classList.remove("active");
+}
+
+function useColorEraser() {
+
+    coloringEraser = true;
+    if (coloringContext) coloringContext.globalCompositeOperation = "destination-out";
+
+    const brush = document.getElementById("colorBrushButton");
+    const eraser = document.getElementById("colorEraserButton");
+    if (brush) brush.classList.remove("active");
+    if (eraser) eraser.classList.add("active");
+
+    const status = document.getElementById("colorTherapyStatus");
+    if (status) status.innerText = "Eraser selected. It removes only your colors, not the pattern.";
+}
+
+function setColoringPattern(pattern) {
+
+    coloringPattern = pattern;
+
+    document.querySelectorAll(".color-pattern-button").forEach(button => button.classList.remove("active"));
+
+    const selected = document.getElementById(
+        pattern === "mandala" ? "patternMandala" :
+        pattern === "flowers" ? "patternFlowers" : "patternGeometric"
+    );
+
+    if (selected) selected.classList.add("active");
+    resetColoring();
+}
+
+function resetColoring() {
+
+    if (!coloringContext || !coloringCanvas || !coloringPatternContext || !coloringPatternCanvas) return;
+
+    coloringContext.clearRect(0, 0, coloringCanvas.width, coloringCanvas.height);
+    coloringContext.globalCompositeOperation = "source-over";
+
+    coloringPatternContext.clearRect(0, 0, coloringPatternCanvas.width, coloringPatternCanvas.height);
+    coloringPatternContext.fillStyle = "#ffffff";
+    coloringPatternContext.fillRect(0, 0, coloringPatternCanvas.width, coloringPatternCanvas.height);
+    coloringPatternContext.strokeStyle = "#596579";
+    coloringPatternContext.lineWidth = 3;
+    coloringPatternContext.lineCap = "round";
+    coloringPatternContext.lineJoin = "round";
+
+    if (coloringPattern === "mandala") drawMandalaPattern();
+    else if (coloringPattern === "flowers") drawFlowersPattern();
+    else drawGeometricPattern();
+
+    coloringEraser = false;
+    useColorBrush();
+}
+
+function drawMandalaPattern() {
+
+    const cx = 260;
+    const cy = 260;
+
+    for (let ring = 1; ring <= 4; ring++) {
+
+        const radius = ring * 48;
+
+        coloringPatternContext.beginPath();
+        coloringPatternContext.arc(
+            cx,
+            cy,
+            radius,
+            0,
+            Math.PI * 2
+        );
+        coloringPatternContext.stroke();
+
+    }
+
+    for (let i = 0; i < 16; i++) {
+
+        const angle =
+            (Math.PI * 2 / 16) * i;
+
+        const innerX =
+            cx + Math.cos(angle) * 55;
+
+        const innerY =
+            cy + Math.sin(angle) * 55;
+
+        const outerX =
+            cx + Math.cos(angle) * 195;
+
+        const outerY =
+            cy + Math.sin(angle) * 195;
+
+        coloringPatternContext.beginPath();
+        coloringPatternContext.moveTo(innerX, innerY);
+        coloringPatternContext.lineTo(outerX, outerY);
+        coloringPatternContext.stroke();
+
+        const petalRadius = 42;
+        const petalX =
+            cx + Math.cos(angle) * 122;
+        const petalY =
+            cy + Math.sin(angle) * 122;
+
+        coloringPatternContext.beginPath();
+        coloringPatternContext.ellipse(
+            petalX,
+            petalY,
+            petalRadius,
+            petalRadius * 0.45,
+            angle,
+            0,
+            Math.PI * 2
+        );
+        coloringPatternContext.stroke();
+
+    }
+
+    coloringPatternContext.beginPath();
+    coloringPatternContext.arc(cx, cy, 27, 0, Math.PI * 2);
+    coloringPatternContext.stroke();
+
+    for (let i = 0; i < 8; i++) {
+
+        const angle =
+            (Math.PI * 2 / 8) * i;
+
+        const x =
+            cx + Math.cos(angle) * 27;
+
+        const y =
+            cy + Math.sin(angle) * 27;
+
+        coloringPatternContext.beginPath();
+        coloringPatternContext.arc(
+            x,
+            y,
+            13,
+            0,
+            Math.PI * 2
+        );
+        coloringPatternContext.stroke();
+
+    }
+}
+
+function drawFlowersPattern() {
+
+    const flowers = [
+        { x: 175, y: 170, r: 55 },
+        { x: 350, y: 175, r: 48 },
+        { x: 150, y: 355, r: 48 },
+        { x: 365, y: 350, r: 58 },
+        { x: 260, y: 265, r: 45 }
+    ];
+
+    flowers.forEach((flower, flowerIndex) => {
+
+        for (let i = 0; i < 8; i++) {
+
+            const angle =
+                (Math.PI * 2 / 8) * i;
+
+            const petalX =
+                flower.x +
+                Math.cos(angle) *
+                flower.r *
+                0.72;
+
+            const petalY =
+                flower.y +
+                Math.sin(angle) *
+                flower.r *
+                0.72;
+
+            coloringPatternContext.beginPath();
+
+            coloringPatternContext.ellipse(
+                petalX,
+                petalY,
+                flower.r * 0.48,
+                flower.r * 0.24,
+                angle,
+                0,
+                Math.PI * 2
+            );
+
+            coloringPatternContext.stroke();
+
+        }
+
+        coloringPatternContext.beginPath();
+
+        coloringPatternContext.arc(
+            flower.x,
+            flower.y,
+            flower.r * 0.25,
+            0,
+            Math.PI * 2
+        );
+
+        coloringPatternContext.stroke();
+
+        if (flowerIndex !== 4) {
+
+            coloringPatternContext.beginPath();
+            coloringPatternContext.moveTo(
+                flower.x,
+                flower.y + flower.r * 0.2
+            );
+            coloringPatternContext.lineTo(
+                flower.x - 8,
+                flower.y + flower.r + 65
+            );
+            coloringPatternContext.stroke();
+
+        }
+
+    });
+
+    coloringPatternContext.beginPath();
+    coloringPatternContext.arc(
+        260,
+        260,
+        205,
+        0,
+        Math.PI * 2
+    );
+    coloringPatternContext.stroke();
+}
+
+function drawGeometricPattern() {
+
+    const cx = 260;
+    const cy = 260;
+
+    const sizes = [190, 145, 105, 65];
+
+    sizes.forEach(size => {
+
+        coloringPatternContext.beginPath();
+
+        coloringPatternContext.moveTo(
+            cx,
+            cy - size
+        );
+
+        coloringPatternContext.lineTo(
+            cx + size,
+            cy
+        );
+
+        coloringPatternContext.lineTo(
+            cx,
+            cy + size
+        );
+
+        coloringPatternContext.lineTo(
+            cx - size,
+            cy
+        );
+
+        coloringPatternContext.closePath();
+        coloringPatternContext.stroke();
+
+    });
+
+    for (let i = 0; i < 12; i++) {
+
+        const angle =
+            (Math.PI * 2 / 12) * i;
+
+        const x1 =
+            cx + Math.cos(angle) * 65;
+
+        const y1 =
+            cy + Math.sin(angle) * 65;
+
+        const x2 =
+            cx + Math.cos(angle) * 190;
+
+        const y2 =
+            cy + Math.sin(angle) * 190;
+
+        coloringPatternContext.beginPath();
+        coloringPatternContext.moveTo(x1, y1);
+        coloringPatternContext.lineTo(x2, y2);
+        coloringPatternContext.stroke();
+
+    }
+
+    coloringPatternContext.beginPath();
+    coloringPatternContext.arc(
+        cx,
+        cy,
+        32,
+        0,
+        Math.PI * 2
+    );
+    coloringPatternContext.stroke();
+
+    for (let i = 0; i < 12; i++) {
+
+        const angle =
+            (Math.PI * 2 / 12) * i;
+
+        const x =
+            cx + Math.cos(angle) * 32;
+
+        const y =
+            cy + Math.sin(angle) * 32;
+
+        coloringPatternContext.beginPath();
+        coloringPatternContext.arc(
+            x,
+            y,
+            9,
+            0,
+            Math.PI * 2
+        );
+        coloringPatternContext.stroke();
+
+    }
+}
+
+function finishColorTherapy() {
+
+    const status =
+        document.getElementById(
+            "colorTherapyStatus"
+        );
+
+    if (status) {
+
+        status.innerText =
+            "Beautiful. You gave yourself a quiet creative moment. 🌸";
+
+    }
+
+}
+
+
+/* ==========================================
+   MEDITATION TIMER
+========================================== */
+
+let simpleMeditationInterval = null;
+let simpleMeditationRemaining = 300;
+let simpleMeditationTotal = 300;
+let simpleMeditationSound = null;
+let simpleMeditationSoundPlaying = false;
+let simpleMeditationSoundEnabled = false;
+
+function meditationTimerActivity() {
+
+    clearSimpleMeditationTimer();
+    stopSimpleMeditationSound();
+
+    simpleMeditationRemaining = 300;
+    simpleMeditationTotal = 300;
+    simpleMeditationSoundEnabled = false;
+
+    openActivity();
+
+    document.getElementById("activityContent").innerHTML = `
+
+        <h2 class="activity-title">
+            🧘‍♀️ Meditation Timer
+        </h2>
+
+        <p class="activity-description">
+            Choose how long you would like to sit quietly.
+            <br>
+            There is no pressure to reach a particular state of mind.
+        </p>
+
+        <div
+            id="simpleMeditationTimerDisplay"
+            class="simple-timer-display"
+        >
+            05:00
+        </div>
+
+        <div
+            id="simpleMeditationTimerLabel"
+            class="simple-timer-label"
+        >
+            Ready when you are.
+        </div>
+
+        <div class="timer-presets">
+
+            <button
+                class="timer-preset active"
+                onclick="setSimpleMeditationMinutes(5, this)"
+            >
+                5 min
+            </button>
+
+            <button
+                class="timer-preset"
+                onclick="setSimpleMeditationMinutes(10, this)"
+            >
+                10 min
+            </button>
+
+            <button
+                class="timer-preset"
+                onclick="setSimpleMeditationMinutes(15, this)"
+            >
+                15 min
+            </button>
+
+            <button
+                class="timer-preset"
+                onclick="setSimpleMeditationMinutes(20, this)"
+            >
+                20 min
+            </button>
+
+            <button
+                class="timer-preset"
+                onclick="setSimpleMeditationMinutes(30, this)"
+            >
+                30 min
+            </button>
+
+        </div>
+
+        <div class="custom-timer">
+
+            <label for="customMeditationMinutes">
+                Custom:
+            </label>
+
+            <input
+                id="customMeditationMinutes"
+                type="number"
+                min="1"
+                max="180"
+                placeholder="Minutes"
+            >
+
+            <button
+                class="color-tool-button"
+                onclick="setCustomMeditationMinutes()"
+            >
+                Set
+            </button>
+
+        </div>
+
+        <div class="simple-timer-progress">
+            <div
+                id="simpleMeditationProgressBar"
+                class="simple-timer-progress-bar"
+            ></div>
+        </div>
+
+        <div class="meditation-controls">
+
+            <button
+                id="simpleMeditationStartButton"
+                class="meditation-control primary"
+                onclick="toggleSimpleMeditation()"
+            >
+                ▶ Start
+            </button>
+
+            <button
+                class="meditation-control"
+                onclick="resetSimpleMeditation()"
+            >
+                ↺ Reset
+            </button>
+
+        </div>
+
+        <div class="timer-sound-box">
+
+            <div id="simpleMeditationSoundStatus">
+                🔇 Background sound is off
+            </div>
+
+            <br>
+
+            <button
+                id="simpleMeditationSoundButton"
+                class="meditation-control"
+                onclick="toggleSimpleMeditationSound()"
+            >
+                🔊 Play Relaxing Meditation Audio
+            </button>
+
+        </div>
+
+        <p
+            id="simpleMeditationStatus"
+            class="meditation-note"
+        >
+            A gentle timer for 5, 10, 15 minutes — or choose your own duration.
+        </p>
+
+    `;
+
+    updateSimpleMeditationDisplay();
+}
+
+function setSimpleMeditationMinutes(minutes, button) {
+
+    clearSimpleMeditationTimer();
+    stopSimpleMeditationSound();
+
+    simpleMeditationRemaining =
+        Number(minutes) * 60;
+
+    simpleMeditationTotal =
+        simpleMeditationRemaining;
+
+    document
+        .querySelectorAll(".timer-preset")
+        .forEach(item => item.classList.remove("active"));
+
+    if (button) {
+        button.classList.add("active");
+    }
+
+    const customInput =
+        document.getElementById(
+            "customMeditationMinutes"
+        );
+
+    if (customInput) {
+        customInput.value = "";
+    }
+
+    const startButton =
+        document.getElementById(
+            "simpleMeditationStartButton"
+        );
+
+    if (startButton) {
+        startButton.innerText = "▶ Start";
+    }
+
+    updateSimpleMeditationDisplay();
+
+    const status =
+        document.getElementById(
+            "simpleMeditationStatus"
+        );
+
+    if (status) {
+        status.innerText =
+            "Your " + minutes +
+            "-minute timer is ready.";
+    }
+}
+
+function setCustomMeditationMinutes() {
+
+    const input =
+        document.getElementById(
+            "customMeditationMinutes"
+        );
+
+    if (!input) {
+        return;
+    }
+
+    const minutes =
+        Number(input.value);
+
+    if (
+        !Number.isFinite(minutes) ||
+        minutes < 1 ||
+        minutes > 180
+    ) {
+
+        alert(
+            "Please choose a duration between 1 and 180 minutes."
+        );
+
+        return;
+    }
+
+    clearSimpleMeditationTimer();
+    stopSimpleMeditationSound();
+
+    simpleMeditationRemaining =
+        Math.round(minutes * 60);
+
+    simpleMeditationTotal =
+        simpleMeditationRemaining;
+
+    document
+        .querySelectorAll(".timer-preset")
+        .forEach(item => item.classList.remove("active"));
+
+    const startButton =
+        document.getElementById(
+            "simpleMeditationStartButton"
+        );
+
+    if (startButton) {
+        startButton.innerText = "▶ Start";
+    }
+
+    updateSimpleMeditationDisplay();
+
+    const status =
+        document.getElementById(
+            "simpleMeditationStatus"
+        );
+
+    if (status) {
+        status.innerText =
+            "Your custom " +
+            minutes +
+            "-minute timer is ready.";
+    }
+}
+
+function toggleSimpleMeditation() {
+
+    if (simpleMeditationRemaining <= 0) {
+        return;
+    }
+
+    const button =
+        document.getElementById(
+            "simpleMeditationStartButton"
+        );
+
+    if (simpleMeditationInterval) {
+
+        clearSimpleMeditationTimer();
+        stopSimpleMeditationSound();
+
+        if (button) {
+            button.innerText = "▶ Resume";
+        }
+
+        const status =
+            document.getElementById(
+                "simpleMeditationStatus"
+            );
+
+        if (status) {
+            status.innerText =
+                "Timer paused. Resume whenever you feel ready.";
+        }
+
+        return;
+    }
+
+    if (simpleMeditationSoundEnabled) {
+        startSimpleMeditationSound();
+    }
+
+    if (button) {
+        button.innerText = "⏸ Pause";
+    }
+
+    const status =
+        document.getElementById(
+            "simpleMeditationStatus"
+        );
+
+    if (status) {
+        status.innerText =
+            "Take slow, comfortable breaths. 🌿";
+    }
+
+    simpleMeditationInterval =
+        setInterval(() => {
+
+            simpleMeditationRemaining--;
+
+            updateSimpleMeditationDisplay();
+
+            if (simpleMeditationRemaining <= 0) {
+                finishSimpleMeditation();
+            }
+
+        }, 1000);
+}
+
+function resetSimpleMeditation() {
+
+    clearSimpleMeditationTimer();
+    stopSimpleMeditationSound();
+
+    simpleMeditationRemaining =
+        simpleMeditationTotal;
+
+    updateSimpleMeditationDisplay();
+
+    const button =
+        document.getElementById(
+            "simpleMeditationStartButton"
+        );
+
+    if (button) {
+        button.innerText = "▶ Start";
+    }
+
+    const status =
+        document.getElementById(
+            "simpleMeditationStatus"
+        );
+
+    if (status) {
+        status.innerText =
+            "Timer reset. Ready when you are.";
+    }
+}
+
+function updateSimpleMeditationDisplay() {
+
+    const display =
+        document.getElementById(
+            "simpleMeditationTimerDisplay"
+        );
+
+    if (display) {
+        display.innerText =
+            formatSimpleMeditationTime(
+                Math.max(0, simpleMeditationRemaining)
+            );
+    }
+
+    const progress =
+        document.getElementById(
+            "simpleMeditationProgressBar"
+        );
+
+    if (progress) {
+
+        const completed =
+            simpleMeditationTotal > 0
+                ? (
+                    (simpleMeditationTotal -
+                        simpleMeditationRemaining)
+                    /
+                    simpleMeditationTotal
+                ) * 100
+                : 0;
+
+        progress.style.width =
+            Math.min(100, Math.max(0, completed)) +
+            "%";
+    }
+}
+
+function formatSimpleMeditationTime(seconds) {
+
+    const minutes =
+        Math.floor(seconds / 60);
+
+    const remainingSeconds =
+        seconds % 60;
+
+    return (
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(remainingSeconds).padStart(2, "0")
+    );
+}
+
+function clearSimpleMeditationTimer() {
+
+    if (simpleMeditationInterval) {
+
+        clearInterval(
+            simpleMeditationInterval
+        );
+
+        simpleMeditationInterval = null;
+    }
+}
+
+function toggleSimpleMeditationSound() {
+    if (simpleMeditationSoundPlaying) {
+        stopSimpleMeditationSound();
+    } else {
+        startSimpleMeditationSound();
+    }
+}
+
+function startSimpleMeditationSound() {
+    try {
+        if (!simpleMeditationSound) {
+            simpleMeditationSound = new Audio(
+                "/victim/audio/serene-meditation.mp3"
+            );
+
+            simpleMeditationSound.loop = true;
+
+            simpleMeditationSound.addEventListener("error", function (error) {
+                console.error("Meditation audio error:", error);
+                simpleMeditationSoundPlaying = false;
+
+                const status =
+                    document.getElementById("simpleMeditationSoundStatus");
+
+                if (status) {
+                    status.innerText =
+                        "⚠️ Could not load meditation audio.";
+                }
+            });
+        }
+
+        simpleMeditationSound
+            .play()
+            .then(function () {
+                simpleMeditationSoundPlaying = true;
+
+                const button =
+                    document.getElementById(
+                        "simpleMeditationSoundButton"
+                    );
+
+                const status =
+                    document.getElementById(
+                        "simpleMeditationSoundStatus"
+                    );
+
+                if (button) {
+                    button.innerText = "🔇 Stop Relaxing Audio";
+                }
+
+                if (status) {
+                    status.innerText =
+                        "🎵 Relaxing meditation audio is playing...";
+                }
+            })
+            .catch(function (error) {
+                console.error(
+                    "Could not play meditation audio:",
+                    error
+                );
+            });
+    } catch (error) {
+        console.error(
+            "Meditation sound setup error:",
+            error
+        );
+    }
+}
+
+function stopSimpleMeditationSound() {
+    if (simpleMeditationSound) {
+        simpleMeditationSound.pause();
+        simpleMeditationSound.currentTime = 0;
+    }
+
+    simpleMeditationSoundPlaying = false;
+
+    const button =
+        document.getElementById(
+            "simpleMeditationSoundButton"
+        );
+
+    const status =
+        document.getElementById(
+            "simpleMeditationSoundStatus"
+        );
+
+    if (button) {
+        button.innerText = "🔊 Play Relaxing Audio";
+    }
+
+    if (status) {
+        status.innerText = "Audio is off.";
+    }
+}
+
+function finishSimpleMeditation() {
+
+    clearSimpleMeditationTimer();
+    stopSimpleMeditationSound();
+
+    simpleMeditationRemaining = 0;
+
+    updateSimpleMeditationDisplay();
+
+    const display =
+        document.getElementById(
+            "simpleMeditationTimerDisplay"
+        );
+
+    const label =
+        document.getElementById(
+            "simpleMeditationTimerLabel"
+        );
+
+    const status =
+        document.getElementById(
+            "simpleMeditationStatus"
+        );
+
+    const button =
+        document.getElementById(
+            "simpleMeditationStartButton"
+        );
+
+    if (display) {
+        display.innerText = "00:00";
+    }
+
+    if (label) {
+        label.innerText = "Session complete 🌿";
+    }
+
+    if (status) {
+        status.innerText =
+            "Well done. You gave yourself a quiet moment today.";
+    }
+
+    if (button) {
+        button.innerText = "✓ Complete";
+        button.disabled = true;
+    }
+}
+
+
+/* ==========================================
+   SIMPLE TIMER CLEANUP
+========================================== */
+
+const pawsOriginalCloseActivity =
+    closeActivity;
+
+closeActivity = function() {
+
+    clearSimpleMeditationTimer();
+    stopSimpleMeditationSound();
+
+    pawsOriginalCloseActivity();
+};
+
+
+
 /* ==========================================
    MINDFUL MOVEMENT & MEDITATION
 ========================================== */
@@ -4283,6 +5428,126 @@ closeActivity = function() {
 
 
 
+
+
+/* ==========================================
+   STORIES THAT INSPIRE
+========================================== */
+function inspiringBooks() {
+    openActivity();
+    document.getElementById("activityContent").innerHTML = `
+        <h2 class="activity-title">📚 Stories That Inspire</h2>
+        <p class="resource-intro">
+            Choose a story, idea or perspective that feels right for you today.
+            These resources are optional and are meant for reflection, inspiration and personal growth.
+        </p>
+
+        <h3 class="resource-section-title">🌱 Personal Growth &amp; Well-being</h3>
+        <div class="resource-card-grid">
+            <div class="resource-card">
+                <h3>Life's Amazing Secrets</h3>
+                <div class="resource-author">Gaur Gopal Das</div>
+                <p>Reflections on relationships, purpose, success and happiness, presented through practical life lessons.</p>
+                <a class="resource-button" href="https://gaurgopaldas.in/about" target="_blank" rel="noopener noreferrer">Explore Book ↗</a>
+            </div>
+
+            <div class="resource-card">
+                <h3>Energize Your Mind</h3>
+                <div class="resource-author">Gaur Gopal Das</div>
+                <p>Practical ideas combining philosophy and psychology around happiness, purpose and managing the mind.</p>
+                <a class="resource-button" href="https://gaurgopaldas.in/about" target="_blank" rel="noopener noreferrer">Explore Book ↗</a>
+            </div>
+
+            <div class="resource-card">
+                <h3>Inner Engineering</h3>
+                <div class="resource-author">Sadhguru</div>
+                <p>A guide centered on inner stability, well-being and classical yogic approaches to creating a more balanced inner experience.</p>
+                <a class="resource-button" href="https://isha.sadhguru.org/us/en/publications/inner-engineering-a-yogis-guide-to-joy" target="_blank" rel="noopener noreferrer">Read / Explore ↗</a>
+                <a class="resource-button secondary" href="https://isha.sadhguru.org/en/wisdom/article/in-is-the-only-way-out" target="_blank" rel="noopener noreferrer">Free Excerpt ↗</a>
+            </div>
+        </div>
+
+        <h3 class="resource-section-title">❤️ Stories of Resilience</h3>
+        <div class="resource-card-grid">
+            <div class="resource-card">
+                <h3>I Am What I Am: A Memoir</h3>
+                <div class="resource-author">Sunitha Krishnan</div>
+                <p>A memoir about survival, personal struggle, advocacy and rebuilding lives after exploitation and abuse.</p>
+                <a class="resource-button" href="https://gsl.lbsnaa.gov.in/cgi-bin/koha/opac-detail.pl?biblionumber=360096" target="_blank" rel="noopener noreferrer">Book Details ↗</a>
+            </div>
+
+            <div class="resource-card">
+                <h3>The Lucky Ones</h3>
+                <div class="resource-author">Zara Chowdhary</div>
+                <p>A survivor memoir exploring family, identity, violence, belonging and resilience after the 2002 violence in Gujarat.</p>
+                <a class="resource-button" href="https://www.penguinrandomhouse.com/books/733872/the-lucky-ones-by-zara-chowdhary/" target="_blank" rel="noopener noreferrer">Read Sample / Explore ↗</a>
+            </div>
+        </div>
+
+        <div class="resource-warning">
+            ⚠️ <strong>Choose gently.</strong> Some survivor memoirs contain descriptions of violence, abuse or trauma. You can stop reading at any time and choose another resource instead.
+        </div>
+
+        <div class="resource-note">
+            🌸 These are optional well-being resources, not a substitute for professional counselling or immediate support. If you need help, you can use <strong>I Need Help</strong> on your PAWS dashboard.
+        </div>
+    `;
+}
+
+
+/* ==========================================
+   WATCH & UNWIND
+========================================== */
+function watchAndUnwind() {
+    openActivity();
+    document.getElementById("activityContent").innerHTML = `
+        <h2 class="activity-title">🎥 Watch &amp; Unwind</h2>
+        <p class="resource-intro">
+            Take a few minutes to breathe, reflect and reconnect with yourself.
+            These videos open on YouTube so the original creators receive their normal viewing experience.
+        </p>
+
+        <h3 class="resource-section-title">🧘 Guided Meditation</h3>
+        <div class="resource-card-grid">
+            <div class="resource-card">
+                <div class="resource-video-icon">🌿</div>
+                <h3>Guided Meditation Experience</h3>
+                <div class="resource-author">BK Shivani · Hindi</div>
+                <p>A guided meditation designed as a short daily pause for reflection and reconnecting with inner strength.</p>
+                <a class="resource-button" href="https://www.youtube.com/watch?v=XnT_cOq_Ba8" target="_blank" rel="noopener noreferrer">▶ Watch on YouTube</a>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-video-icon">🕊️</div>
+                <h3>Guided Meditation To Reconnect &amp; Recharge</h3>
+                <div class="resource-author">BK Shivani · English</div>
+                <p>A guided meditation focused on creating a quiet space for reflection, calm and inner strength.</p>
+                <a class="resource-button" href="https://www.youtube.com/watch?v=fgChzlOt3XI" target="_blank" rel="noopener noreferrer">▶ Watch on YouTube</a>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-video-icon">🌙</div>
+                <h3>Isha Kriya: Guided Meditation</h3>
+                <div class="resource-author">Sadhguru · 15-minute guided video</div>
+                <p>A guided meditation using breath, thought and awareness, presented as a simple practice for beginners.</p>
+                <a class="resource-button" href="https://www.youtube.com/watch?v=EwQkfoKxRvo" target="_blank" rel="noopener noreferrer">▶ Watch on YouTube</a>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-video-icon">🌱</div>
+                <h3>How to Meditate for Beginners</h3>
+                <div class="resource-author">Sadhguru</div>
+                <p>An introductory explanation of meditation and common misunderstandings around the practice.</p>
+                <a class="resource-button" href="https://www.youtube.com/watch?v=Hzi3PDz1AWU" target="_blank" rel="noopener noreferrer">▶ Watch on YouTube</a>
+            </div>
+        </div>
+
+        <div class="resource-note">
+            🌸 If a video does not feel comfortable or helpful today, simply close it and choose another activity from PAWS.
+        </div>
+    `;
+}
+
     /* ==========================================
        LOGOUT
     ========================================== */
@@ -4307,8 +5572,39 @@ closeActivity = function() {
 
 
 </script>
+<script>
+/* ================= MULTILINGUAL DASHBOARD (HOMEPAGE ONLY) ================= */
+function setDashboardLanguage(language) {
+    const elements = document.querySelectorAll('[data-en][data-hi]');
 
+    elements.forEach(function (element) {
+        const value = element.getAttribute(language === 'hi' ? 'data-hi' : 'data-en');
+        if (value !== null) {
+            element.textContent = value;
+        }
+    });
 
-</body>
+    const englishButton = document.getElementById('langEnglish');
+    const hindiButton = document.getElementById('langHindi');
 
+    if (englishButton) englishButton.classList.toggle('active', language === 'en');
+    if (hindiButton) hindiButton.classList.toggle('active', language === 'hi');
+
+    try {
+        localStorage.setItem('paws_dashboard_language', language);
+    } catch (e) {
+        // Language preference is optional; the dashboard still works without localStorage.
+    }
+}
+
+function loadDashboardLanguage() {
+    let language = 'en';
+    try {
+        language = localStorage.getItem('paws_dashboard_language') || 'en';
+    } catch (e) {}
+    setDashboardLanguage(language === 'hi' ? 'hi' : 'en');
+}
+
+document.addEventListener('DOMContentLoaded', loadDashboardLanguage);
+</script></body>
 </html>

@@ -67,6 +67,7 @@ def victim_dashboard():
     return send_from_directory("frontend/victim", "dashboard.html")
 
 
+
 @app.route("/victim/checkin")
 def victim_checkin():
     return send_from_directory("frontend/victim", "checkin.html")
