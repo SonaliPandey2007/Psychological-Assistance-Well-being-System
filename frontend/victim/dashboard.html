@@ -1684,518 +1684,762 @@
 </div>
 </aside>
 <section class="main-area">
-<header class="topbar">
-<div>
-<div class="topbar-title" data-en="Victim Dashboard" data-hi="पीड़ित डैशबोर्ड">
-                    Victim Dashboard
 
-            <a href="#" class="sidebar-link sidebar-logout"
-               onclick="logout(); return false;">
-                <span class="sidebar-icon">↪</span>
-                <span>Logout</span>
-            </a>
+    <!-- ================= TOPBAR ================= -->
+    <header class="topbar">
+
+        <div>
+            <div class="topbar-title"
+                 data-en="Victim Dashboard"
+                 data-hi="पीड़ित डैशबोर्ड">
+                Victim Dashboard
+            </div>
+
+            <div class="topbar-subtitle"
+                 data-en="Your personal well-being and support space"
+                 data-hi="आपके व्यक्तिगत कल्याण और सहायता का स्थान">
+                Your personal well-being and support space
+            </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:12px;">
+
+            <!-- LANGUAGE -->
+            <div class="language-switcher"
+                 aria-label="Language selection">
+
+                <button
+                    class="active"
+                    id="langEnglish"
+                    type="button"
+                    onclick="setDashboardLanguage('en')">
+                    English
+                </button>
+
+                <button
+                    id="langHindi"
+                    type="button"
+                    onclick="setDashboardLanguage('hi')">
+                    हिन्दी
+                </button>
+
+            </div>
+
+            <!-- USER -->
+            <div class="topbar-user">
+
+                <div class="topbar-avatar">
+                    👤
+                </div>
+
+                <div class="topbar-user-details">
+
+                    <div class="topbar-user-name">
+                        <span id="topbarUserName">
+                            PAWS User
+                        </span>
+                    </div>
+
+                    <div class="topbar-user-role"
+                         data-en="Victim Portal"
+                         data-hi="पीड़ित पोर्टल">
+                        Victim Portal
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 
-    </aside>
+    </header>
 
-    <section class="main-area">
 
-        <header class="topbar">
+    <!-- ================= MAIN ================= -->
 
-            <div>
-                <div class="topbar-title">
-                My Well-being Dashboard
+    <main>
+
+        <div class="container">
+
+
+            <!-- ================= WELCOME ================= -->
+
+            <div class="welcome">
+
+                <h1
+                    id="welcomeMessage"
+                    data-en="Welcome back"
+                    data-hi="वापसी पर आपका स्वागत है">
+                    Welcome back
+                </h1>
+
+                <p
+                    data-en="Take a moment to check in with yourself today. We're here to support your well-being."
+                    data-hi="आज कुछ पल अपने मन की स्थिति को समझने के लिए निकालें। हम आपके कल्याण और सहायता के लिए यहाँ हैं।">
+                    Take a moment to check in with yourself today.
+                    We're here to support your well-being.
+                </p>
+
+            </div>
+
+
+            <!-- ================= OFFLINE STATUS ================= -->
+
+            <div
+                id="offlineModeCard"
+                style="
+                    margin-bottom:25px;
+                    padding:16px 20px;
+                    border-radius:14px;
+                    background:#f8fafc;
+                    border:1px solid #e2e8f0;
+                    transition:0.3s;
+                ">
+
+                <div
+                    style="
+                        display:flex;
+                        align-items:center;
+                        gap:10px;
+                        flex-wrap:wrap;
+                    ">
+
+                    <span
+                        id="offlineStatus"
+                        style="
+                            padding:7px 13px;
+                            border-radius:20px;
+                            font-size:13px;
+                            font-weight:600;
+                            background:#e6fffa;
+                            color:#276749;
+                        ">
+                        🟢 Online
+                    </span>
+
+                    <span
+                        id="offlineSyncText"
+                        style="
+                            font-size:13px;
+                            color:#526581;
+                        ">
+                        Your connection is active.
+                    </span>
+
                 </div>
-<div class="topbar-subtitle" data-en="Your personal well-being and support space" data-hi="आपके व्यक्तिगत कल्याण और सहायता का स्थान">
-                    Your personal well-being and support space
-                </div>
-</div>
-<div aria-label="Language selection" class="language-switcher"><button class="active" id="langEnglish" onclick="setDashboardLanguage('en')" type="button">English</button><button id="langHindi" onclick="setDashboardLanguage('hi')" type="button">हिन्दी</button></div><div class="topbar-user">
-<div class="topbar-avatar">
-                    👤
-                </div>
-<div class="topbar-user-details">
-<div class="topbar-user-name">
-<span id="topbarUserName">PAWS User</span>
-</div>
-<div class="topbar-user-role" data-en="Victim Portal" data-hi="पीड़ित पोर्टल">
-                        Victim Portal
 
-                <div class="topbar-user-details">
-                    <div class="topbar-user-name">
-                        <span id="topbarUserName">PAWS User</span>
+
+                <div
+                    id="offlineDetails"
+                    style="
+                        margin-top:12px;
+                        font-size:13px;
+                        color:#526581;
+                        display:none;
+                    ">
+
+                    ✓ Last resources available<br>
+                    ✓ Check-ins can be saved locally<br>
+                    ✓ Help requests will be queued<br>
+                    ✓ Data will sync automatically when connection returns
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= DASHBOARD GRID ================= -->
+
+            <div class="dashboard-grid">
+
+
+                <!-- ================================================= -->
+                <!-- LEFT COLUMN -->
+                <!-- ================================================= -->
+
+                <div>
+
+
+                    <!-- DAILY CHECK-IN -->
+
+                    <div class="card checkin-card">
+
+                        <h2
+                            data-en="🌿 Daily Well-being Check-in"
+                            data-hi="🌿 दैनिक कल्याण चेक-इन">
+                            🌿 Daily Well-being Check-in
+                        </h2>
+
+                        <p
+                            class="card-description"
+                            data-en="A few moments of reflection can help us understand how you're feeling today."
+                            data-hi="कुछ पल आत्मचिंतन करने से हमें समझने में मदद मिलती है कि आप आज कैसा महसूस कर रहे हैं।">
+                            A few moments of reflection can help us understand how you're feeling today.
+                        </p>
+
+                        <button
+                            class="checkin-button"
+                            data-en="Start Today's Check-in →"
+                            data-hi="आज का चेक-इन शुरू करें →"
+                            onclick="startCheckin()">
+                            Start Today's Check-in →
+                        </button>
+
                     </div>
 
-                    <div class="topbar-user-role">
-                    Personal Well-being Space
+
+                    <br>
+
+
+                    <!-- WELL-BEING TREND -->
+
+                    <div
+                        class="card"
+                        id="wellbeingTrend">
+
+                        <h2
+                            data-en="📈 Your Well-being Trend"
+                            data-hi="📈 आपका कल्याण ट्रेंड">
+                            📈 Your Well-being Trend
+                        </h2>
+
+                        <p
+                            class="card-description"
+                            data-en="Your most recent well-being status based on your check-in."
+                            data-hi="आपके हालिया चेक-इन के आधार पर आपकी नवीनतम कल्याण स्थिति।">
+                            Your most recent well-being status based on your check-in.
+                        </p>
+
+                        <div
+                            class="trend-box"
+                            style="
+                                min-height:280px;
+                                position:relative;
+                            ">
+
+                            <canvas id="trendChart"></canvas>
+
+                            <div
+                                id="trendFallback"
+                                style="
+                                    display:none;
+                                    padding:25px;
+                                    text-align:center;
+                                ">
+                                Loading your well-being history...
+                            </div>
+
+                        </div>
+
                     </div>
-</div>
-</div>
-</header>
-<main>
-<!-- ================= MAIN CONTENT ================= -->
-<div class="container">
-<!-- ================= WELCOME ================= -->
-<div class="welcome">
-<h1 data-en="Welcome back" data-hi="वापसी पर आपका स्वागत है" id="welcomeMessage">
-
-            Welcome back
-
-        </h1>
-<p data-en="Take a moment to check in with yourself today. We're here to support your well-being." data-hi="आज कुछ पल अपने मन की स्थिति को समझने के लिए निकालें। हम आपके कल्याण और सहायता के लिए यहाँ हैं।">
-
-            Take a moment to check in with yourself today.
-            We're here to support your well-being.
-
-        </p>
-</div>
-<div class="dashboard-grid">
-<!-- ================= LEFT SECTION ================= -->
-<div>
-<!-- DAILY CHECK-IN -->
-<div class="card checkin-card">
-<h2 data-en="🌿 Daily Well-being Check-in" data-hi="🌿 दैनिक कल्याण चेक-इन">
 
 
-    </div>
-
-    <!-- ================= OFFLINE / CONNECTIVITY STATUS ================= -->
-
-<div id="offlineModeCard"
-     style="
-        margin-top:20px;
-        padding:16px 20px;
-        border-radius:14px;
-        background:#f8fafc;
-        border:1px solid #e2e8f0;
-        transition:0.3s;
-     ">
-
-    <div style="
-        display:flex;
-        align-items:center;
-        gap:10px;
-        flex-wrap:wrap;
-    ">
-
-        <span id="offlineStatus"
-              style="
-                padding:7px 13px;
-                border-radius:20px;
-                font-size:13px;
-                font-weight:600;
-                background:#e6fffa;
-                color:#276749;
-              ">
-            🟢 Online
-        </span>
-
-        <span id="offlineSyncText"
-              style="
-                font-size:13px;
-                color:#526581;
-              ">
-            Your connection is active.
-        </span>
-
-    </div>
-
-    <div id="offlineDetails"
-         style="
-            margin-top:12px;
-            font-size:13px;
-            color:#526581;
-            display:none;
-         ">
-
-        ✓ Last resources available<br>
-        ✓ Check-ins can be saved locally<br>
-        ✓ Help requests will be queued<br>
-        ✓ Data will sync automatically when connection returns
-
-    </div>
-
-</div>
-
-<!-- ================= END OFFLINE STATUS ================= -->
+                    <br>
 
 
+                    <!-- ================= CALMING SUPPORT ================= -->
 
-    <div class="dashboard-grid">
+                    <div
+                        class="card"
+                        id="supportActivities">
 
+                        <h2
+                            data-en="🧘 Take a Moment for Yourself"
+                            data-hi="🧘 अपने लिए एक पल निकालें">
+                            🧘 Take a Moment for Yourself
+                        </h2>
 
-        <!-- ================= LEFT SECTION ================= -->
-
-        <div>
-
-
-            <!-- DAILY CHECK-IN -->
-
-            <div class="card checkin-card">
-
-
-                <h2>
-
-                    🌿 Daily Well-being Check-in
-
-                </h2>
-<p class="card-description" data-en="A few moments of reflection can help us understand how you're feeling today." data-hi="कुछ पल आत्मचिंतन करने से हमें समझने में मदद मिलती है कि आप आज कैसा महसूस कर रहे हैं।">
-
-                    A few moments of reflection can help us
-                    understand how you're feeling today.
-
-                </p>
-<button class="checkin-button" data-en="Start Today's Check-in →" data-hi="आज का चेक-इन शुरू करें →" onclick="startCheckin()">
-
-                    Start Today's Check-in →
-
-                </button>
-</div>
-<br/>
-<!-- WELL-BEING TREND -->
-<div class="card" id="wellbeingTrend">
-<h2 data-en="📈 Your Well-being Trend" data-hi="📈 आपका कल्याण ट्रेंड">
-
-                    📈 Your Well-being Trend
-
-                </h2>
-<p class="card-description" data-en="Your most recent well-being status based on your check-in." data-hi="आपके हालिया चेक-इन के आधार पर आपकी नवीनतम कल्याण स्थिति।">
-
-                    Your most recent well-being status
-                    based on your check-in.
-
-                </p>
-<div class="trend-box" style="min-height:280px; position:relative;">
-<canvas id="trendChart"></canvas>
-<div id="trendFallback" style="display:none; padding:25px; text-align:center;">
-        Loading your well-being history...
-    </div>
-</div>
-</div>
-<br/>
-<!-- CALMING SUPPORT -->
-<div class="card" id="supportActivities">
-<h2 data-en="🧘 Take a Moment for Yourself" data-hi="🧘 अपने लिए एक पल निकालें">
-
-                    🧘 Take a Moment for Yourself
-
-                </h2>
-<p class="card-description" data-en="Choose an activity that may help you feel calmer and more grounded." data-hi="ऐसी गतिविधि चुनें जो आपको अधिक शांत और संतुलित महसूस करने में मदद कर सके।">
-
-                    Choose an activity that may help you feel
-                    calmer and more grounded.
-
-                </p>
-<div class="support-grid">
-<!-- BREATHING -->
-<div class="support-item" onclick="breathing()">
-<span>🌬️</span>
-<p data-en="Breathing Exercise" data-hi="श्वास अभ्यास">Breathing Exercise</p>
-</div>
-<!-- GROUNDING -->
-<div class="support-item" onclick="grounding()">
-<span>🌱</span>
-<p data-en="Grounding Activity" data-hi="ग्राउंडिंग गतिविधि">Grounding Activity</p>
-</div>
-<!-- CALMING SOUNDS -->
-<div class="support-item" onclick="calmingSound()">
-<span>🎵</span>
-<p data-en="Calming Sounds" data-hi="शांत करने वाली ध्वनियाँ">Calming Sounds</p>
-</div>
-<!-- STRESS RELIEF GAME -->
-<div class="support-item" onclick="stressGame()">
-<span>🎮</span>
-<p data-en="Relax &amp; Reset" data-hi="आराम और रीसेट">Relax &amp; Reset</p>
-</div>
-<!-- MINDFUL MOVEMENT -->
-<div class="support-item" onclick="mindfulMovement()">
-<span>🧘</span>
-<p data-en="Mindful Movement" data-hi="सचेत गतिविधि">Mindful Movement</p>
-</div>
-<!-- COLOR & CREATE -->
-<div class="support-item" onclick="colorTherapy()">
-<span>🎨</span>
-<p data-en="Color &amp; Create" data-hi="रंग भरें और सृजन करें">Color &amp; Create</p>
-</div>
-<!-- MEDITATION TIMER -->
-<div class="support-item" onclick="meditationTimerActivity()">
-<span>⏱️</span>
-<p data-en="Meditation Timer" data-hi="ध्यान टाइमर">Meditation Timer</p>
-</div>
-<!-- STORIES THAT INSPIRE -->
-<div class="support-item" onclick="inspiringBooks()">
-<span>📚</span>
-<p data-en="Stories That Inspire" data-hi="प्रेरणादायक कहानियाँ">Stories That Inspire</p>
-</div>
-<!-- WATCH & UNWIND -->
-<div class="support-item" onclick="watchAndUnwind()">
-<span>🎥</span>
-<p data-en="Watch &amp; Unwind" data-hi="देखें और मन को शांत करें">Watch &amp; Unwind</p>
-</div>
-</div>
-</div>
-</div>
-<!-- ================= RIGHT SECTION ================= -->
-<div>
-<!-- DDI CARD -->
-<div class="card">
-<h2 data-en="Your Well-being Status" data-hi="आपकी कल्याण स्थिति">
+                        <p
+                            class="card-description"
+                            data-en="Choose an activity that may help you feel calmer and more grounded."
+                            data-hi="ऐसी गतिविधि चुनें जो आपको अधिक शांत और संतुलित महसूस करने में मदद कर सके।">
+                            Choose an activity that may help you feel calmer and more grounded.
+                        </p>
 
 
+                        <div class="support-grid">
 
 
+                            <!-- BREATHING -->
+
+                            <div
+                                class="support-item"
+                                onclick="breathing()">
+
+                                <span>🌬️</span>
+
+                                <p
+                                    data-en="Breathing Exercise"
+                                    data-hi="श्वास अभ्यास">
+                                    Breathing Exercise
+                                </p>
+
+                            </div>
+
+
+                            <!-- GROUNDING -->
+
+                            <div
+                                class="support-item"
+                                onclick="grounding()">
+
+                                <span>🌱</span>
+
+                                <p
+                                    data-en="Grounding Activity"
+                                    data-hi="ग्राउंडिंग गतिविधि">
+                                    Grounding Activity
+                                </p>
+
+                            </div>
+
+
+                            <!-- CALMING SOUNDS -->
+
+                            <div
+                                class="support-item"
+                                onclick="calmingSound()">
+
+                                <span>🎵</span>
+
+                                <p
+                                    data-en="Calming Sounds"
+                                    data-hi="शांत करने वाली ध्वनियाँ">
+                                    Calming Sounds
+                                </p>
+
+                            </div>
+
+
+                            <!-- RELAX & RESET -->
+
+                            <div
+                                class="support-item"
+                                onclick="stressGame()">
+
+                                <span>🎮</span>
+
+                                <p
+                                    data-en="Relax & Reset"
+                                    data-hi="आराम और रीसेट">
+                                    Relax & Reset
+                                </p>
+
+                            </div>
+
+
+                            <!-- MINDFUL MOVEMENT -->
+
+                            <div
+                                class="support-item"
+                                onclick="mindfulMovement()">
+
+                                <span>🧘</span>
+
+                                <p
+                                    data-en="Mindful Movement"
+                                    data-hi="सचेत गतिविधि">
+                                    Mindful Movement
+                                </p>
+
+                            </div>
+
+
+                            <!-- COLOR & CREATE -->
+
+                            <div
+                                class="support-item"
+                                onclick="colorTherapy()">
+
+                                <span>🎨</span>
+
+                                <p
+                                    data-en="Color & Create"
+                                    data-hi="रंग भरें और सृजन करें">
+                                    Color & Create
+                                </p>
+
+                            </div>
+
+
+                            <!-- MEDITATION TIMER -->
+
+                            <div
+                                class="support-item"
+                                onclick="meditationTimerActivity()">
+
+                                <span>⏱️</span>
+
+                                <p
+                                    data-en="Meditation Timer"
+                                    data-hi="ध्यान टाइमर">
+                                    Meditation Timer
+                                </p>
+
+                            </div>
+
+
+                            <!-- STORIES -->
+
+                            <div
+                                class="support-item"
+                                onclick="inspiringBooks()">
+
+                                <span>📚</span>
+
+                                <p
+                                    data-en="Stories That Inspire"
+                                    data-hi="प्रेरणादायक कहानियाँ">
+                                    Stories That Inspire
+                                </p>
+
+                            </div>
+
+
+                            <!-- WATCH & UNWIND -->
+
+                            <div
+                                class="support-item"
+                                onclick="watchAndUnwind()">
+
+                                <span>🎥</span>
+
+                                <p
+                                    data-en="Watch & Unwind"
+                                    data-hi="देखें और मन को शांत करें">
+                                    Watch & Unwind
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- RIGHT COLUMN -->
+                <!-- ================================================= -->
+
+                <div>
+
+
+                    <!-- ================= DDI ================= -->
+
+                    <div class="card">
+
+                        <h2
+                            data-en="Your Well-being Status"
+                            data-hi="आपकी कल्याण स्थिति">
+                            Your Well-being Status
+                        </h2>
+
+                        <p
+                            class="card-description"
+                            data-en="Based on your most recent check-in."
+                            data-hi="आपके हालिया चेक-इन के आधार पर।">
+                            Based on your most recent check-in.
+                        </p>
+
+
+                        <div class="ddi-score">
+
+                            <div
+                                class="score-circle"
+                                id="ddiScore">
+                                --
+                            </div>
+
+                            <div>
+
+                                <p
+                                    id="statusText"
+                                    data-en="No recent check-in"
+                                    data-hi="कोई हालिया चेक-इन नहीं">
+                                    No recent check-in
+                                </p>
+
+                                <br>
+
+                                <p
+                                    id="riskLevel"
+                                    data-en="Complete a check-in to update"
+                                    data-hi="अपडेट करने के लिए चेक-इन पूरा करें">
+                                    Complete a check-in to update
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- LATEST DETAILS -->
+
+                        <div
+                            class="latest-details"
+                            id="latestDetails"
+                            style="display:none;">
+
+                            <div class="detail-row">
+
+                                <span
+                                    class="detail-label"
+                                    data-en="Mood"
+                                    data-hi="मूड">
+                                    Mood
+                                </span>
+
+                                <span
+                                    class="detail-value"
+                                    id="latestMood">
+                                    --
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail-row">
+
+                                <span
+                                    class="detail-label"
+                                    data-en="Safety"
+                                    data-hi="सुरक्षा">
+                                    Safety
+                                </span>
+
+                                <span
+                                    class="detail-value"
+                                    id="latestSafety">
+                                    --
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail-row">
+
+                                <span
+                                    class="detail-label"
+                                    data-en="Fear Level"
+                                    data-hi="भय स्तर">
+                                    Fear Level
+                                </span>
+
+                                <span
+                                    class="detail-value"
+                                    id="latestFear">
+                                    --
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <br>
+
+
+                    <!-- ================= HELP ================= -->
+
+                    <div class="card help-card">
+
+                        <h2
+                            data-en="🚨 Need Immediate Support?"
+                            data-hi="🚨 क्या आपको तुरंत सहायता चाहिए?">
+                            🚨 Need Immediate Support?
+                        </h2>
+
+                        <p
+                            class="card-description"
+                            data-en="If you feel unsafe or need immediate assistance, let us know."
+                            data-hi="यदि आप असुरक्षित महसूस कर रहे हैं या आपको तुरंत सहायता चाहिए, तो हमें बताएं।">
+                            If you feel unsafe or need immediate assistance, let us know.
+                        </p>
+
+                        <button
+                            class="help-button"
+                            data-en="🚨 I NEED HELP"
+                            data-hi="🚨 मुझे सहायता चाहिए"
+                            onclick="needHelp()">
+                            🚨 I NEED HELP
+                        </button>
+
+                    </div>
+
+
+                    <!-- ================= VIDEO ================= -->
+
+                    <div
+                        class="card"
+                        id="victimVideoSection"
+                        style="margin-top:25px;">
+
+                        <h2>
+                            🎥 Video Counselling
+                        </h2>
+
+                        <p class="card-description">
+                            Join a private video counselling session with your counsellor.
+                        </p>
+
+                        <div
+                            id="victimVideoStatus"
+                            style="
+                                margin-top:15px;
+                                padding:16px;
+                                background:#f8fafc;
+                                border-radius:12px;
+                                color:#526581;
+                            ">
+                            Checking for an available counselling session...
+                        </div>
+
+                        <button
+                            id="joinVideoButton"
+                            class="primary-button"
+                            type="button"
+                            onclick="joinVictimVideoSession()"
+                            style="
+                                display:none;
+                                margin-top:15px;
+                            ">
+                            🎥 Join Video Counselling
+                        </button>
+
+                    </div>
+
+
+                    <!-- ================= MESSAGING ================= -->
+
+                    <div
+                        class="card"
+                        id="messagingSection"
+                        style="margin-top:25px;">
+
+                        <h2>
+                            💬 Message Counsellor
+                        </h2>
+
+                        <p class="card-description">
+                            Send a private message to your counsellor and continue your conversation.
+                        </p>
+
+
+                        <div
+                            id="victimMessageList"
+                            style="
+                                height:280px;
+                                overflow-y:auto;
+                                padding:15px;
+                                background:#f8fafc;
+                                border-radius:12px;
+                                margin-top:15px;
+                                margin-bottom:15px;
+                            ">
+
+                            <div class="empty-state">
+                                Loading conversation...
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            style="
+                                display:flex;
+                                gap:12px;
+                                align-items:flex-end;
+                            ">
+
+                            <textarea
+                                id="victimMessageInput"
+                                placeholder="Write a message to your counsellor..."
+                                rows="2"
+                                style="
+                                    flex:1;
+                                    resize:none;
+                                    padding:12px;
+                                    border:1px solid #dce4ed;
+                                    border-radius:10px;
+                                    font-family:inherit;
+                                    font-size:14px;
+                                "></textarea>
+
+
+                            <button
+                                type="button"
+                                class="primary-button"
+                                onclick="sendVictimMessage()"
+                                style="
+                                    min-width:110px;
+                                    height:48px;
+                                    padding:0 24px;
+                                    border:none;
+                                    border-radius:10px;
+                                    background:#365f8b;
+                                    color:#ffffff;
+                                    font-size:15px;
+                                    font-weight:600;
+                                    cursor:pointer;
+                                    white-space:nowrap;
+                                    box-shadow:0 2px 6px rgba(0,0,0,0.10);
+                                ">
+                                Send
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            id="victimMessageStatus"
+                            style="
+                                margin-top:10px;
+                                font-size:13px;
+                            ">
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= ACTIVITY MODAL ================= -->
+
+            <div
+                class="activity-modal"
+                id="activityModal">
+
+                <div class="activity-window">
+
+                    <button
+                        class="close-activity"
+                        onclick="closeActivity()">
+                        ×
+                    </button>
+
+                    <div id="activityContent"></div>
+
+                </div>
 
             </div>
 
 
         </div>
 
-<!-- =========================
-     VIDEO COUNSELLING
-========================== -->
+    </main>
 
-<div
-    class="card"
-    id="victimVideoSection"
-    style="margin-top:25px;"
->
-    <h2>
-        🎥 Video Counselling
-    </h2>
-
-    <p class="card-description">
-        Join a private video counselling session with your counsellor.
-    </p>
-
-    <div
-        id="victimVideoStatus"
-        style="
-            margin-top:15px;
-            padding:16px;
-            background:#f8fafc;
-            border-radius:12px;
-            color:#526581;
-        "
-    >
-        Checking for an available counselling session...
-    </div>
-
-    <button
-        id="joinVideoButton"
-        class="primary-button"
-        type="button"
-        onclick="joinVictimVideoSession()"
-        style="
-            display:none;
-            margin-top:15px;
-        "
-    >
-        🎥 Join Video Counselling
-    </button>
-</div>
-
-<!-- =========================
-     MESSAGE COUNSELLOR
-========================== -->
-
-<div
-    class="card"
-    id="messagingSection"
-    style="margin-top:25px;"
->
-
-    <h2>
-        💬 Message Counsellor
-    </h2>
-
-    <p class="card-description">
-
-        Send a private message to your counsellor
-        and continue your conversation.
-
-    </p>
-
-    <div
-        id="victimMessageList"
-        style="
-            height:280px;
-            overflow-y:auto;
-            padding:15px;
-            background:#f8fafc;
-            border-radius:12px;
-            margin-top:15px;
-            margin-bottom:15px;
-        "
-    >
-
-        <div class="empty-state">
-            Loading conversation...
-        </div>
-
-    </div>
-
-    <div
-        style="
-            display:flex;
-            gap:12px;
-            align-items:flex-end;
-        "
-    >
-
-        <textarea
-            id="victimMessageInput"
-            placeholder="Write a message to your counsellor..."
-            rows="2"
-            style="
-                flex:1;
-                resize:none;
-                padding:12px;
-                border:1px solid #dce4ed;
-                border-radius:10px;
-                font-family:inherit;
-                font-size:14px;
-            "
-        ></textarea>
-
-        <button
-    type="button"
-    class="primary-button"
-    onclick="sendVictimMessage()"
-    style="
-        min-width:110px;
-        height:48px;
-        padding:0 24px;
-        border:none;
-        border-radius:10px;
-        background:#365f8b;
-        color:#ffffff;
-        font-size:15px;
-        font-weight:600;
-        cursor:pointer;
-        white-space:nowrap;
-        box-shadow:0 2px 6px rgba(0,0,0,0.10);
-    "
->
-    Send
-</button>
-
-    </div>
-
-    <div
-        id="victimMessageStatus"
-        style="
-            margin-top:10px;
-            font-size:13px;
-        "
-    ></div>
-
-</div>
+</section>
 
 
-        <!-- ================= RIGHT SECTION ================= -->
-
-        <div>
-
-
-            <!-- DDI CARD -->
-
-            <div class="card">
-
-
-                <h2>
-
-                    Your Well-being Status
-
-                </h2>
-<p class="card-description" data-en="Based on your most recent check-in." data-hi="आपके हालिया चेक-इन के आधार पर।">
-
-                    Based on your most recent check-in.
-
-                </p>
-<div class="ddi-score">
-<div class="score-circle" id="ddiScore">
-
-                        --
-
-                    </div>
-<div>
-<p data-en="No recent check-in" data-hi="कोई हालिया चेक-इन नहीं" id="statusText">
-
-                            No recent check-in
-
-                        </p>
-<br/>
-<p data-en="Complete a check-in to update" data-hi="अपडेट करने के लिए चेक-इन पूरा करें" id="riskLevel">
-
-                            Complete a check-in to update
-
-                        </p>
-</div>
-</div>
-<!-- LATEST CHECK-IN DETAILS -->
-<div class="latest-details" id="latestDetails" style="display: none;">
-<div class="detail-row">
-<span class="detail-label">
-
-                            Mood
-
-                        </span>
-<span class="detail-value" id="latestMood">
-
-                            --
-
-                        </span>
-</div>
-<div class="detail-row">
-<span class="detail-label">
-
-                            Safety
-
-                        </span>
-<span class="detail-value" id="latestSafety">
-
-                            --
-
-                        </span>
-</div>
-<div class="detail-row">
-<span class="detail-label">
-
-                            Fear Level
-
-                        </span>
-<span class="detail-value" id="latestFear">
-
-                            --
-
-                        </span>
-</div>
-</div>
-</div>
-<br/>
-<!-- EMERGENCY -->
-<div class="card help-card">
-<h2 data-en="🚨 Need Immediate Support?" data-hi="🚨 क्या आपको तुरंत सहायता चाहिए?">
-
-                    🚨 Need Immediate Support?
-
-                </h2>
-<p class="card-description" data-en="If you feel unsafe or need immediate assistance, let us know." data-hi="यदि आप असुरक्षित महसूस कर रहे हैं या आपको तुरंत सहायता चाहिए, तो हमें बताएं।">
-
-                    If you feel unsafe or need immediate
-                    assistance, let us know.
-
-                </p>
-<button class="help-button" data-en="🚨 I NEED HELP" data-hi="🚨 मुझे सहायता चाहिए" onclick="needHelp()">
-
-                    🚨 I NEED HELP
-
-                </button>
-</div>
-</div>
-</div>
-</div>
+                        
 <!-- ================= CALMING ACTIVITY MODAL ================= -->
 <div class="activity-modal" id="activityModal">
 <div class="activity-window">
@@ -6796,8 +7040,6 @@ function escapeHtml(value) {
 loadVictimMessages();
 loadVictimVideoSession();
 
-</script>
-<script>
 /* ================= MULTILINGUAL DASHBOARD (HOMEPAGE ONLY) ================= */
 function setDashboardLanguage(language) {
     const elements = document.querySelectorAll('[data-en][data-hi]');
@@ -6831,5 +7073,7 @@ function loadDashboardLanguage() {
 }
 
 document.addEventListener('DOMContentLoaded', loadDashboardLanguage);
-</script></body>
+
+</script>
+</body>
 </html>
